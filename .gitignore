@@ -1,0 +1,17 @@
+﻿# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Data
+data/raw/

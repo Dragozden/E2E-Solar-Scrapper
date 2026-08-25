@@ -1,0 +1,23 @@
+[project]
+name = "e2e-solar-scrapper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Emanuel Wierzchowski", email = "elomba11@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "lxml>=6.1.2",
+    "pandas>=3.0.5",
+    "playwright>=1.62.0",
+    "psycopg[binary]>=3.3.4",
+]
+
+[project.scripts]
+e2e-solar-scrapper = "e2e_solar_scrapper:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"

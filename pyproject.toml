@@ -13,6 +13,7 @@ dependencies = [
     "pandas>=3.0.5",
     "playwright>=1.62.0",
     "psycopg[binary]>=3.3.4",
+    "python-dotenv>=1.2.3",
 ]
 
 [project.scripts]
@@ -21,3 +22,6 @@ e2e-solar-scrapper = "e2e_solar_scrapper:main"
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+package = false

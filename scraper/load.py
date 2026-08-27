@@ -1,5 +1,6 @@
 import psycopg
 from config import config
+from models import RawPanel
 
 def get_connection():
     return psycopg.connect(
@@ -10,7 +11,7 @@ def get_connection():
         password=config.password,
     )
 
-def insert_raw_panel(panel: dict):
+def insert_raw_panel(panel: RawPanel):
     with get_connection() as conn:
         with conn.cursor() as cur:
             cur.execute(
@@ -26,11 +27,11 @@ def insert_raw_panel(panel: dict):
                 VALUES (%s,%s,%s,%s,%s,%s)
                 """,
                 (
-                    panel["title"],
-                    panel["price_text"],
-                    panel["power_text"],
-                    panel["efficiency_text"],
-                    panel["bifaciality_text"],
-                    panel["source_url"],
+                    panel.title,
+                    panel.price_text,
+                    panel.power_text,
+                    panel.efficiency_text,
+                    panel.bifaciality_text,
+                    panel.source_url,
                 ),
             )

@@ -1,14 +1,15 @@
-from load import insert_raw_panel
+from extractor import fetch_html
+from parser import parse_html
+from pathlib import Path
 
-panel = {
-    "title": "Jinko Tiger Neo 505W Black",
-    "price_text": "419,00 zł",
-    "power_text": "505 W",
-    "efficiency_text": "21.3 %",
-    "bifaciality_text": "80 %",
-    "source_url": "https://example.com",
-}
+URL = "https://sklepsoltech.pl/pl/c/Panele-fotowoltaiczne/13"
 
-insert_raw_panel(panel)
+html = fetch_html(URL)
 
-print("Panel zapisany.")
+output_dir = Path("data/raw/html")
+output_dir.mkdir(parents=True, exist_ok=True)
+(output_dir / "page.html").write_text(html, encoding="utf-8")
+
+soup = parse_html(html)
+
+print(soup.title.string)

@@ -1,6 +1,8 @@
 import psycopg
-from config import config
-from models import RawPanel
+
+from scraper.config import config
+from scraper.models import RawPanel
+
 
 def get_connection():
     return psycopg.connect(
@@ -10,6 +12,7 @@ def get_connection():
         user=config.user,
         password=config.password,
     )
+
 
 def insert_raw_panel(panel: RawPanel):
     with get_connection() as conn:
@@ -22,9 +25,10 @@ def insert_raw_panel(panel: RawPanel):
                     power_text,
                     efficiency_text,
                     bifaciality_text,
-                    source_url
+                    source_url,
+                    is_available
                 )
-                VALUES (%s,%s,%s,%s,%s,%s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
                     panel.title,
@@ -33,5 +37,6 @@ def insert_raw_panel(panel: RawPanel):
                     panel.efficiency_text,
                     panel.bifaciality_text,
                     panel.source_url,
+                    panel.is_available,
                 ),
             )

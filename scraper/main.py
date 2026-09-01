@@ -1,15 +1,17 @@
-from extractor import fetch_html
-from parser import parse_html
-from pathlib import Path
+from scraper.extractor import scrape_panels
+from scraper.load import insert_raw_panel
 
-URL = "https://sklepsoltech.pl/pl/c/Panele-fotowoltaiczne/13"
 
-html = fetch_html(URL)
+def main():
+    panels = scrape_panels()
 
-output_dir = Path("data/raw/html")
-output_dir.mkdir(parents=True, exist_ok=True)
-(output_dir / "page.html").write_text(html, encoding="utf-8")
+    print(f"\nZnaleziono paneli: {len(panels)}")
 
-soup = parse_html(html)
+    for panel in panels:
+        insert_raw_panel(panel)
 
-print(soup.title.string)
+    print("Dane zapisane do PostgreSQL.")
+
+
+if __name__ == "__main__":
+    main()

@@ -8,3 +8,4 @@ class RawPanel:
     efficiency_text: str
     bifaciality_text: str
     source_url: str
+    is_available: bool

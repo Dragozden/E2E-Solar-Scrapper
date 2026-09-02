@@ -22,17 +22,41 @@ def scrape_panels() -> list:
                 else f"{BASE_URL}/{current_page}"
             )
 
-            print(f"Scrapowanie strony {current_page}/{TOTAL_PAGES}")
-
-            page.goto(url, wait_until="domcontentloaded")
-
-            page.wait_for_selector(
-                "product-tile",
-                state="attached",
-                timeout=10_000,
+            print(
+                f"Scrapowanie strony "
+                f"{current_page}/{TOTAL_PAGES}"
             )
 
-            tiles = page.locator("product-tile").all()
+            page.goto(
+                url,
+                wait_until="domcontentloaded"
+            )
+
+            product_list = page.get_by_text(
+                "Lista produktów",
+                exact=True,
+            )
+
+            if product_list.count() != 1:
+                raise RuntimeError(
+                    f"Nie znaleziono jednoznacznej sekcji "
+                    f"'Lista produktów' na stronie "
+                    f"{current_page}. "
+                    f"Znaleziono: {product_list.count()}"
+                )
+
+            product_container = product_list.locator(
+                "xpath=ancestor::*[.//product-tile][1]"
+            )
+
+            tiles = product_container.locator(
+                "product-tile"
+            ).all()
+
+            print(
+                f"Strona {current_page}: "
+                f"{len(tiles)} produktów"
+            )
 
             for tile in tiles:
                 panel = parse_product_tile(tile)
@@ -41,5 +65,7 @@ def scrape_panels() -> list:
                     panels.append(panel)
 
         browser.close()
+
+    print(f"\nŁącznie produktów: {len(panels)}")
 
     return panels

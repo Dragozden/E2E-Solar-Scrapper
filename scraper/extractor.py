@@ -1,14 +1,16 @@
 from playwright.sync_api import sync_playwright
 
 from scraper.parser import parse_product_tile
+from uuid import uuid4
 
 
 BASE_URL = "https://sklepsoltech.pl/pl/c/Panele-fotowoltaiczne/13"
 TOTAL_PAGES = 12
 
 
-def scrape_panels() -> list:
+def scrape_panels(scrape_run_id: UUID) -> list[RawPanel]:
     panels = []
+    scrape_run_id = uuid4()
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -59,7 +61,7 @@ def scrape_panels() -> list:
             )
 
             for tile in tiles:
-                panel = parse_product_tile(tile)
+                panel = parse_product_tile(tile, scrape_run_id,)
 
                 if panel is not None:
                     panels.append(panel)

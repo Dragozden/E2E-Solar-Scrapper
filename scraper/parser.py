@@ -2,7 +2,7 @@ from playwright.sync_api import Locator
 
 from scraper.models import RawPanel
 from scraper.regex_utils import extract_power
-
+from uuid import UUID
 
 PANEL_PREFIX = "panel fotowoltaiczny"
 
@@ -11,7 +11,7 @@ def is_panel(name: str) -> bool:
     return name.strip().lower().startswith(PANEL_PREFIX)
 
 
-def parse_product_tile(tile: Locator) -> RawPanel | None:
+def parse_product_tile(tile: Locator, scrape_run_id: UUID) -> RawPanel | None:
     name = tile.get_attribute("name")
     price = tile.get_attribute("price")
 
@@ -42,4 +42,5 @@ def parse_product_tile(tile: Locator) -> RawPanel | None:
         bifaciality_text="",
         source_url="",
         is_available=not is_unavailable,
+        scrape_run_id=scrape_run_id,
     )

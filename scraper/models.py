@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from uuid import UUID
 
 @dataclass(slots=True)
 class RawPanel:
@@ -9,3 +10,4 @@ class RawPanel:
     bifaciality_text: str
     source_url: str
     is_available: bool
+    scrape_run_id: UUID

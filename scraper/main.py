@@ -1,16 +1,32 @@
+from uuid import uuid4
+
 from scraper.extractor import scrape_panels
-from scraper.load import insert_raw_panel
+from scraper.load import (
+    create_scrape_run,
+    finish_scrape_run,
+    insert_raw_panel,
+)
 
 
 def main():
-    panels = scrape_panels()
+    scrape_run_id = uuid4()
 
-    print(f"\nZnaleziono paneli: {len(panels)}")
+    create_scrape_run(scrape_run_id)
+
+    panels = scrape_panels(scrape_run_id)
 
     for panel in panels:
         insert_raw_panel(panel)
 
-    print("Dane zapisane do PostgreSQL.")
+    finish_scrape_run(
+        scrape_run_id,
+        len(panels),
+    )
+
+    print(
+        f"Scrape zakończony. "
+        f"Produktów: {len(panels)}"
+    )
 
 
 if __name__ == "__main__":

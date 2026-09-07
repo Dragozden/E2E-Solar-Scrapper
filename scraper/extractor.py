@@ -10,7 +10,6 @@ TOTAL_PAGES = 12
 
 def scrape_panels(scrape_run_id: UUID) -> list[RawPanel]:
     panels = []
-    scrape_run_id = uuid4()
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)

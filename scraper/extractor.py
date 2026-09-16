@@ -7,7 +7,6 @@ from uuid import uuid4
 BASE_URL = "https://sklepsoltech.pl/pl/c/Panele-fotowoltaiczne/13"
 TOTAL_PAGES = 12
 
-
 def scrape_panels(scrape_run_id: UUID) -> list[RawPanel]:
     panels = []
 

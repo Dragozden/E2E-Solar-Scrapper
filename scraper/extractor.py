@@ -1,7 +1,6 @@
 from playwright.sync_api import sync_playwright
 
 from scraper.parser import parse_product_tile
-from uuid import uuid4
 
 
 BASE_URL = "https://sklepsoltech.pl/pl/c/Panele-fotowoltaiczne/13"

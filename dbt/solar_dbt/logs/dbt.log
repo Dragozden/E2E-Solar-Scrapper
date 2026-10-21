@@ -348,3 +348,1129 @@ drop view if exists "solar_prices"."silver"."stg_panels__dbt_backup" cascade
 [0m19:20:19.107507 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B219E18B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B218E9F40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B217CD1D0>]}
 [0m19:20:19.107788 [debug] [MainThread]: Flushing usage events
 [0m19:20:19.693096 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:37:20.327789 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7E2E9FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7F9A7ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7F9A7B10>]}
+
+
+============================== 20:37:20.332025 | 198fa442-4c52-417b-bf82-2331b88d31c2 ==============================
+[0m20:37:20.332025 [info ] [MainThread]: Running with dbt=1.12.6
+[0m20:37:20.332533 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'dbt/solar_dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt test --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'dbt\\solar_dbt\\logs'}
+[0m20:37:20.501482 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7E807230>]}
+[0m20:37:20.556840 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7C862CF0>]}
+[0m20:37:20.558484 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m20:37:20.961195 [debug] [MainThread]: checksum: 24647b7f8ead2844ed64c829f8a06bd1e04d07ff8529ee06367c971a4bd1114d, vars: {}, profile: solar_local, target: dev, version: 1.12.6
+[0m20:37:21.151338 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 3 files added, 0 files changed.
+[0m20:37:21.151741 [debug] [MainThread]: Partial parsing: added file: solar_dbt://tests\assert_latest_run_integrity.sql
+[0m20:37:21.152063 [debug] [MainThread]: Partial parsing: added file: solar_dbt://models\staging\stg_panels.yml
+[0m20:37:21.152327 [debug] [MainThread]: Partial parsing: added file: solar_dbt://tests\assert_valid_price_and_power.sql
+[0m20:37:21.581106 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD01660B50>]}
+[0m20:37:21.684295 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m20:37:21.687362 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m20:37:21.721286 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m20:37:21.856340 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD0341D6D0>]}
+[0m20:37:21.856740 [info ] [MainThread]: Found 1 model, 7 data tests, 2 sources, 477 macros
+[0m20:37:21.857074 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD0173A5F0>]}
+[0m20:37:21.858821 [info ] [MainThread]: 
+[0m20:37:21.859179 [info ] [MainThread]: Concurrency: 2 threads (target='dev')
+[0m20:37:21.859483 [info ] [MainThread]: 
+[0m20:37:21.859915 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m20:37:21.860723 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices_silver'
+[0m20:37:21.965100 [debug] [ThreadPool]: Using postgres connection "list_solar_prices_silver"
+[0m20:37:21.965442 [debug] [ThreadPool]: On list_solar_prices_silver: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices_silver"} */
+select
+      'solar_prices' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'silver'
+    union all
+    select distinct
+     'solar_prices' as database,
+     proname as name,
+     ns.nspname as schema,
+     'function' as type
+    from pg_proc
+     join pg_namespace as ns on pronamespace = ns.oid
+    where ns.nspname ilike 'silver'
+  
+[0m20:37:21.966284 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m20:37:22.006318 [debug] [ThreadPool]: SQL status: SELECT 1 in 0.040 seconds
+[0m20:37:22.007452 [debug] [ThreadPool]: On list_solar_prices_silver: ROLLBACK
+[0m20:37:22.008393 [debug] [ThreadPool]: On list_solar_prices_silver: Close
+[0m20:37:22.011433 [debug] [MainThread]: Using postgres connection "master"
+[0m20:37:22.011785 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m20:37:22.012089 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m20:37:22.029051 [debug] [MainThread]: SQL status: SELECT 2 in 0.017 seconds
+[0m20:37:22.030127 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '198fa442-4c52-417b-bf82-2331b88d31c2', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD02AACFC0>]}
+[0m20:37:22.030493 [debug] [MainThread]: On master: ROLLBACK
+[0m20:37:22.031230 [debug] [MainThread]: On master: COMMIT
+[0m20:37:22.031526 [debug] [MainThread]: Using postgres connection "master"
+[0m20:37:22.031767 [debug] [MainThread]: On master: COMMIT
+[0m20:37:22.032838 [debug] [MainThread]: SQL status: COMMIT in 0.001 seconds
+[0m20:37:22.033136 [debug] [MainThread]: On master: Close
+[0m20:37:22.037504 [debug] [Thread-2 (]: Began running node test.solar_dbt.assert_valid_price_and_power
+[0m20:37:22.037928 [debug] [Thread-1 (]: Began running node test.solar_dbt.assert_latest_run_integrity
+[0m20:37:22.038263 [info ] [Thread-2 (]: 2 of 7 START test assert_valid_price_and_power ................................. [RUN]
+[0m20:37:22.039130 [debug] [Thread-2 (]: Acquiring new postgres connection 'test.solar_dbt.assert_valid_price_and_power'
+[0m20:37:22.038588 [info ] [Thread-1 (]: 1 of 7 START test assert_latest_run_integrity .................................. [RUN]
+[0m20:37:22.039514 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.assert_valid_price_and_power
+[0m20:37:22.039923 [debug] [Thread-1 (]: Acquiring new postgres connection 'test.solar_dbt.assert_latest_run_integrity'
+[0m20:37:22.044660 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.assert_valid_price_and_power"
+[0m20:37:22.045104 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.assert_latest_run_integrity
+[0m20:37:22.046914 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.assert_latest_run_integrity"
+[0m20:37:22.048310 [debug] [Thread-2 (]: Began executing node test.solar_dbt.assert_valid_price_and_power
+[0m20:37:22.064046 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.assert_valid_price_and_power"
+[0m20:37:22.064426 [debug] [Thread-1 (]: Began executing node test.solar_dbt.assert_latest_run_integrity
+[0m20:37:22.065903 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.assert_latest_run_integrity"
+[0m20:37:22.067304 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.assert_valid_price_and_power"
+[0m20:37:22.067636 [debug] [Thread-2 (]: On test.solar_dbt.assert_valid_price_and_power: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.assert_valid_price_and_power"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  SELECT
+    scrape_id,
+    scrape_run_id,
+    title,
+    price_pln,
+    power_w
+FROM "solar_prices"."silver"."stg_panels"
+WHERE price_pln IS NULL
+   OR price_pln <= 0
+   OR power_w IS NULL
+   OR power_w <= 0
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.067939 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m20:37:22.068265 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.assert_latest_run_integrity"
+[0m20:37:22.068690 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.assert_latest_run_integrity"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  WITH latest_run AS (
+    SELECT
+        scrape_run_id,
+        products_count
+    FROM "solar_prices"."bronze"."scrape_runs"
+    WHERE status = 'SUCCESS'
+    ORDER BY finished_at DESC NULLS LAST
+    LIMIT 1
+),
+
+run_quality AS (
+    SELECT
+        r.scrape_run_id,
+        r.products_count AS expected_count,
+        COUNT(p.scrape_id) AS actual_count,
+
+        COUNT(p.scrape_id) FILTER (
+            WHERE p.source_url IS NULL
+               OR TRIM(p.source_url) = ''
+        ) AS missing_urls,
+
+        COUNT(p.scrape_id)
+            - COUNT(DISTINCT NULLIF(TRIM(p.source_url), ''))
+            AS non_unique_urls
+
+    FROM latest_run r
+    LEFT JOIN "solar_prices"."bronze"."panel_scrape_raw" p
+        ON r.scrape_run_id = p.scrape_run_id
+    GROUP BY
+        r.scrape_run_id,
+        r.products_count
+)
+
+SELECT *
+FROM run_quality
+WHERE actual_count = 0
+   OR expected_count IS NULL
+   OR actual_count <> expected_count
+   OR missing_urls > 0
+   OR non_unique_urls > 0
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.069000 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m20:37:22.093287 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.024 seconds
+[0m20:37:22.096804 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: ROLLBACK
+[0m20:37:22.097666 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: Close
+[0m20:37:22.098381 [info ] [Thread-1 (]: 1 of 7 PASS assert_latest_run_integrity ........................................ [[32mPASS[0m in 0.06s]
+[0m20:37:22.099059 [debug] [Thread-1 (]: Finished running node test.solar_dbt.assert_latest_run_integrity
+[0m20:37:22.099489 [debug] [Thread-1 (]: Began running node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:37:22.099843 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.032 seconds
+[0m20:37:22.100163 [info ] [Thread-1 (]: 3 of 7 START test not_null_stg_panels_scrape_id ................................ [RUN]
+[0m20:37:22.101419 [debug] [Thread-2 (]: On test.solar_dbt.assert_valid_price_and_power: ROLLBACK
+[0m20:37:22.101791 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.assert_latest_run_integrity, now test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2)
+[0m20:37:22.102140 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:37:22.112157 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:37:22.112598 [debug] [Thread-2 (]: On test.solar_dbt.assert_valid_price_and_power: Close
+[0m20:37:22.113558 [info ] [Thread-2 (]: 2 of 7 PASS assert_valid_price_and_power ....................................... [[32mPASS[0m in 0.07s]
+[0m20:37:22.114285 [debug] [Thread-2 (]: Finished running node test.solar_dbt.assert_valid_price_and_power
+[0m20:37:22.114704 [debug] [Thread-2 (]: Began running node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:37:22.115506 [debug] [Thread-1 (]: Began executing node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:37:22.115144 [info ] [Thread-2 (]: 4 of 7 START test not_null_stg_panels_scrape_run_id ............................ [RUN]
+[0m20:37:22.117373 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:37:22.117821 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.solar_dbt.assert_valid_price_and_power, now test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2)
+[0m20:37:22.118274 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:37:22.123969 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:37:22.125198 [debug] [Thread-2 (]: Began executing node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:37:22.126629 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:37:22.127192 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:37:22.127550 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scrape_id
+from "solar_prices"."silver"."stg_panels"
+where scrape_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.127898 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:37:22.128439 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:37:22.128979 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scrape_run_id
+from "solar_prices"."silver"."stg_panels"
+where scrape_run_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.129353 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:37:22.142906 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.015 seconds
+[0m20:37:22.143287 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.014 seconds
+[0m20:37:22.144415 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: ROLLBACK
+[0m20:37:22.145504 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: ROLLBACK
+[0m20:37:22.146273 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: Close
+[0m20:37:22.146572 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: Close
+[0m20:37:22.147234 [info ] [Thread-1 (]: 3 of 7 PASS not_null_stg_panels_scrape_id ...................................... [[32mPASS[0m in 0.05s]
+[0m20:37:22.148240 [debug] [Thread-1 (]: Finished running node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:37:22.147664 [info ] [Thread-2 (]: 4 of 7 PASS not_null_stg_panels_scrape_run_id .................................. [[32mPASS[0m in 0.03s]
+[0m20:37:22.148721 [debug] [Thread-1 (]: Began running node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:37:22.149294 [debug] [Thread-2 (]: Finished running node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:37:22.150009 [debug] [Thread-2 (]: Began running node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:37:22.149665 [info ] [Thread-1 (]: 5 of 7 START test not_null_stg_panels_scraped_at ............................... [RUN]
+[0m20:37:22.150831 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2, now test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610)
+[0m20:37:22.150469 [info ] [Thread-2 (]: 6 of 7 START test not_null_stg_panels_title .................................... [RUN]
+[0m20:37:22.151228 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:37:22.151588 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2, now test.solar_dbt.not_null_stg_panels_title.ffbee19e01)
+[0m20:37:22.156422 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:37:22.156763 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:37:22.161401 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:37:22.162612 [debug] [Thread-1 (]: Began executing node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:37:22.164005 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:37:22.164368 [debug] [Thread-2 (]: Began executing node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:37:22.165626 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:37:22.166110 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:37:22.166426 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scraped_at
+from "solar_prices"."silver"."stg_panels"
+where scraped_at is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.166734 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:37:22.167129 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:37:22.167421 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select title
+from "solar_prices"."silver"."stg_panels"
+where title is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.167698 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:37:22.178962 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.012 seconds
+[0m20:37:22.180255 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: ROLLBACK
+[0m20:37:22.180605 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.013 seconds
+[0m20:37:22.181693 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: ROLLBACK
+[0m20:37:22.181978 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: Close
+[0m20:37:22.182925 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: Close
+[0m20:37:22.182637 [info ] [Thread-1 (]: 5 of 7 PASS not_null_stg_panels_scraped_at ..................................... [[32mPASS[0m in 0.03s]
+[0m20:37:22.183665 [debug] [Thread-1 (]: Finished running node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:37:22.184465 [debug] [Thread-1 (]: Began running node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:37:22.184150 [info ] [Thread-2 (]: 6 of 7 PASS not_null_stg_panels_title .......................................... [[32mPASS[0m in 0.03s]
+[0m20:37:22.185383 [debug] [Thread-2 (]: Finished running node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:37:22.184922 [info ] [Thread-1 (]: 7 of 7 START test unique_stg_panels_scrape_id .................................. [RUN]
+[0m20:37:22.185872 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610, now test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035)
+[0m20:37:22.186160 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:37:22.193601 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:37:22.196543 [debug] [Thread-1 (]: Began executing node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:37:22.198079 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:37:22.198994 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:37:22.199310 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    scrape_id as unique_field,
+    count(*) as n_records
+
+from "solar_prices"."silver"."stg_panels"
+where scrape_id is not null
+group by scrape_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:37:22.199598 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:37:22.211772 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.012 seconds
+[0m20:37:22.212946 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: ROLLBACK
+[0m20:37:22.213641 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: Close
+[0m20:37:22.214152 [info ] [Thread-1 (]: 7 of 7 PASS unique_stg_panels_scrape_id ........................................ [[32mPASS[0m in 0.03s]
+[0m20:37:22.214686 [debug] [Thread-1 (]: Finished running node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:37:22.215744 [debug] [MainThread]: On master: COMMIT
+[0m20:37:22.216055 [debug] [MainThread]: Using postgres connection "master"
+[0m20:37:22.216307 [debug] [MainThread]: On master: COMMIT
+[0m20:37:22.216532 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m20:37:22.226710 [debug] [MainThread]: SQL status: COMMIT in 0.010 seconds
+[0m20:37:22.227044 [debug] [MainThread]: On master: Close
+[0m20:37:22.227441 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m20:37:22.227731 [debug] [MainThread]: Connection 'list_solar_prices_silver' was properly closed.
+[0m20:37:22.227956 [debug] [MainThread]: Connection 'test.solar_dbt.not_null_stg_panels_title.ffbee19e01' was properly closed.
+[0m20:37:22.228164 [debug] [MainThread]: Connection 'test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035' was properly closed.
+[0m20:37:22.228425 [info ] [MainThread]: 
+[0m20:37:22.228791 [info ] [MainThread]: Finished running 7 data tests in 0 hours 0 minutes and 0.37 seconds (0.37s).
+[0m20:37:22.230236 [debug] [MainThread]: Command end result
+[0m20:37:22.257401 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m20:37:22.260493 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m20:37:22.263500 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m20:37:22.270499 [debug] [MainThread]: Wrote artifact RunExecutionResult to dbt\solar_dbt\target\run_results.json
+[0m20:37:22.270787 [info ] [MainThread]: 
+[0m20:37:22.271134 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m20:37:22.271451 [info ] [MainThread]: 
+[0m20:37:22.271807 [info ] [MainThread]: Done. PASS=7 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=7
+[0m20:37:22.273021 [debug] [MainThread]: Command `dbt test` succeeded at 20:37:22.272908 after 2.07 seconds
+[0m20:37:22.273356 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD7F76E990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD03410C00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002AD03410940>]}
+[0m20:37:22.273644 [debug] [MainThread]: Flushing usage events
+[0m20:37:22.846598 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:42:14.188264 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E5F309FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E61997ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E61997B10>]}
+
+
+============================== 20:42:14.192440 | e3e18526-3cd5-4f3b-84fe-e91c1b66223f ==============================
+[0m20:42:14.192440 [info ] [MainThread]: Running with dbt=1.12.6
+[0m20:42:14.192919 [debug] [MainThread]: running dbt with arguments {'maximum_seed_size_mib': '1', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'version_check': 'True', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'dbt/solar_dbt', 'use_colors': 'True', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'invocation_command': 'dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt', 'log_path': 'dbt\\solar_dbt\\logs'}
+[0m20:42:14.357522 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E5F827230>]}
+[0m20:42:14.413354 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E5D892CF0>]}
+[0m20:42:14.414984 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m20:42:14.831226 [debug] [MainThread]: checksum: 24647b7f8ead2844ed64c829f8a06bd1e04d07ff8529ee06367c971a4bd1114d, vars: {}, profile: solar_local, target: dev, version: 1.12.6
+[0m20:42:14.979711 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m20:42:14.980121 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E61EBB650>]}
+[0m20:42:16.263201 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E62099A90>]}
+[0m20:42:16.354525 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m20:42:16.357556 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m20:42:16.389509 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m20:42:16.486557 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E625C7310>]}
+[0m20:42:16.486938 [info ] [MainThread]: Found 2 models, 7 data tests, 2 sources, 478 macros
+[0m20:42:16.488983 [info ] [MainThread]: 
+[0m20:42:16.489344 [info ] [MainThread]: Concurrency: 2 threads (target='dev')
+[0m20:42:16.489633 [info ] [MainThread]: 
+[0m20:42:16.490070 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m20:42:16.493136 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices'
+[0m20:42:16.500048 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices'
+[0m20:42:16.597420 [debug] [ThreadPool]: Using postgres connection "list_solar_prices"
+[0m20:42:16.597754 [debug] [ThreadPool]: Using postgres connection "list_solar_prices"
+[0m20:42:16.598023 [debug] [ThreadPool]: On list_solar_prices: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m20:42:16.598302 [debug] [ThreadPool]: On list_solar_prices: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m20:42:16.598577 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m20:42:16.598830 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m20:42:16.622256 [debug] [ThreadPool]: SQL status: SELECT 7 in 0.023 seconds
+[0m20:42:16.622596 [debug] [ThreadPool]: SQL status: SELECT 7 in 0.024 seconds
+[0m20:42:16.623595 [debug] [ThreadPool]: On list_solar_prices: Close
+[0m20:42:16.624482 [debug] [ThreadPool]: On list_solar_prices: Close
+[0m20:42:16.626033 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices_gold'
+[0m20:42:16.630772 [debug] [ThreadPool]: Using postgres connection "list_solar_prices_gold"
+[0m20:42:16.631223 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices_silver'
+[0m20:42:16.631502 [debug] [ThreadPool]: On list_solar_prices_gold: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices_gold"} */
+select
+      'solar_prices' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'gold'
+    union all
+    select
+      'solar_prices' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'gold'
+    union all
+    select
+      'solar_prices' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'gold'
+    union all
+    select distinct
+     'solar_prices' as database,
+     proname as name,
+     ns.nspname as schema,
+     'function' as type
+    from pg_proc
+     join pg_namespace as ns on pronamespace = ns.oid
+    where ns.nspname ilike 'gold'
+  
+[0m20:42:16.632377 [debug] [ThreadPool]: Using postgres connection "list_solar_prices_silver"
+[0m20:42:16.632641 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m20:42:16.632915 [debug] [ThreadPool]: On list_solar_prices_silver: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices_silver"} */
+select
+      'solar_prices' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'silver'
+    union all
+    select distinct
+     'solar_prices' as database,
+     proname as name,
+     ns.nspname as schema,
+     'function' as type
+    from pg_proc
+     join pg_namespace as ns on pronamespace = ns.oid
+    where ns.nspname ilike 'silver'
+  
+[0m20:42:16.633288 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m20:42:16.651135 [debug] [ThreadPool]: SQL status: SELECT 1 in 0.018 seconds
+[0m20:42:16.651472 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.019 seconds
+[0m20:42:16.652450 [debug] [ThreadPool]: On list_solar_prices_silver: ROLLBACK
+[0m20:42:16.653298 [debug] [ThreadPool]: On list_solar_prices_gold: ROLLBACK
+[0m20:42:16.653935 [debug] [ThreadPool]: On list_solar_prices_gold: Close
+[0m20:42:16.654188 [debug] [ThreadPool]: On list_solar_prices_silver: Close
+[0m20:42:16.657318 [debug] [MainThread]: Using postgres connection "master"
+[0m20:42:16.657655 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m20:42:16.657939 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m20:42:16.672010 [debug] [MainThread]: SQL status: SELECT 2 in 0.014 seconds
+[0m20:42:16.673043 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E626E8940>]}
+[0m20:42:16.673389 [debug] [MainThread]: On master: ROLLBACK
+[0m20:42:16.674012 [debug] [MainThread]: On master: COMMIT
+[0m20:42:16.674259 [debug] [MainThread]: Using postgres connection "master"
+[0m20:42:16.674490 [debug] [MainThread]: On master: COMMIT
+[0m20:42:16.675341 [debug] [MainThread]: SQL status: COMMIT in 0.001 seconds
+[0m20:42:16.675609 [debug] [MainThread]: On master: Close
+[0m20:42:16.679877 [debug] [Thread-1 (]: Began running node test.solar_dbt.assert_latest_run_integrity
+[0m20:42:16.680245 [info ] [Thread-1 (]: 1 of 9 START test assert_latest_run_integrity .................................. [RUN]
+[0m20:42:16.680828 [debug] [Thread-1 (]: Acquiring new postgres connection 'test.solar_dbt.assert_latest_run_integrity'
+[0m20:42:16.681201 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.assert_latest_run_integrity
+[0m20:42:16.686278 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.assert_latest_run_integrity"
+[0m20:42:16.687479 [debug] [Thread-1 (]: Began executing node test.solar_dbt.assert_latest_run_integrity
+[0m20:42:16.702599 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.assert_latest_run_integrity"
+[0m20:42:16.703874 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.assert_latest_run_integrity"
+[0m20:42:16.704357 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.assert_latest_run_integrity"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  WITH latest_run AS (
+    SELECT
+        scrape_run_id,
+        products_count
+    FROM "solar_prices"."bronze"."scrape_runs"
+    WHERE status = 'SUCCESS'
+    ORDER BY finished_at DESC NULLS LAST
+    LIMIT 1
+),
+
+run_quality AS (
+    SELECT
+        r.scrape_run_id,
+        r.products_count AS expected_count,
+        COUNT(p.scrape_id) AS actual_count,
+
+        COUNT(p.scrape_id) FILTER (
+            WHERE p.source_url IS NULL
+               OR TRIM(p.source_url) = ''
+        ) AS missing_urls,
+
+        COUNT(p.scrape_id)
+            - COUNT(DISTINCT NULLIF(TRIM(p.source_url), ''))
+            AS non_unique_urls
+
+    FROM latest_run r
+    LEFT JOIN "solar_prices"."bronze"."panel_scrape_raw" p
+        ON r.scrape_run_id = p.scrape_run_id
+    GROUP BY
+        r.scrape_run_id,
+        r.products_count
+)
+
+SELECT *
+FROM run_quality
+WHERE actual_count = 0
+   OR expected_count IS NULL
+   OR actual_count <> expected_count
+   OR missing_urls > 0
+   OR non_unique_urls > 0
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.705299 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m20:42:16.722033 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.017 seconds
+[0m20:42:16.725497 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: ROLLBACK
+[0m20:42:16.726187 [debug] [Thread-1 (]: On test.solar_dbt.assert_latest_run_integrity: Close
+[0m20:42:16.726792 [info ] [Thread-1 (]: 1 of 9 PASS assert_latest_run_integrity ........................................ [[32mPASS[0m in 0.05s]
+[0m20:42:16.727407 [debug] [Thread-1 (]: Finished running node test.solar_dbt.assert_latest_run_integrity
+[0m20:42:16.728010 [debug] [Thread-2 (]: Began running node model.solar_dbt.stg_panels
+[0m20:42:16.728498 [info ] [Thread-2 (]: 2 of 9 START sql view model silver.stg_panels .................................. [RUN]
+[0m20:42:16.729032 [debug] [Thread-2 (]: Acquiring new postgres connection 'model.solar_dbt.stg_panels'
+[0m20:42:16.729345 [debug] [Thread-2 (]: Began compiling node model.solar_dbt.stg_panels
+[0m20:42:16.731147 [debug] [Thread-2 (]: Writing injected SQL for node "model.solar_dbt.stg_panels"
+[0m20:42:16.732308 [debug] [Thread-2 (]: Began executing node model.solar_dbt.stg_panels
+[0m20:42:16.757716 [debug] [Thread-2 (]: Writing runtime sql for node "model.solar_dbt.stg_panels"
+[0m20:42:16.758986 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m20:42:16.759321 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+
+  create view "solar_prices"."silver"."stg_panels__dbt_tmp"
+    
+    
+  as (
+    WITH source_data AS (
+    SELECT
+        p.scrape_id,
+        p.scrape_run_id,
+        p.title,
+        p.price_text,
+        p.power_text,
+        p.efficiency_text,
+        p.bifaciality_text,
+        p.source_url,
+        p.is_available,
+        p.scraped_at
+    FROM "solar_prices"."bronze"."panel_scrape_raw" p
+    INNER JOIN "solar_prices"."bronze"."scrape_runs" r
+        ON p.scrape_run_id = r.scrape_run_id
+    WHERE r.status = 'SUCCESS'
+)
+
+SELECT
+    scrape_id,
+    scrape_run_id,
+    title,
+
+    CASE
+        WHEN TRIM(price_text) ~ '^[0-9]+([.,][0-9]{1,2})?$'
+        THEN REPLACE(TRIM(price_text), ',', '.')::NUMERIC(12,2)
+        ELSE NULL
+    END AS price_pln,
+
+    CASE
+        WHEN TRIM(power_text) ~ '^[0-9]+[[:space:]]*[Ww]?$'
+        THEN SUBSTRING(power_text FROM '[0-9]+')::INTEGER
+        ELSE NULL
+    END AS power_w,
+
+    NULLIF(TRIM(source_url), '') AS source_url,
+    is_available,
+    scraped_at
+
+FROM source_data
+  );
+[0m20:42:16.759626 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m20:42:16.780449 [debug] [Thread-2 (]: SQL status: CREATE VIEW in 0.021 seconds
+[0m20:42:16.785096 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m20:42:16.785417 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+alter table "solar_prices"."silver"."stg_panels" rename to "stg_panels__dbt_backup"
+[0m20:42:16.786603 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m20:42:16.788228 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m20:42:16.788517 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+alter table "solar_prices"."silver"."stg_panels__dbt_tmp" rename to "stg_panels"
+[0m20:42:16.789366 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m20:42:16.803037 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: COMMIT
+[0m20:42:16.803354 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m20:42:16.803628 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: COMMIT
+[0m20:42:16.805447 [debug] [Thread-2 (]: SQL status: COMMIT in 0.002 seconds
+[0m20:42:16.809484 [debug] [Thread-2 (]: Applying DROP to: "solar_prices"."silver"."stg_panels__dbt_backup"
+[0m20:42:16.812759 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m20:42:16.813060 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+drop view if exists "solar_prices"."silver"."stg_panels__dbt_backup" cascade
+[0m20:42:16.817952 [debug] [Thread-2 (]: SQL status: DROP VIEW in 0.005 seconds
+[0m20:42:16.819091 [debug] [Thread-2 (]: On model.solar_dbt.stg_panels: Close
+[0m20:42:16.821365 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E6266E150>]}
+[0m20:42:16.821921 [info ] [Thread-2 (]: 2 of 9 OK created sql view model silver.stg_panels ............................. [[32mCREATE VIEW[0m in 0.09s]
+[0m20:42:16.822548 [debug] [Thread-2 (]: Finished running node model.solar_dbt.stg_panels
+[0m20:42:16.823304 [debug] [Thread-1 (]: Began running node test.solar_dbt.assert_valid_price_and_power
+[0m20:42:16.823900 [debug] [Thread-2 (]: Began running node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:42:16.823629 [info ] [Thread-1 (]: 3 of 9 START test assert_valid_price_and_power ................................. [RUN]
+[0m20:42:16.824333 [info ] [Thread-2 (]: 4 of 9 START test not_null_stg_panels_scrape_id ................................ [RUN]
+[0m20:42:16.824793 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.assert_latest_run_integrity, now test.solar_dbt.assert_valid_price_and_power)
+[0m20:42:16.825197 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.solar_dbt.stg_panels, now test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2)
+[0m20:42:16.825533 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.assert_valid_price_and_power
+[0m20:42:16.825833 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:42:16.827267 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.assert_valid_price_and_power"
+[0m20:42:16.836830 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:42:16.837523 [debug] [Thread-1 (]: Began executing node test.solar_dbt.assert_valid_price_and_power
+[0m20:42:16.837841 [debug] [Thread-2 (]: Began executing node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:42:16.839113 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.assert_valid_price_and_power"
+[0m20:42:16.840272 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:42:16.840922 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.assert_valid_price_and_power"
+[0m20:42:16.841246 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"
+[0m20:42:16.841544 [debug] [Thread-1 (]: On test.solar_dbt.assert_valid_price_and_power: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.assert_valid_price_and_power"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  SELECT
+    scrape_id,
+    scrape_run_id,
+    title,
+    price_pln,
+    power_w
+FROM "solar_prices"."silver"."stg_panels"
+WHERE price_pln IS NULL
+   OR price_pln <= 0
+   OR power_w IS NULL
+   OR power_w <= 0
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.841875 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scrape_id
+from "solar_prices"."silver"."stg_panels"
+where scrape_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.842225 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:42:16.842517 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:42:16.855399 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.013 seconds
+[0m20:42:16.856617 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: ROLLBACK
+[0m20:42:16.857244 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2: Close
+[0m20:42:16.857820 [info ] [Thread-2 (]: 4 of 9 PASS not_null_stg_panels_scrape_id ...................................... [[32mPASS[0m in 0.03s]
+[0m20:42:16.858421 [debug] [Thread-2 (]: Finished running node test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2
+[0m20:42:16.858808 [debug] [Thread-2 (]: Began running node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:42:16.859193 [info ] [Thread-2 (]: 5 of 9 START test not_null_stg_panels_scrape_run_id ............................ [RUN]
+[0m20:42:16.859727 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scrape_id.0c68d760c2, now test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2)
+[0m20:42:16.860051 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:42:16.864760 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:42:16.865370 [debug] [Thread-2 (]: Began executing node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:42:16.866589 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:42:16.866924 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.025 seconds
+[0m20:42:16.868162 [debug] [Thread-1 (]: On test.solar_dbt.assert_valid_price_and_power: ROLLBACK
+[0m20:42:16.868735 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"
+[0m20:42:16.869045 [debug] [Thread-1 (]: On test.solar_dbt.assert_valid_price_and_power: Close
+[0m20:42:16.869340 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scrape_run_id
+from "solar_prices"."silver"."stg_panels"
+where scrape_run_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.869697 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:42:16.870166 [info ] [Thread-1 (]: 3 of 9 PASS assert_valid_price_and_power ....................................... [[32mPASS[0m in 0.05s]
+[0m20:42:16.870784 [debug] [Thread-1 (]: Finished running node test.solar_dbt.assert_valid_price_and_power
+[0m20:42:16.871142 [debug] [Thread-1 (]: Began running node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:42:16.871595 [info ] [Thread-1 (]: 6 of 9 START test not_null_stg_panels_scraped_at ............................... [RUN]
+[0m20:42:16.872099 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.assert_valid_price_and_power, now test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610)
+[0m20:42:16.872420 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:42:16.877900 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:42:16.878562 [debug] [Thread-1 (]: Began executing node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:42:16.879945 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:42:16.880695 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"
+[0m20:42:16.881013 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select scraped_at
+from "solar_prices"."silver"."stg_panels"
+where scraped_at is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.881302 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:42:16.882486 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.013 seconds
+[0m20:42:16.883709 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: ROLLBACK
+[0m20:42:16.884395 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2: Close
+[0m20:42:16.884991 [info ] [Thread-2 (]: 5 of 9 PASS not_null_stg_panels_scrape_run_id .................................. [[32mPASS[0m in 0.03s]
+[0m20:42:16.885622 [debug] [Thread-2 (]: Finished running node test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2
+[0m20:42:16.885960 [debug] [Thread-2 (]: Began running node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:42:16.886332 [info ] [Thread-2 (]: 7 of 9 START test not_null_stg_panels_title .................................... [RUN]
+[0m20:42:16.886767 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scrape_run_id.82c696c7c2, now test.solar_dbt.not_null_stg_panels_title.ffbee19e01)
+[0m20:42:16.887071 [debug] [Thread-2 (]: Began compiling node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:42:16.892449 [debug] [Thread-2 (]: Writing injected SQL for node "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:42:16.893151 [debug] [Thread-2 (]: Began executing node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:42:16.894447 [debug] [Thread-2 (]: Writing runtime sql for node "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:42:16.894811 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.013 seconds
+[0m20:42:16.895999 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: ROLLBACK
+[0m20:42:16.896567 [debug] [Thread-2 (]: Using postgres connection "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"
+[0m20:42:16.896894 [debug] [Thread-1 (]: On test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610: Close
+[0m20:42:16.897193 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.not_null_stg_panels_title.ffbee19e01"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select title
+from "solar_prices"."silver"."stg_panels"
+where title is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.897557 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:42:16.898063 [info ] [Thread-1 (]: 6 of 9 PASS not_null_stg_panels_scraped_at ..................................... [[32mPASS[0m in 0.03s]
+[0m20:42:16.898668 [debug] [Thread-1 (]: Finished running node test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610
+[0m20:42:16.899025 [debug] [Thread-1 (]: Began running node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:42:16.899390 [info ] [Thread-1 (]: 8 of 9 START test unique_stg_panels_scrape_id .................................. [RUN]
+[0m20:42:16.899858 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_scraped_at.2c111e4610, now test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035)
+[0m20:42:16.900155 [debug] [Thread-1 (]: Began compiling node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:42:16.907407 [debug] [Thread-1 (]: Writing injected SQL for node "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:42:16.908063 [debug] [Thread-1 (]: Began executing node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:42:16.909331 [debug] [Thread-1 (]: Writing runtime sql for node "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:42:16.909953 [debug] [Thread-1 (]: Using postgres connection "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"
+[0m20:42:16.910255 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    scrape_id as unique_field,
+    count(*) as n_records
+
+from "solar_prices"."silver"."stg_panels"
+where scrape_id is not null
+group by scrape_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m20:42:16.910535 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m20:42:16.912044 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.014 seconds
+[0m20:42:16.913303 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: ROLLBACK
+[0m20:42:16.914125 [debug] [Thread-2 (]: On test.solar_dbt.not_null_stg_panels_title.ffbee19e01: Close
+[0m20:42:16.914717 [info ] [Thread-2 (]: 7 of 9 PASS not_null_stg_panels_title .......................................... [[32mPASS[0m in 0.03s]
+[0m20:42:16.915356 [debug] [Thread-2 (]: Finished running node test.solar_dbt.not_null_stg_panels_title.ffbee19e01
+[0m20:42:16.922896 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.012 seconds
+[0m20:42:16.924091 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: ROLLBACK
+[0m20:42:16.924741 [debug] [Thread-1 (]: On test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035: Close
+[0m20:42:16.925292 [info ] [Thread-1 (]: 8 of 9 PASS unique_stg_panels_scrape_id ........................................ [[32mPASS[0m in 0.03s]
+[0m20:42:16.925879 [debug] [Thread-1 (]: Finished running node test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035
+[0m20:42:16.926419 [debug] [Thread-2 (]: Began running node model.solar_dbt.current_panel_ranking
+[0m20:42:16.926842 [info ] [Thread-2 (]: 9 of 9 START sql view model gold.current_panel_ranking ......................... [RUN]
+[0m20:42:16.927334 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.solar_dbt.not_null_stg_panels_title.ffbee19e01, now model.solar_dbt.current_panel_ranking)
+[0m20:42:16.927673 [debug] [Thread-2 (]: Began compiling node model.solar_dbt.current_panel_ranking
+[0m20:42:16.929457 [debug] [Thread-2 (]: Writing injected SQL for node "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.930877 [debug] [Thread-2 (]: Began executing node model.solar_dbt.current_panel_ranking
+[0m20:42:16.932994 [debug] [Thread-2 (]: Writing runtime sql for node "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.935008 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.935420 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.current_panel_ranking"} */
+
+  create view "solar_prices"."gold"."current_panel_ranking__dbt_tmp"
+    
+    
+  as (
+    WITH latest_run AS (
+    SELECT scrape_run_id
+    FROM "solar_prices"."bronze"."scrape_runs"
+    WHERE status = 'SUCCESS'
+    ORDER BY finished_at DESC NULLS LAST
+    LIMIT 1
+),
+
+latest_panels AS (
+    SELECT p.*
+    FROM "solar_prices"."silver"."stg_panels" p
+    INNER JOIN latest_run r
+        ON p.scrape_run_id = r.scrape_run_id
+    WHERE p.price_pln > 0
+      AND p.power_w > 0
+      AND p.source_url IS NOT NULL
+),
+
+deduplicated AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY source_url
+            ORDER BY scraped_at DESC, scrape_id DESC
+        ) AS product_row
+    FROM latest_panels
+),
+
+metrics AS (
+    SELECT
+        scrape_id,
+        scrape_run_id,
+        title,
+        source_url,
+        price_pln,
+        power_w,
+        is_available,
+        scraped_at,
+
+        ROUND(
+            price_pln / power_w, 4
+        ) AS pln_per_watt,
+
+        ROUND(
+            power_w / price_pln, 4
+        ) AS watt_per_pln,
+
+        CASE
+            WHEN price_pln < 200 THEN '<200 zł'
+            WHEN price_pln < 300 THEN '200-300 zł'
+            WHEN price_pln < 400 THEN '300-400 zł'
+            ELSE '400+ zł'
+        END AS price_category
+
+    FROM deduplicated
+    WHERE product_row = 1
+)
+
+SELECT
+    ROW_NUMBER() OVER (
+        ORDER BY
+            CASE WHEN is_available THEN 0 ELSE 1 END,
+            pln_per_watt ASC,
+            title ASC
+    ) AS overall_rank,
+
+    *
+FROM metrics
+  );
+[0m20:42:16.935757 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m20:42:16.949525 [debug] [Thread-2 (]: SQL status: CREATE VIEW in 0.014 seconds
+[0m20:42:16.951320 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.951615 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.current_panel_ranking"} */
+alter table "solar_prices"."gold"."current_panel_ranking__dbt_tmp" rename to "current_panel_ranking"
+[0m20:42:16.952551 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m20:42:16.953661 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: COMMIT
+[0m20:42:16.953967 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.954238 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: COMMIT
+[0m20:42:16.955986 [debug] [Thread-2 (]: SQL status: COMMIT in 0.001 seconds
+[0m20:42:16.957157 [debug] [Thread-2 (]: Applying DROP to: "solar_prices"."gold"."current_panel_ranking__dbt_backup"
+[0m20:42:16.958057 [debug] [Thread-2 (]: Using postgres connection "model.solar_dbt.current_panel_ranking"
+[0m20:42:16.958344 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.current_panel_ranking"} */
+drop view if exists "solar_prices"."gold"."current_panel_ranking__dbt_backup" cascade
+[0m20:42:16.959349 [debug] [Thread-2 (]: SQL status: DROP VIEW in 0.001 seconds
+[0m20:42:16.960380 [debug] [Thread-2 (]: On model.solar_dbt.current_panel_ranking: Close
+[0m20:42:16.960933 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'e3e18526-3cd5-4f3b-84fe-e91c1b66223f', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E6265A990>]}
+[0m20:42:16.961620 [info ] [Thread-2 (]: 9 of 9 OK created sql view model gold.current_panel_ranking .................... [[32mCREATE VIEW[0m in 0.03s]
+[0m20:42:16.962258 [debug] [Thread-2 (]: Finished running node model.solar_dbt.current_panel_ranking
+[0m20:42:16.963342 [debug] [MainThread]: On master: COMMIT
+[0m20:42:16.963626 [debug] [MainThread]: Using postgres connection "master"
+[0m20:42:16.963857 [debug] [MainThread]: On master: COMMIT
+[0m20:42:16.964074 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m20:42:16.974762 [debug] [MainThread]: SQL status: COMMIT in 0.011 seconds
+[0m20:42:16.975086 [debug] [MainThread]: On master: Close
+[0m20:42:16.975509 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m20:42:16.975775 [debug] [MainThread]: Connection 'list_solar_prices' was properly closed.
+[0m20:42:16.975986 [debug] [MainThread]: Connection 'list_solar_prices' was properly closed.
+[0m20:42:16.976200 [debug] [MainThread]: Connection 'list_solar_prices_gold' was properly closed.
+[0m20:42:16.976400 [debug] [MainThread]: Connection 'list_solar_prices_silver' was properly closed.
+[0m20:42:16.976600 [debug] [MainThread]: Connection 'test.solar_dbt.unique_stg_panels_scrape_id.f443ecb035' was properly closed.
+[0m20:42:16.976800 [debug] [MainThread]: Connection 'model.solar_dbt.current_panel_ranking' was properly closed.
+[0m20:42:16.977077 [info ] [MainThread]: 
+[0m20:42:16.977402 [info ] [MainThread]: Finished running 7 data tests, 2 view models in 0 hours 0 minutes and 0.49 seconds (0.49s).
+[0m20:42:16.978971 [debug] [MainThread]: Command end result
+[0m20:42:17.004191 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m20:42:17.007260 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m20:42:17.010175 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m20:42:17.016071 [debug] [MainThread]: Wrote artifact RunExecutionResult to dbt\solar_dbt\target\run_results.json
+[0m20:42:17.016340 [info ] [MainThread]: 
+[0m20:42:17.016683 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m20:42:17.016979 [info ] [MainThread]: 
+[0m20:42:17.017333 [info ] [MainThread]: Done. PASS=9 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=9
+[0m20:42:17.018415 [debug] [MainThread]: Command `dbt build` succeeded at 20:42:17.018318 after 2.95 seconds
+[0m20:42:17.018698 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E62AE6D50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E62A0BAD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020E5D9FD2D0>]}
+[0m20:42:17.018980 [debug] [MainThread]: Flushing usage events
+[0m20:42:17.565799 [debug] [MainThread]: An error was encountered while trying to flush usage events

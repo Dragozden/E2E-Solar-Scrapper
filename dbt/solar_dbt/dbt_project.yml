@@ -11,3 +11,7 @@ models:
   solar_dbt:
     staging:
       +materialized: view
+
+    marts:
+      +materialized: view
+      +schema: gold

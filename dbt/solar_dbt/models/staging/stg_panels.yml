@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_panels
+    description: >
+      Historical panel observations from successfully
+      completed scraping runs.
+
+    columns:
+      - name: scrape_id
+        description: Unique observation identifier
+        data_tests:
+          - unique
+          - not_null
+
+      - name: scrape_run_id
+        description: Identifier of the scraping execution
+        data_tests:
+          - not_null
+
+      - name: title
+        description: Original product title
+        data_tests:
+          - not_null
+
+      - name: scraped_at
+        data_tests:
+          - not_null

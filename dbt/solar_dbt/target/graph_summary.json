@@ -1,0 +1,1 @@
+{"_invocation_id": "59869e1a-0cb6-44a9-b019-ae0888c55de3", "linked": {"0": {"name": "source.solar_dbt.solar_bronze.panel_scrape_raw", "type": "source", "succ": [2]}, "1": {"name": "source.solar_dbt.solar_bronze.scrape_runs", "type": "source", "succ": [2]}, "2": {"name": "model.solar_dbt.stg_panels", "type": "model"}}}

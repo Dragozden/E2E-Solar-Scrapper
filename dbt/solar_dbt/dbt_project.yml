@@ -1,0 +1,13 @@
+
+name: solar_dbt
+version: "1.0.0"
+config-version: 2
+
+profile: solar_local
+
+model-paths: ["models"]
+
+models:
+  solar_dbt:
+    staging:
+      +materialized: view

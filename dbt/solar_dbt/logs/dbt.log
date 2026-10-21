@@ -1,0 +1,350 @@
+[0m19:15:29.342568 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C7F4D9FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C01B5BED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C01B5BB10>]}
+
+
+============================== 19:15:29.346698 | 745b5975-4f9c-4211-b284-b84c07d089e2 ==============================
+[0m19:15:29.346698 [info ] [MainThread]: Running with dbt=1.12.6
+[0m19:15:29.347181 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'maximum_seed_size_mib': '1', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'dbt/solar_dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt debug --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'dbt\\solar_dbt\\logs'}
+[0m19:15:29.593393 [info ] [MainThread]: dbt version: 1.12.6
+[0m19:15:29.593781 [info ] [MainThread]: python version: 3.13.15
+[0m19:15:29.594078 [info ] [MainThread]: python path: C:\Users\Yatta\AppData\Local\uv\cache\archive-v0\irRPCLg60olnpuvh\Scripts\python.exe
+[0m19:15:29.594360 [info ] [MainThread]: os info: Windows-11-10.0.26300-SP0
+[0m19:15:29.656575 [info ] [MainThread]: Using profiles dir at dbt/solar_dbt
+[0m19:15:29.656947 [info ] [MainThread]: Using profiles.yml file at dbt/solar_dbt\profiles.yml
+[0m19:15:29.657232 [info ] [MainThread]: Using dbt_project.yml file at dbt\solar_dbt\dbt_project.yml
+[0m19:15:29.658386 [info ] [MainThread]: adapter type: postgres
+[0m19:15:29.658681 [info ] [MainThread]: adapter version: 1.11.0
+[0m19:15:29.745965 [info ] [MainThread]: Configuration:
+[0m19:15:29.746353 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m19:15:29.746664 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m19:15:29.746959 [info ] [MainThread]: Required dependencies:
+[0m19:15:29.747262 [debug] [MainThread]: Executing "git --help"
+[0m19:15:29.781253 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--config-env=<name>=<envvar>] <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m19:15:29.781645 [debug] [MainThread]: STDERR: "b''"
+[0m19:15:29.781958 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m19:15:29.782295 [info ] [MainThread]: Connection:
+[0m19:15:29.782615 [info ] [MainThread]:   host: localhost
+[0m19:15:29.782896 [info ] [MainThread]:   port: 5432
+[0m19:15:29.783176 [info ] [MainThread]:   user: postgres
+[0m19:15:29.783444 [info ] [MainThread]:   database: solar_prices
+[0m19:15:29.783713 [info ] [MainThread]:   schema: silver
+[0m19:15:29.783982 [info ] [MainThread]:   connect_timeout: 10
+[0m19:15:29.784249 [info ] [MainThread]:   role: None
+[0m19:15:29.784515 [info ] [MainThread]:   search_path: None
+[0m19:15:29.784783 [info ] [MainThread]:   keepalives_idle: 0
+[0m19:15:29.785050 [info ] [MainThread]:   sslmode: None
+[0m19:15:29.785332 [info ] [MainThread]:   sslcert: None
+[0m19:15:29.785598 [info ] [MainThread]:   sslkey: None
+[0m19:15:29.785864 [info ] [MainThread]:   sslrootcert: None
+[0m19:15:29.786141 [info ] [MainThread]:   application_name: dbt
+[0m19:15:29.786410 [info ] [MainThread]:   autocommit: False
+[0m19:15:29.786674 [info ] [MainThread]:   retries: 1
+[0m19:15:29.787140 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m19:15:30.243552 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m19:15:32.126210 [debug] [MainThread]: Using postgres connection "debug"
+[0m19:15:32.126514 [debug] [MainThread]: On debug: select 1 as id
+[0m19:15:32.126745 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:15:36.190032 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+[0m19:15:40.231922 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m19:15:40.232249 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m19:15:40.232517 [debug] [MainThread]: On debug: No close available on handle
+[0m19:15:40.232766 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m19:15:40.233090 [info ] [MainThread]: [31m1 check failed:[0m
+[0m19:15:40.233390 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+  	Is the server running on that host and accepting TCP/IP connections?
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m19:15:40.234317 [debug] [MainThread]: Command `dbt debug` failed at 19:15:40.234221 after 11.04 seconds
+[0m19:15:40.234578 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m19:15:40.234846 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C01C7B6F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C01E7A0F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000025C01DEACF0>]}
+[0m19:15:40.235198 [debug] [MainThread]: Flushing usage events
+[0m19:15:40.810979 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:16:19.116341 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B669C09FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B66C23BED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B66C23BB10>]}
+
+
+============================== 19:16:19.120394 | ce91dc7b-679f-4f0a-b6dc-5db515207fb6 ==============================
+[0m19:16:19.120394 [info ] [MainThread]: Running with dbt=1.12.6
+[0m19:16:19.120864 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'dbt/solar_dbt', 'invocation_command': 'dbt debug --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'dbt\\solar_dbt\\logs'}
+[0m19:16:19.144455 [info ] [MainThread]: dbt version: 1.12.6
+[0m19:16:19.144833 [info ] [MainThread]: python version: 3.13.15
+[0m19:16:19.145129 [info ] [MainThread]: python path: C:\Users\Yatta\AppData\Local\uv\cache\archive-v0\irRPCLg60olnpuvh\Scripts\python.exe
+[0m19:16:19.145414 [info ] [MainThread]: os info: Windows-11-10.0.26300-SP0
+[0m19:16:19.201292 [info ] [MainThread]: Using profiles dir at dbt/solar_dbt
+[0m19:16:19.201668 [info ] [MainThread]: Using profiles.yml file at dbt/solar_dbt\profiles.yml
+[0m19:16:19.201957 [info ] [MainThread]: Using dbt_project.yml file at dbt\solar_dbt\dbt_project.yml
+[0m19:16:19.203166 [info ] [MainThread]: adapter type: postgres
+[0m19:16:19.203477 [info ] [MainThread]: adapter version: 1.11.0
+[0m19:16:19.291296 [info ] [MainThread]: Configuration:
+[0m19:16:19.291683 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m19:16:19.291974 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m19:16:19.292259 [info ] [MainThread]: Required dependencies:
+[0m19:16:19.292554 [debug] [MainThread]: Executing "git --help"
+[0m19:16:19.325936 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--config-env=<name>=<envvar>] <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m19:16:19.326326 [debug] [MainThread]: STDERR: "b''"
+[0m19:16:19.326635 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m19:16:19.326946 [info ] [MainThread]: Connection:
+[0m19:16:19.327270 [info ] [MainThread]:   host: localhost
+[0m19:16:19.327567 [info ] [MainThread]:   port: 5432
+[0m19:16:19.327844 [info ] [MainThread]:   user: postgres
+[0m19:16:19.328116 [info ] [MainThread]:   database: solar_prices
+[0m19:16:19.328385 [info ] [MainThread]:   schema: silver
+[0m19:16:19.328653 [info ] [MainThread]:   connect_timeout: 10
+[0m19:16:19.328929 [info ] [MainThread]:   role: None
+[0m19:16:19.329200 [info ] [MainThread]:   search_path: None
+[0m19:16:19.329475 [info ] [MainThread]:   keepalives_idle: 0
+[0m19:16:19.329745 [info ] [MainThread]:   sslmode: None
+[0m19:16:19.330012 [info ] [MainThread]:   sslcert: None
+[0m19:16:19.330281 [info ] [MainThread]:   sslkey: None
+[0m19:16:19.330547 [info ] [MainThread]:   sslrootcert: None
+[0m19:16:19.330812 [info ] [MainThread]:   application_name: dbt
+[0m19:16:19.331087 [info ] [MainThread]:   autocommit: False
+[0m19:16:19.331358 [info ] [MainThread]:   retries: 1
+[0m19:16:19.331808 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m19:16:19.733654 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m19:16:19.824109 [debug] [MainThread]: Using postgres connection "debug"
+[0m19:16:19.824410 [debug] [MainThread]: On debug: select 1 as id
+[0m19:16:19.824642 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:16:19.861683 [debug] [MainThread]: SQL status: SELECT 1 in 0.037 seconds
+[0m19:16:19.862465 [debug] [MainThread]: On debug: Close
+[0m19:16:19.862766 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m19:16:19.863143 [info ] [MainThread]: [32mAll checks passed![0m
+[0m19:16:19.864081 [debug] [MainThread]: Command `dbt debug` succeeded at 19:16:19.863973 after 0.87 seconds
+[0m19:16:19.864352 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m19:16:19.864653 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B66C34E9E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B66C5FA330>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001B66C54B240>]}
+[0m19:16:19.864969 [debug] [MainThread]: Flushing usage events
+[0m19:16:20.413250 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:20:15.976792 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B1E8E9FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B20F77ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B20F77B10>]}
+
+
+============================== 19:20:15.980905 | 59869e1a-0cb6-44a9-b019-ae0888c55de3 ==============================
+[0m19:20:15.980905 [info ] [MainThread]: Running with dbt=1.12.6
+[0m19:20:15.981383 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'maximum_seed_size_mib': '1', 'printer_width': '80', 'write_json': 'True', 'empty': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'dbt/solar_dbt', 'invocation_command': 'dbt run --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'dbt\\solar_dbt\\logs'}
+[0m19:20:16.165373 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B1EE07230>]}
+[0m19:20:16.220602 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B1CE72CF0>]}
+[0m19:20:16.222149 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m19:20:16.652781 [debug] [MainThread]: checksum: 24647b7f8ead2844ed64c829f8a06bd1e04d07ff8529ee06367c971a4bd1114d, vars: {}, profile: solar_local, target: dev, version: 1.12.6
+[0m19:20:16.653651 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m19:20:16.653990 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B20EFF850>]}
+[0m19:20:18.311884 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B1E6B8500>]}
+[0m19:20:18.379905 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m19:20:18.392392 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m19:20:18.640566 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m19:20:18.723136 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B2187B930>]}
+[0m19:20:18.723513 [info ] [MainThread]: Found 1 model, 2 sources, 477 macros
+[0m19:20:18.723835 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B215BF790>]}
+[0m19:20:18.725229 [info ] [MainThread]: 
+[0m19:20:18.725561 [info ] [MainThread]: Concurrency: 2 threads (target='dev')
+[0m19:20:18.725838 [info ] [MainThread]: 
+[0m19:20:18.726261 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m19:20:18.727029 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices'
+[0m19:20:18.827628 [debug] [ThreadPool]: Using postgres connection "list_solar_prices"
+[0m19:20:18.827931 [debug] [ThreadPool]: On list_solar_prices: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m19:20:18.828203 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m19:20:18.863815 [debug] [ThreadPool]: SQL status: SELECT 7 in 0.036 seconds
+[0m19:20:18.864891 [debug] [ThreadPool]: On list_solar_prices: Close
+[0m19:20:18.866042 [debug] [ThreadPool]: Acquiring new postgres connection 'list_solar_prices_silver'
+[0m19:20:18.869877 [debug] [ThreadPool]: Using postgres connection "list_solar_prices_silver"
+[0m19:20:18.870152 [debug] [ThreadPool]: On list_solar_prices_silver: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "list_solar_prices_silver"} */
+select
+      'solar_prices' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'silver'
+    union all
+    select
+      'solar_prices' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'silver'
+    union all
+    select distinct
+     'solar_prices' as database,
+     proname as name,
+     ns.nspname as schema,
+     'function' as type
+    from pg_proc
+     join pg_namespace as ns on pronamespace = ns.oid
+    where ns.nspname ilike 'silver'
+  
+[0m19:20:18.870403 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m19:20:18.894397 [debug] [ThreadPool]: SQL status: SELECT 0 in 0.024 seconds
+[0m19:20:18.895420 [debug] [ThreadPool]: On list_solar_prices_silver: ROLLBACK
+[0m19:20:18.896191 [debug] [ThreadPool]: On list_solar_prices_silver: Close
+[0m19:20:18.898961 [debug] [MainThread]: Using postgres connection "master"
+[0m19:20:18.899314 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m19:20:18.899615 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:20:18.917689 [debug] [MainThread]: SQL status: SELECT 0 in 0.018 seconds
+[0m19:20:18.918687 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B21B64E90>]}
+[0m19:20:18.919033 [debug] [MainThread]: On master: ROLLBACK
+[0m19:20:18.919715 [debug] [MainThread]: On master: COMMIT
+[0m19:20:18.919971 [debug] [MainThread]: Using postgres connection "master"
+[0m19:20:18.920199 [debug] [MainThread]: On master: COMMIT
+[0m19:20:18.921012 [debug] [MainThread]: SQL status: COMMIT in 0.001 seconds
+[0m19:20:18.921278 [debug] [MainThread]: On master: Close
+[0m19:20:18.941651 [debug] [Thread-1 (]: Began running node model.solar_dbt.stg_panels
+[0m19:20:18.942154 [info ] [Thread-1 (]: 1 of 1 START sql view model silver.stg_panels .................................. [RUN]
+[0m19:20:18.942833 [debug] [Thread-1 (]: Acquiring new postgres connection 'model.solar_dbt.stg_panels'
+[0m19:20:18.943218 [debug] [Thread-1 (]: Began compiling node model.solar_dbt.stg_panels
+[0m19:20:18.949023 [debug] [Thread-1 (]: Writing injected SQL for node "model.solar_dbt.stg_panels"
+[0m19:20:18.958088 [debug] [Thread-1 (]: Began executing node model.solar_dbt.stg_panels
+[0m19:20:18.987356 [debug] [Thread-1 (]: Writing runtime sql for node "model.solar_dbt.stg_panels"
+[0m19:20:18.989714 [debug] [Thread-1 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m19:20:18.990065 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+
+  create view "solar_prices"."silver"."stg_panels__dbt_tmp"
+    
+    
+  as (
+    WITH source_data AS (
+    SELECT
+        p.scrape_id,
+        p.scrape_run_id,
+        p.title,
+        p.price_text,
+        p.power_text,
+        p.efficiency_text,
+        p.bifaciality_text,
+        p.source_url,
+        p.is_available,
+        p.scraped_at
+    FROM "solar_prices"."bronze"."panel_scrape_raw" p
+    INNER JOIN "solar_prices"."bronze"."scrape_runs" r
+        ON p.scrape_run_id = r.scrape_run_id
+    WHERE r.status = 'SUCCESS'
+)
+
+SELECT
+    scrape_id,
+    scrape_run_id,
+    title,
+
+    CASE
+        WHEN TRIM(price_text) ~ '^[0-9]+([.,][0-9]{1,2})?$'
+        THEN REPLACE(TRIM(price_text), ',', '.')::NUMERIC(12,2)
+        ELSE NULL
+    END AS price_pln,
+
+    CASE
+        WHEN TRIM(power_text) ~ '^[0-9]+[[:space:]]*[Ww]?$'
+        THEN SUBSTRING(power_text FROM '[0-9]+')::INTEGER
+        ELSE NULL
+    END AS power_w,
+
+    NULLIF(TRIM(source_url), '') AS source_url,
+    is_available,
+    scraped_at
+
+FROM source_data
+  );
+[0m19:20:18.990424 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m19:20:19.012808 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 0.022 seconds
+[0m19:20:19.017373 [debug] [Thread-1 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m19:20:19.017741 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+alter table "solar_prices"."silver"."stg_panels__dbt_tmp" rename to "stg_panels"
+[0m19:20:19.018751 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m19:20:19.031359 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: COMMIT
+[0m19:20:19.031722 [debug] [Thread-1 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m19:20:19.032010 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: COMMIT
+[0m19:20:19.034332 [debug] [Thread-1 (]: SQL status: COMMIT in 0.002 seconds
+[0m19:20:19.038768 [debug] [Thread-1 (]: Applying DROP to: "solar_prices"."silver"."stg_panels__dbt_backup"
+[0m19:20:19.042655 [debug] [Thread-1 (]: Using postgres connection "model.solar_dbt.stg_panels"
+[0m19:20:19.042985 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "solar_local", "target_name": "dev", "node_id": "model.solar_dbt.stg_panels"} */
+drop view if exists "solar_prices"."silver"."stg_panels__dbt_backup" cascade
+[0m19:20:19.044536 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.001 seconds
+[0m19:20:19.046427 [debug] [Thread-1 (]: On model.solar_dbt.stg_panels: Close
+[0m19:20:19.054486 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '59869e1a-0cb6-44a9-b019-ae0888c55de3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B21B7D020>]}
+[0m19:20:19.055076 [info ] [Thread-1 (]: 1 of 1 OK created sql view model silver.stg_panels ............................. [[32mCREATE VIEW[0m in 0.10s]
+[0m19:20:19.055692 [debug] [Thread-1 (]: Finished running node model.solar_dbt.stg_panels
+[0m19:20:19.056726 [debug] [MainThread]: On master: COMMIT
+[0m19:20:19.056999 [debug] [MainThread]: Using postgres connection "master"
+[0m19:20:19.057232 [debug] [MainThread]: On master: COMMIT
+[0m19:20:19.057453 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m19:20:19.067344 [debug] [MainThread]: SQL status: COMMIT in 0.010 seconds
+[0m19:20:19.067672 [debug] [MainThread]: On master: Close
+[0m19:20:19.068074 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m19:20:19.068303 [debug] [MainThread]: Connection 'list_solar_prices' was properly closed.
+[0m19:20:19.068517 [debug] [MainThread]: Connection 'list_solar_prices_silver' was properly closed.
+[0m19:20:19.068727 [debug] [MainThread]: Connection 'model.solar_dbt.stg_panels' was properly closed.
+[0m19:20:19.068965 [info ] [MainThread]: 
+[0m19:20:19.069318 [info ] [MainThread]: Finished running 1 view model in 0 hours 0 minutes and 0.34 seconds (0.34s).
+[0m19:20:19.069970 [debug] [MainThread]: Command end result
+[0m19:20:19.093303 [debug] [MainThread]: Wrote artifact WritableManifest to dbt\solar_dbt\target\manifest.json
+[0m19:20:19.096306 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt\solar_dbt\target\semantic_manifest.json
+[0m19:20:19.099337 [debug] [MainThread]: Wrote artifact OsiDocument to dbt\solar_dbt\target\osi_document.json
+[0m19:20:19.104999 [debug] [MainThread]: Wrote artifact RunExecutionResult to dbt\solar_dbt\target\run_results.json
+[0m19:20:19.105242 [info ] [MainThread]: 
+[0m19:20:19.105595 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m19:20:19.105900 [info ] [MainThread]: 
+[0m19:20:19.106214 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
+[0m19:20:19.107225 [debug] [MainThread]: Command `dbt run` succeeded at 19:20:19.107132 after 3.25 seconds
+[0m19:20:19.107507 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B219E18B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B218E9F40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019B217CD1D0>]}
+[0m19:20:19.107788 [debug] [MainThread]: Flushing usage events
+[0m19:20:19.693096 [debug] [MainThread]: An error was encountered while trying to flush usage events

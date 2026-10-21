@@ -1,0 +1,12 @@
+
+version: 2
+
+sources:
+  - name: solar_bronze
+    description: Raw solar panel scraping data
+    schema: bronze
+    tables:
+      - name: panel_scrape_raw
+        description: Raw panel observations
+      - name: scrape_runs
+        description: Scraper execution metadata

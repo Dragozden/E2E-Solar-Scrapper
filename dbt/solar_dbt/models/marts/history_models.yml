@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: product_price_history
+    description: >
+      One valid observation per product URL and scrape run,
+      including previous observed price and price changes.
+    columns:
+      - name: scrape_run_id
+        data_tests:
+          - not_null
+      - name: source_url
+        description: MVP product identifier; may change if retailer renames URLs.
+        data_tests:
+          - not_null
+      - name: observed_at
+        description: Finished timestamp of the scrape run (currently timezone-naive).
+        data_tests:
+          - not_null
+      - name: price_pln
+        data_tests:
+          - not_null
+      - name: power_w
+        data_tests:
+          - not_null
+
+  - name: daily_market_prices
+    description: >
+      Daily market summary of currently available products,
+      keeping the latest observation per URL per day.
+      These are changing-catalog offer metrics, not a fixed-basket price index.
+    columns:
+      - name: observation_date
+        data_tests:
+          - unique
+          - not_null
+      - name: available_panels
+        data_tests:
+          - not_null

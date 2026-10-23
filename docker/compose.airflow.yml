@@ -1,0 +1,36 @@
+# Compose overlay. Run together with the EXISTING docker/docker-compose.yml.
+# This file does not replace or recreate the existing PostgreSQL volume.
+services:
+  airflow:
+    build:
+      context: ..
+      dockerfile: airflow/Dockerfile
+    container_name: solar-airflow
+    command: standalone
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    env_file:
+      - ../.env
+    environment:
+      # localhost in .env is correct for host Python, but Docker uses the service name.
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      PYTHONPATH: /opt/airflow/solar
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: "admin:admin"
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: /opt/airflow/state/simple_auth_manager_passwords.json.generated
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/state/airflow.db
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags:rw
+      - ../scraper:/opt/airflow/solar/scraper:rw
+      - ../dbt/solar_dbt:/opt/airflow/solar/dbt:rw
+      - solar_airflow_state:/opt/airflow/state
+      - solar_airflow_logs:/opt/airflow/logs
+    depends_on:
+      - postgres
+
+volumes:
+  solar_airflow_state:
+  solar_airflow_logs:

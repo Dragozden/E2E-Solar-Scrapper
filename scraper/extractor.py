@@ -1,5 +1,7 @@
+from uuid import UUID
 from playwright.sync_api import sync_playwright
 
+from scraper.models import RawPanel
 from scraper.parser import parse_product_tile
 
 

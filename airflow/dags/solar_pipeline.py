@@ -24,7 +24,7 @@ def run_command(command: list[str]) -> None:
     dag_id="solar_el_pipeline",
     description="Scrape PV panels and build validated dbt models",
     start_date=pendulum.datetime(2026, 10, 1, tz="Europe/Warsaw"),
-    schedule=None,
+    schedule="2 0 * * *",
     catchup=False,
     max_active_runs=1,
     tags=["solar", "elt", "postgres", "dbt"],

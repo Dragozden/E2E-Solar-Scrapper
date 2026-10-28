@@ -2,12 +2,16 @@
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 
-# Environment
+# Environment / Local configuration
 .env
+.env.*
+!.env.example
 
-# VS Code
+# IDE
 .vscode/
+.idea/
 
 # Playwright
 playwright-report/
@@ -22,14 +26,4 @@ dbt/solar_dbt/logs/
 
 # Airflow runtime logs
 airflow/logs/
-
-# Python
-__pycache__/
-.pytest_cache/
-*.pyc
-.venv/
-
-# Local configuration
-.env
-.env.*
-!.env.example
+airflow/state/

@@ -15,3 +15,21 @@ test-results/
 
 # Data
 data/raw/
+
+# dbt generated files
+dbt/solar_dbt/target/
+dbt/solar_dbt/logs/
+
+# Airflow runtime logs
+airflow/logs/
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+
+# Local configuration
+.env
+.env.*
+!.env.example

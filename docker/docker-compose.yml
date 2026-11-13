@@ -1,3 +1,4 @@
+# Local development only. Postgres and pgAdmin listen on localhost, not LAN/WAN.
 services:
   postgres:
     image: postgres:17
@@ -11,7 +12,7 @@ services:
       POSTGRES_PASSWORD: postgres
 
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -28,7 +29,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
 
     ports:
-      - "5050:80"
+      - "127.0.0.1:5050:80"
 
     depends_on:
       - postgres

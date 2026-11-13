@@ -1,6 +1,14 @@
-# Compose overlay. Run together with the EXISTING docker/docker-compose.yml.
-# This file does not replace or recreate the existing PostgreSQL volume.
+# Docker Compose automatically merges this file with docker/docker-compose.yml.
+# Do not run 'docker compose down -v': postgres_data holds historical observations.
 services:
+  postgres:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
   airflow:
     build:
       context: ..
@@ -13,7 +21,6 @@ services:
     env_file:
       - ../.env
     environment:
-      # localhost in .env is correct for host Python, but Docker uses the service name.
       POSTGRES_HOST: postgres
       POSTGRES_PORT: "5432"
       PYTHONPATH: /opt/airflow/solar
@@ -30,6 +37,24 @@ services:
       - solar_airflow_logs:/opt/airflow/logs
     depends_on:
       - postgres
+
+  dashboard:
+    build:
+      context: ..
+      dockerfile: dashboard/Dockerfile
+    container_name: solar-dashboard
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8501:8501"
+    # Created locally by scripts/setup_dashboard_reader.py (never commit it).
+    env_file:
+      - ../dashboard/.env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   solar_airflow_state:

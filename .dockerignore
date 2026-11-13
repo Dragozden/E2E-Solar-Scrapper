@@ -1,0 +1,15 @@
+# Shared build context for Airflow and Streamlit; do NOT exclude scraper/ or dbt/ source.
+.git/
+.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.env
+**/.env.*
+!**/.env.example
+**/target/
+**/logs/
+airflow/state/
+.pytest_cache/
+data/raw/
+*.sqlite
+*.db

@@ -1,0 +1,6 @@
+# Runtime dependencies of dashboard/*.py. Keep ranges aligned with pyproject.toml.
+streamlit>=1.50,<2
+plotly>=6,<7
+pandas>=3.0,<4
+psycopg[binary]>=3.2,<4
+python-dotenv>=1,<2

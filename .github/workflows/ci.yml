@@ -1,0 +1,113 @@
+name: CI — E2E Solar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-tests:
+    name: Python · pytest and source integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install Python 3.14
+        run: uv python install 3.14
+      - name: Restore locked project dependencies
+        run: uv sync --frozen
+      - name: Verify dashboard sources are committed
+        run: |
+          test -f dashboard/app.py
+          test -f dashboard/db.py
+          test -f dashboard/analytics.py
+          test -f dashboard/charts.py
+          test -f dashboard/insights.py
+          test -f dashboard/monitoring.py
+          test -f tests/test_dashboard_analytics.py
+          test -f tests/test_dashboard_insights.py
+      - name: Run Python tests
+        run: uv run --frozen python -m pytest -q
+      - name: Compile project source files
+        run: uv run --frozen python -m compileall -q scraper dashboard scripts
+
+  dbt-integration:
+    name: dbt · build against isolated PostgreSQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: solar_prices
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci_postgres_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d solar_prices"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=12
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB: solar_prices
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ci_postgres_password
+      DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install Python versions
+        run: uv python install 3.14 3.13
+      - name: Restore locked project dependencies
+        run: uv sync --frozen
+      - name: Initialize Bronze schema and deterministic test data
+        run: uv run --frozen python scripts/ci_dbt_integration.py seed
+      - name: Build and test dbt models
+        run: >-
+          uvx --python 3.13 --from 'dbt-postgres==1.11.0'
+          dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
+      - name: Assert business-level results in Silver and Gold
+        run: uv run --frozen python scripts/ci_dbt_integration.py assert
+
+  docker-build:
+    name: Docker · reproducible images and Compose
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check dashboard source files exist
+        run: |
+          test -f dashboard/app.py
+          test -f dashboard/db.py
+      - name: Validate Compose with disposable CI credentials
+        run: |
+          printf 'POSTGRES_HOST=localhost\nPOSTGRES_PORT=5432\nPOSTGRES_DB=solar_prices\nPOSTGRES_USER=postgres\nPOSTGRES_PASSWORD=dummy_ci_only\n' > .env
+          printf 'POSTGRES_HOST=postgres\nPOSTGRES_PORT=5432\nPOSTGRES_DB=solar_prices\nPOSTGRES_USER=solar_dashboard\nPOSTGRES_PASSWORD=dummy_ci_only\n' > dashboard/.env
+          (cd docker && docker compose config --quiet)
+      - name: Build dashboard image
+        run: docker build -f dashboard/Dockerfile -t e2e-solar-dashboard:ci .
+      - name: Smoke-test dashboard image
+        run: >-
+          docker run --rm e2e-solar-dashboard:ci
+          python -c "from pathlib import Path; import dashboard.db; import dashboard.analytics; import dashboard.insights; assert Path('/app/dashboard/app.py').is_file()"
+      - name: Build Airflow image
+        run: docker build -f airflow/Dockerfile -t e2e-solar-airflow:ci .

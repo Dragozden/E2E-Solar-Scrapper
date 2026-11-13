@@ -1,6 +1,6 @@
-# Runtime dependencies of dashboard/*.py. Keep ranges aligned with pyproject.toml.
-streamlit>=1.50,<2
-plotly>=6,<7
-pandas>=3.0,<4
-psycopg[binary]>=3.2,<4
-python-dotenv>=1,<2
+# Docker runtime: keep major versions compatible with pyproject.toml.
+streamlit>=1.66.1,<2
+plotly>=7.1.0,<8
+pandas>=3.0.5,<4
+psycopg[binary]>=3.3.4,<4
+python-dotenv>=1.2.3,<2

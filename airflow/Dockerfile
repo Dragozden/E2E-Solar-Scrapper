@@ -15,8 +15,14 @@ RUN python -m venv /opt/airflow/solar-venv \
        'pandas>=2.2,<4' \
        'dbt-postgres>=1.10,<2'
 
-# Install browser and Linux system libraries at image build time.
+# Install Node runtime prerequisite before calling Playwright CLI.
+# The bundled Playwright Node binary requires libatomic.so.1 on Linux.
 USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libatomic1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install browser and Linux system libraries at image build time.
 RUN /opt/airflow/solar-venv/bin/python -m playwright install --with-deps chromium \
     && chmod -R a+rX /ms-playwright \
     && mkdir -p /opt/airflow/state \

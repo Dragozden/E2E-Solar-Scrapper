@@ -13,3 +13,8 @@ airflow/state/
 data/raw/
 *.sqlite
 *.db
+
+# Never copy backup data into a Docker build context.
+backups/
+**/*.dump
+**/*.backup

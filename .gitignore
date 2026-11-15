@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 .venv/
 __pycache__/
 *.pyc
@@ -27,3 +27,8 @@ dbt/solar_dbt/logs/
 # Airflow runtime logs
 airflow/logs/
 airflow/state/
+
+# PostgreSQL backup files (may contain sensitive business data)
+backups/
+*.dump
+*.backup

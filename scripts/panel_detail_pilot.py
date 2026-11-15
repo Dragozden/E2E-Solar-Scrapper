@@ -11,7 +11,6 @@ Before live runs review site terms/robots, use low frequency, honor rate limits.
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict
 import json
 from pathlib import Path
 import time
@@ -22,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scraper.panel_detail_specs import is_allowed_detail_url, parse_panel_details
+from scraper.panel_detail_specs import is_allowed_detail_url, parse_panel_details, sample_quality
 
 
 def select_product_urls(limit: int) -> list[str]:
@@ -76,9 +75,45 @@ def _readable_url(url: str) -> str:
 
 
 def _same_product_path(expected: str, actual: str) -> bool:
-    """Require the same product identity, allowing a harmless trailing slash."""
+    """Identity is the store product path, never tracking query/fragment."""
     a, b = urlsplit(expected), urlsplit(actual)
     return a.hostname == b.hostname and a.path.rstrip("/") == b.path.rstrip("/")
+
+
+def _same_product_document(expected: str, actual: str) -> bool:
+    """Accept only HTTPS on the exact trusted host and same product path.
+
+    Shops can append a harmless query string or fragment with history.replaceState.
+    The canonical Gold URL remains the DB key. Never permit a new origin,
+    credentials, non-HTTPS URL, other port, or different product path.
+    """
+    if not is_allowed_detail_url(expected):
+        return False
+    try:
+        observed = urlsplit(actual)
+        return (observed.scheme == "https"
+                and observed.hostname == "sklepsoltech.pl"
+                and observed.username is None and observed.password is None
+                and observed.port in (None, 443)
+                and _same_product_path(expected, actual))
+    except ValueError:  # malformed port or malformed URL
+        return False
+
+
+def _document_snapshot(page) -> tuple[str, str]:
+    """Capture document URL and DOM in one browser execution.
+
+    Reading `page.url` and `page.content()` separately can produce mismatched
+    values when the retailer updates the address using client-side navigation.
+    """
+    data = page.evaluate("""() => ({
+        href: window.location.href,
+        html: document.documentElement ? document.documentElement.outerHTML : ''
+    })""")
+    if not isinstance(data, dict) or not isinstance(data.get("href"), str) \
+            or not isinstance(data.get("html"), str):
+        raise ValueError("Unable to capture page URL and HTML atomically")
+    return data["href"], data["html"]
 
 
 def live_samples(limit: int, delay: float, *, explicit_url: str | None = None,
@@ -109,30 +144,69 @@ def live_samples(limit: int, delay: float, *, explicit_url: str | None = None,
                     raise RuntimeError(f"Product #{i + 1}: HTTP response {status}; stopped")
                 page.wait_for_timeout(600)
                 actual_url = page.url
-                if not is_allowed_detail_url(actual_url) or not _same_product_path(url, actual_url):
-                    reason = f"Product #{i + 1}: unexpected redirect to {_readable_url(actual_url)}"
+                if not _same_product_document(url, actual_url):
+                    reason = (f"Product #{i + 1}: left the intended HTTPS product path; "
+                              f"observed {_readable_url(actual_url)} "
+                              f"(query={bool(urlsplit(actual_url).query)}, "
+                              f"fragment={bool(urlsplit(actual_url).fragment)})")
                     print(f"SKIP: {reason}", file=sys.stderr, flush=True)
                     skipped.append(reason)
                     continue
-                content = page.content()
-                # A client-side redirect may have happened while reading HTML.
-                # Bind the HTML to the very same URL used by the parser.
-                if page.url != actual_url:
-                    reason = f"Product #{i + 1}: page URL changed while reading HTML"
+                try:
+                    snapshot_url, content = _document_snapshot(page)
+                except Exception as exc:
+                    # An in-flight navigation can invalidate Playwright's execution
+                    # context. Skip safely, without reloading or retrying the site.
+                    reason = (f"Product #{i + 1}: document snapshot failed "
+                              f"({type(exc).__name__}); no retry")
                     print(f"SKIP: {reason}", file=sys.stderr, flush=True)
                     skipped.append(reason)
                     continue
-                sample = parse_panel_details(content, actual_url)
+                if not _same_product_document(url, snapshot_url):
+                    reason = (f"Product #{i + 1}: snapshot belongs to a different "
+                              f"page {_readable_url(snapshot_url)}")
+                    print(f"SKIP: {reason}", file=sys.stderr, flush=True)
+                    skipped.append(reason)
+                    continue
+                if snapshot_url != url:
+                    # The path is still the same, so this is not a new product.
+                    # Do not log query values: they can contain session tokens.
+                    print(f"INFO: Product #{i + 1}: same-product URL variation "
+                          f"(query={bool(urlsplit(snapshot_url).query)}, "
+                          f"fragment={bool(urlsplit(snapshot_url).fragment)}); "
+                          "using canonical Gold URL", flush=True)
+                # Persist the stable URL from Gold, never temporary query state.
+                sample = parse_panel_details(content, url)
+                if not sample.attributes_raw or not sample.values:
+                    reason = (f"Product #{i + 1}: no usable technical parameters; "
+                              "possible empty or unrelated page")
+                    print(f"SKIP: {reason}", file=sys.stderr, flush=True)
+                    skipped.append(reason)
+                    continue
                 samples.append(sample)
+                quality = sample_quality(sample.values, sample.parse_issues)
                 print(f"OK: {len(sample.attributes_raw)} attributes, "
                       f"{len(sample.values)} normalized fields, "
-                      f"{len(sample.parse_issues)} issues", flush=True)
+                      f"{len(sample.parse_issues)} issues; "
+                      f"quality={quality['status']}", flush=True)
+                if quality['missing_core_fields']:
+                    print(f"  MISSING CORE: {', '.join(quality['missing_core_fields'])}", flush=True)
+                if quality['review_issues']:
+                    print(f"  TO REVIEW: {', '.join(quality['review_issues'])}", flush=True)
         finally:
             browser.close()
     print(f"LIVE SUMMARY: {len(samples)}/{len(urls)} valid product pages, "
           f"{len(skipped)} skipped", flush=True)
     if strict and skipped:
         raise RuntimeError("Incomplete live batch: refusing --write after skipped product pages")
+    if strict:
+        inadequate = [s.source_url for s in samples
+                      if sample_quality(s.values, s.parse_issues)['status'] != 'PASS']
+        if inadequate:
+            raise RuntimeError(
+                f"Incomplete technical data in {len(inadequate)} product(s): "
+                "refusing --write; review --live output and select only approved products"
+            )
     if not samples:
         raise RuntimeError("No valid product pages; nothing to preview or write")
     return samples

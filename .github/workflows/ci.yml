@@ -17,7 +17,6 @@ concurrency:
 jobs:
   python-tests:
     name: Python · pytest and source integrity
-    # Explicit OS for supported, predictable Playwright Chromium dependencies.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -87,12 +86,16 @@ jobs:
         run: uv sync --frozen
       - name: Initialize Bronze schema and deterministic test data
         run: uv run --frozen python scripts/ci_dbt_integration.py seed
+      - name: Seed synthetic panel spec versions (isolated CI only)
+        run: uv run --frozen python scripts/ci_panel_specs.py seed
       - name: Build and test dbt models
         run: >-
           uvx --python 3.13 --from 'dbt-postgres==1.11.0'
           dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
       - name: Assert business-level results in Silver and Gold
         run: uv run --frozen python scripts/ci_dbt_integration.py assert
+      - name: Assert technical enrichment integrity and latest-spec semantics
+        run: uv run --frozen python scripts/ci_panel_specs.py assert
 
   docker-build:
     name: Docker · reproducible images and Compose

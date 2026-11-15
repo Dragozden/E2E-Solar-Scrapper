@@ -1,12 +1,13 @@
-
 version: 2
 
 sources:
   - name: solar_bronze
-    description: Raw solar panel scraping data
+    description: Raw solar panel scraping and technical enrichment data
     schema: bronze
     tables:
       - name: panel_scrape_raw
-        description: Raw panel observations
+        description: Raw historical panel offers
       - name: scrape_runs
         description: Scraper execution metadata
+      - name: panel_spec_snapshots
+        description: Immutable detail-page specifications, one row per URL and spec_hash

@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_panel_specs
+    description: >
+      Immutable historical technical-specification versions. One row per spec_id.
+      Numeric columns originate from normalized_values JSONB and are NULL when
+      absent or malformed. PASS requires all five electrical parameters, physical
+      consistency and zero parser issues.
+    columns:
+      - name: spec_id
+        data_tests:
+          - unique
+          - not_null
+      - name: source_url
+        data_tests:
+          - not_null
+      - name: spec_hash
+        data_tests:
+          - not_null
+      - name: fetched_at
+        data_tests:
+          - not_null
+      - name: spec_quality
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['PASS', 'INCOMPLETE', 'REVIEW']

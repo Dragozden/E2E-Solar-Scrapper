@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: panel_technical_comparison
+    description: >
+      Current offer ranking enriched by latest known technical specifications.
+      Every offer stays present even if no detail page was scraped. Technical
+      values are NOT guaranteed to describe a currently for-sale model variant
+      until technical_status is PASS and is_technical_comparable is true.
+    columns:
+      - name: source_url
+        description: Product URL from latest successful catalog run, one row per URL.
+        data_tests:
+          - not_null
+          - unique
+      - name: overall_rank
+        data_tests:
+          - not_null
+          - unique
+      - name: technical_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['PASS', 'REVIEW', 'INCOMPLETE', 'NOT_ENRICHED', 'POWER_MISMATCH']

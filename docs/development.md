@@ -1,156 +1,119 @@
-# Development & local operations
+# Development & runbook — E2E Solar
 
-> **Stan potwierdzony: 28.10.2026.** Działają: Playwright → PostgreSQL Bronze → dbt Silver/Gold → Apache Airflow. Lokalny zestaw testów: **8 passed**. Dashboard Streamlit nie został jeszcze wdrożony.
+_Updated: 15 November 2026. Applies to Windows PowerShell, Docker Compose, uv and the local environment._
 
-## Wymagania
+## Services and entry points
 
-- Windows + PowerShell, Git, Docker Desktop z obsługą Compose.
-- Środowisko Pythona projektu (`.venv`, zarządzane przez `uv`); w dotychczasowej konfiguracji scraper działał z Pythonem 3.14.
-- Playwright i przeglądarka Chromium (`uv run playwright install chromium`).
-- dbt CLI może być uruchamiany osobno przez `uvx --python 3.13`; ten proces **nie** korzysta z paczek w `.venv` scrapera.
-- Prywatny `.env` w katalogu głównym repozytorium; nie dodawać go do Git.
+| Component | Path | Purpose |
+|---|---|---|
+| Scraper | `scraper/` | Playwright extraction, parsing, Bronze loading |
+| DAGs | `airflow/dags/` | Pipeline and daily quality watchdog |
+| dbt | `dbt/solar_dbt/` | Silver/Gold models and tests |
+| Dashboard | `dashboard/` | Streamlit/Plotly read-only UI |
+| Compose | `docker/docker-compose.yml` and `.override.yml` | DB, pgAdmin, Airflow, Streamlit |
+| CI | `.github/workflows/ci.yml` | Python tests, dbt integration, Docker builds |
 
-## Struktura uruchomienia Docker Compose
+## Full setup from a clean clone
 
-W katalogu `docker/` znajdują się:
+1. Install Git, Docker Desktop (Compose), and `uv`.
+2. Clone the repository; from the repository root run `uv sync --frozen`.
+3. Create a local root `.env` using `.env.example` and configure PostgreSQL credentials. They must match the actual database state. Do not commit credentials.
+4. Start **only** the base database services:
 
-- `docker-compose.yml` — PostgreSQL i pgAdmin;
-- `docker-compose.override.yml` — Airflow, automatycznie łączony z bazowym Compose, **gdy polecenia uruchamiane są z katalogu `docker`**.
+   ```powershell
+   docker compose -f docker/docker-compose.yml up -d postgres pgadmin
+   ```
+
+5. Initialize a real sample from the shop (this **does** contact the retailer and write to Bronze), then run dbt:
+
+   ```powershell
+   uv run --frozen python -m playwright install chromium
+   uv run --frozen python -m scraper.main
+   uvx --env-file .env --python 3.13 --from 'dbt-postgres==1.11.0' dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
+   ```
+
+6. Create/select the dashboard's read-only database credentials **after Gold views exist**:
+
+   ```powershell
+   uv run --frozen python scripts/setup_dashboard_reader.py
+   ```
+
+7. Start all four services:
+
+   ```powershell
+   cd docker
+   docker compose up -d --build
+   docker compose ps
+   cd ..
+   ```
+
+   Open Streamlit `http://localhost:8501`, Airflow `http://localhost:8080`, and pgAdmin `http://localhost:5050`.
+
+8. Run the local test suite:
+
+   ```powershell
+   uv run --frozen python -m pytest -q
+   ```
+
+   The scraper regression fixture tests use local HTML and can be run without the live retailer:
+
+   ```powershell
+   uv run --frozen python -m pytest tests/test_extractor_regression.py -q
+   ```
+
+   If you are on a fresh clone, ensure Chromium has been installed first.
+
+## Common Docker commands
+
+Run from `docker/` so that the Compose override is loaded automatically:
 
 ```powershell
-# Z katalogu głównego repozytorium
 cd docker
-docker compose config --services   # oczekiwane: postgres, airflow, pgadmin
-docker compose up -d --build
+docker compose config --services
 docker compose ps
-cd ..
+docker compose logs --tail 100 airflow
+docker compose logs --tail 100 dashboard
+docker compose exec airflow airflow dags list
 ```
 
-Nie używaj starego `compose.airflow.yml` — został zastąpiony plikiem override. Jeśli uruchamiasz polecenie `docker compose` z innego katalogu, upewnij się, że odwołujesz się do właściwych plików Compose. **Nie używaj `docker compose down -v` przy zwykłym restarcie:** usuwa wolumeny i może skasować bazę oraz stan Airflow.
+Expected services: `postgres`, `pgadmin`, `airflow`, `dashboard`. `solar_data_watchdog` and `solar_el_pipeline` are two Airflow **DAGs**, not separate containers. Airflow discovers files via a bind mount; changes to dependencies or Dockerfiles require a rebuild, while Python files mounted from the host ordinarily do not.
 
-Porty w obecnej konfiguracji lokalnej: Airflow `http://localhost:8080`, pgAdmin `http://localhost:5050`, PostgreSQL `localhost:5432`. Airflow jest zbindowany do `127.0.0.1`; konfiguracja PostgreSQL i pgAdmin w wersji developerskiej wymaga ograniczenia ekspozycji przed użyciem poza zaufaną maszyną.
+**Never use `docker compose down -v` during routine maintenance.** It deletes named volumes, which can hold PostgreSQL history and Airflow state.
 
-## Pierwszy start (PowerShell, katalog główny repo)
+## Running the pipeline
 
-```powershell
-uv sync
-uv run playwright install chromium
+- Main DAG: `solar_el_pipeline`, daily **00:02 Europe/Warsaw**; tasks `scrape_to_bronze` → `build_dbt_models` → `validate_pipeline`.
+- Watchdog DAG: `solar_data_watchdog`, daily **09:00 Europe/Warsaw**; default freshness threshold **30 hours**.
+- On-demand run: trigger the **entire** main DAG in the Airflow UI rather than only re-running dbt after changing the scraper.
+- A successful CI build does not imply that the local Airflow scheduler is running.
 
-# Tylko jeśli .env jeszcze nie istnieje; następnie uzupełnij wartości
-Copy-Item .env.example .env
+## Where to investigate failures
 
-cd docker
-docker compose up -d --build
-cd ..
-
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-Ostatni potwierdzony wynik testów: `8 passed in 0.10s`. Zakres pokrycia testów wymaga osobnej oceny: taki wynik **nie oznacza**, że istnieją testy wszystkich przypadków paginacji i rollbacku.
-
-**Częsty błąd:** `.\.venv\Scripts\python.exe` z folderu `docker/` nie zadziała, bo `.venv` jest w katalogu nadrzędnym. Wróć przez `cd ..` i uruchom `.\.venv\Scripts\python.exe -m pytest -q`.
-
-## Uruchomienie scrapera poza Airflow
-
-```powershell
-# Z katalogu głównego repozytorium; zapisuje nowy run do PostgreSQL
-uv run python -m scraper.main
-```
-
-Do testowania **samej ekstrakcji bez zapisu w bazie**:
-
-```powershell
-.\.venv\Scripts\python.exe -c "from uuid import uuid4; from scraper.extractor import scrape_panels; panels=scrape_panels(uuid4()); print(len(panels)); assert len(panels)==len({p.source_url for p in panels})"
-```
-
-Extractor śledzi link „Następne produkty”, wykrywa powtórzenia URL, puste strony i zapętlenia oraz ogranicza liczbę stron przez `MAX_PAGES=50` (bezpiecznik). Ostatni zweryfikowany wynik: **4 strony, 78 unikalnych produktów, 0 duplikatów**. Liczba ofert nie jest stałym kontraktem.
-
-## Airflow — dzienne i ręczne uruchomienia
-
-- Interfejs: `http://localhost:8080`.
-- DAG: `solar_el_pipeline`, plik `airflow/dags/solar_pipeline.py`.
-- Harmonogram: `schedule="2 0 * * *"`, czyli **codziennie o 00:02** w strefie `Europe/Warsaw` skonfigurowanej w DAG-u.
-- `catchup=False`, `max_active_runs=1`.
-- Ręczny przebieg powinien uruchamiać **cały DAG** (scraper i dbt). Samo ponowienie `build_dbt_models` nie wygeneruje nowego, naprawionego wsadu w Bronze.
-
-Sprawdź, czy kontener widzi poprawiony kod scrapera:
-
-```powershell
-docker exec solar-airflow sh -lc "grep -n 'MAX_PAGES\|TOTAL_PAGES' /opt/airflow/solar/scraper/extractor.py"
-```
-
-Dzięki bind mount `../scraper:/opt/airflow/solar/scraper:rw` zmiany tego folderu są widoczne w kontenerze. Przebudowa może być potrzebna dla zmian w `airflow/Dockerfile` lub zależnościach obrazu:
-
-```powershell
-cd docker
-docker compose up -d --build --no-deps airflow
-cd ..
-```
-
-## dbt — uruchamianie ręczne z `.env`
-
-```powershell
-uvx --env-file .env --python 3.13 --from "dbt-postgres>=1.10,<2" dbt debug --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
-uvx --env-file .env --python 3.13 --from "dbt-postgres>=1.10,<2" dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
-uvx --env-file .env --python 3.13 --from "dbt-postgres>=1.10,<2" dbt docs generate --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
-uvx --env-file .env --python 3.13 --from "dbt-postgres>=1.10,<2" dbt docs serve --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
-```
-
-W Airflow `dbt build` jest uruchamiany wewnątrz kontenera z katalogiem projektu i profili `/opt/airflow/solar/dbt`. W diagnostyce z 28.10.2026 dbt wykrył **5 modeli i 15 testów danych**. Warto przypiąć dokładną przetestowaną wersję `dbt-postgres`, zamiast przedziału wersji, aby zwiększyć odtwarzalność.
-
-## Diagnostyka — co sprawdzić przy błędzie
-
-### Logi
-
-| Źródło | Lokalizacja w kontenerze `solar-airflow` |
+| Area | Location / command |
 |---|---|
-| Airflow task | `/opt/airflow/logs/dag_id=solar_el_pipeline/run_id=<RUN_ID>/task_id=<TASK_ID>/attempt=<N>.log` |
-| dbt debug log | `/opt/airflow/solar/dbt/logs/dbt.log` |
-| Wyniki dbt | `/opt/airflow/solar/dbt/target/run_results.json` |
-| Skompilowany SQL | `/opt/airflow/solar/dbt/target/compiled/` |
+| Airflow tasks | Airflow UI task instance logs or `/opt/airflow/logs/` in the container |
+| dbt log | `/opt/airflow/solar/dbt/logs/dbt.log` |
+| dbt result metadata | `/opt/airflow/solar/dbt/target/run_results.json` |
+| Runtime status | `docker compose ps` and `docker compose logs --tail 100 airflow` |
+| Scraper watchdog | `docker compose exec airflow /opt/airflow/solar-venv/bin/python -m scraper.watchdog` |
+| CI | GitHub Actions → CI — E2E Solar |
 
-```powershell
-docker exec solar-airflow sh -lc "tail -n 120 /opt/airflow/solar/dbt/logs/dbt.log"
-docker cp solar-airflow:/opt/airflow/solar/dbt/logs/dbt.log .\dbt-debug.log
-```
+`dbt/target` and `dbt/logs` are generated artifacts and can be replaced by subsequent builds. The Bronze run history is the persistent source of ingestion metadata.
 
-`run_results.json` i inne artefakty w `target/` mogą zostać zastąpione przez następny `dbt build` — nie traktuj ich jako trwałego archiwum historii.
+A latest-run integrity FAIL checks (among others): `actual_count > 0`, expected and actual counts match, URLs are present, and URLs are unique within that run. A product count decrease alone is a **warning**; it does not prove that products were removed from the retailer.
 
-### Kontrola najnowszego runu w PostgreSQL
+## Alerts and freshness
 
-```sql
-WITH last_run AS (
-    SELECT scrape_run_id, products_count
-    FROM bronze.scrape_runs
-    WHERE status = 'SUCCESS'
-    ORDER BY finished_at DESC NULLS LAST
-    LIMIT 1
-)
-SELECT
-    r.scrape_run_id,
-    r.products_count AS expected_count,
-    COUNT(p.scrape_id) AS actual_count,
-    COUNT(p.scrape_id) FILTER (
-        WHERE p.source_url IS NULL OR TRIM(p.source_url) = ''
-    ) AS missing_urls,
-    COUNT(p.scrape_id)
-      - COUNT(DISTINCT NULLIF(TRIM(p.source_url), '')) AS non_unique_urls
-FROM last_run r
-LEFT JOIN bronze.panel_scrape_raw p ON p.scrape_run_id = r.scrape_run_id
-GROUP BY r.scrape_run_id, r.products_count;
-```
+See [alerting.md](alerting.md) for optional Discord/Slack webhook configuration and safe test commands. The `SOLAR_ALERT_WEBHOOK_URL` value is a secret and belongs only in the local root `.env`. If the `.env` changes, re-create the Airflow container to load updated environment values. Watchdog alerts are ineffective while Airflow or the host computer are stopped.
 
-`assert_latest_run_integrity` zwraca błąd, gdy ostatni run `SUCCESS` nie ma danych, `products_count` jest NULL, liczba zapisanych rekordów się nie zgadza, brakuje URL albo występują duplikaty. Wtedy dbt może oznaczyć zależne modele `SKIP`; nie jest to błąd samego SQL modelu Silver.
+## Data preservation and credentials
 
-### Inne uwagi
+- PostgreSQL initialization SQL in `docker/postgres/init/` is applied to an **empty** data volume, not automatically re-run as schema migrations.
+- `POSTGRES_PASSWORD` in Compose does **not** rotate the password of an existing PostgreSQL cluster by itself.
+- Current Compose credentials are **development defaults**, not appropriate for an internet-facing deployment. Treat `dashboard/.env` as a secret.
+- Keep `.env`, `dashboard/.env`, dbt target artifacts and all database dumps out of Git. Check `git status` before committing.
+- Implement and test a **backup/restore** process before migrating the system to another machine or publishing it.
 
-- Python uruchamiany na Windows łączy się z PostgreSQL przez `localhost`; usługi wewnątrz Compose używają nazwy `postgres`.
-- `dbt_project.yml`, `profiles.yml` i makro `generate_schema_name` muszą wskazywać zamierzone schematy `silver`/`gold`.
-- `docker/postgres/init/*.sql` działa tylko podczas inicjalizacji **pustego** wolumenu bazy, nie migracji istniejącej instalacji.
-- Ostrzeżenia Git `LF will be replaced by CRLF` są zazwyczaj informacją o normalizacji zakończeń linii, nie błędem testów.
+## Release verification
 
-## Git, artefakty i sekrety
-
-Commituj kod, modele SQL, YAML, testy, `pyproject.toml`, `uv.lock`, pliki Compose, `.env.example` oraz `docs/`. Ignoruj `.env`, `.venv`, pliki `dbt/solar_dbt/target/` i `dbt/solar_dbt/logs/`, logi Airflow oraz lokalne zrzuty bazy. Jeżeli takie pliki były wcześniej śledzone, samo dodanie do `.gitignore` ich nie usuwa z indeksu Git; sprawdź `git ls-files` przed `git rm --cached`.
-
-Obecne przykładowe hasła w Compose i publicznie zbindowane porty PostgreSQL/pgAdmin są akceptowalne wyłącznie w odizolowanym środowisku deweloperskim. Przed szerszym wdrożeniem wymień hasła, ogranicz ekspozycję portów i skonfiguruj bezpieczne zarządzanie sekretami. Zmiana hasła zmienną `POSTGRES_PASSWORD` nie aktualizuje automatycznie hasła w istniejącym wolumenie PostgreSQL.
+Use [release_checklist.md](release_checklist.md) to test fresh-clone reproducibility, secrets, backups, and presentation artifacts. A green CI indicates that tested code paths pass on GitHub; it is not equivalent to a production-ready deployment.

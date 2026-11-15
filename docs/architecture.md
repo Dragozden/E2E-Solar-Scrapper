@@ -1,78 +1,75 @@
-# Architecture — E2E Solar Price Pipeline
+# Architecture — E2E Solar
 
-> **Stan potwierdzony: 28.10.2026.** Scraper, PostgreSQL Bronze, modele dbt Silver/Gold i orkiestracja Airflow działają w pełnym przebiegu DAG-a. Dashboard Streamlit pozostaje kolejnym etapem.
+_Last reviewed: 15 November 2026. Describes the verified repository structure and implemented local services; it is not a public production deployment._
 
-## Cel systemu
-
-Projekt portfolio z obszaru Data Engineering / ELT. System cyklicznie pobiera oferty paneli fotowoltaicznych z katalogu Soltech, zapisuje obserwacje historyczne, kontroluje ich jakość i przygotowuje dane do analiz cenowych. Dane opisują **oferty sklepu**, a nie transakcje sprzedaży.
-
-## Architektura logiczna
+## System overview
 
 ```mermaid
-flowchart LR
-    Shop[Soltech - katalog paneli] --> Extract[Playwright - extractor]
-    Extract --> Parse[Parser RawPanel]
-    Parse --> Load[Python - loader]
-    Load --> Bronze[(PostgreSQL - bronze)]
-    Bronze --> Gate{dbt - test integralnosci}
-    Gate -->|PASS| Silver[dbt - silver.stg_panels]
-    Silver --> Gold[dbt - gold marts]
-    Gate -->|FAIL| Fail[Zatrzymaj zalezne modele]
-    Gold --> UI[Streamlit - planowany]
-    Airflow[Apache Airflow - solar_el_pipeline] -. uruchamia .-> Extract
-    Airflow -. dbt build .-> Gate
+flowchart TB
+    subgraph extraction[Ingestion]
+        Site[Soltech retailer category] --> P[Playwright browser]
+        P --> Parser[Parser / RawPanel]
+        Parser --> Load[Batch loader]
+    end
+    subgraph storage[PostgreSQL 17]
+        Load --> Bronze[(bronze.scrape_runs + panel_scrape_raw)]
+        Bronze --> Silver[dbt silver.stg_panels]
+        Silver --> Gold[dbt gold marts]
+    end
+    subgraph presentation[Analytics]
+        Gold --> Reader[SELECT-only solar_dashboard role]
+        Bronze --> Reader
+        Reader --> UI[Streamlit v3 / Plotly]
+    end
+    subgraph ops[Orchestration & reliability]
+        Airflow[solar_el_pipeline daily 00:02] -. execute .-> P
+        Airflow -. dbt build / validation .-> Gold
+        Watchdog[solar_data_watchdog daily 09:00] -. freshness / integrity .-> Bronze
+        Watchdog -. optional webhook .-> Alert[Discord / Slack]
+        Airflow -. failure alert .-> Alert
+    end
+    CI[GitHub Actions: Python, dbt integration, Docker] -. validates code and build .-> ops
 ```
 
-**Uruchomienie lokalne:** `docker/docker-compose.yml` oraz automatycznie dołączany `docker/docker-compose.override.yml` udostępniają usługi `postgres`, `pgadmin` i `airflow`. PostgreSQL przechowuje dane w wolumenie `postgres_data`. Airflow ma osobne wolumeny stanu i logów; repozytorium scrapera, folder DAG i projekt dbt są montowane do kontenera.
+All four application services are provided by Docker Compose: `postgres`, `pgadmin`, `airflow`, `dashboard`. Local ports bind to `127.0.0.1` in the current Compose files.
 
-## Przepływ danych
+## Runtime flow
 
-1. **Airflow** uruchamia DAG `solar_el_pipeline`: ręcznie lub zgodnie z `schedule="2 0 * * *"`, tj. codziennie o **00:02 w strefie `Europe/Warsaw`** skonfigurowanej w DAG-u. `catchup=False`, `max_active_runs=1`.
-2. **`scraper.main`** generuje jeden `scrape_run_id` (UUID) dla całego pobierania i zarządza statusem uruchomienia (`RUNNING` → `SUCCESS` albo `FAILED`).
-3. **`scraper.extractor`** używa synchronicznego Playwright. Otwiera sekcję „Lista produktów”, przechodzi po linkach „Następne produkty”, zatrzymuje się na końcu katalogu i deduplikuje produkty według URL. `MAX_PAGES=50` to bezpiecznik, a nie zadana liczba stron.
-4. **`scraper.parser`** parsuje kafelki do obiektów `RawPanel`, normalizuje URL i wydobywa moc z tytułu wyrażeniem regularnym.
-5. **Loader Pythona** zapisuje obserwacje do `bronze.panel_scrape_raw`; metadane uruchomienia przechowuje `bronze.scrape_runs`. Bronze zachowuje dane z kolejnych uruchomień.
-6. **Airflow uruchamia `dbt build`** (`build_dbt_models`). Test `assert_latest_run_integrity` bada ostatni `SUCCESS` — liczność rekordów, kompletność URL i ich unikalność. Przy błędzie powiązane modele są pomijane (`SKIP`), a zadanie Airflow kończy się błędem.
-7. **Silver** (`silver.stg_panels`) typuje i normalizuje wartości. **Gold** dostarcza ranking, historię cen i dzienne statystyki rynku.
-8. **Streamlit** będzie odczytywać modele Gold; nie jest jeszcze wdrożony.
+1. Airflow (`airflow/dags/solar_pipeline.py`) schedules the main pipeline daily at **00:02 Europe/Warsaw**, with `catchup=False` and `max_active_runs=1`.
+2. `scraper.main` creates a UUID for the scrape, marks its status `RUNNING`, extracts products, loads them into Bronze, then records `SUCCESS` and the count; failures update the run to `FAILED`.
+3. `scraper.extractor` uses synchronous Playwright. It targets the product list, follows the next-page link, and rejects pagination loops, pages with no new products, and missing source URLs. `MAX_PAGES` is a fail-safe cap, not a fixed expected page count.
+4. `dbt build` validates the latest successful run's count and URL integrity. Dependent models are skipped if the integrity gate fails; the Airflow task fails.
+5. Silver normalizes data types and preserves successful-run history; Gold provides ranking, history and daily trends.
+6. `scraper.validate` checks the latest run and ensures the Gold ranking is nonempty.
+7. Streamlit queries Gold and selected Bronze metadata with a dedicated PostgreSQL login. The app itself does not perform scrapes or update records.
+8. A separate watchdog DAG checks freshness (default **30 h**) and integrity at **09:00 Europe/Warsaw**. Optional webhook alerts can notify Discord or Slack.
 
-## Modele i odpowiedzialności
+## Contracts and grain
 
-| Warstwa | Zasób | Odpowiedzialność |
+| Layer | Entity | Logical grain |
 |---|---|---|
-| Extract | `scraper/extractor.py`, `parser.py` | Pobranie kafelków, parsowanie, dynamiczna paginacja, deduplikacja w pojedynczym runie |
-| Bronze | `bronze.scrape_runs` | UUID, czas, status i zadeklarowana liczba produktów |
-| Bronze | `bronze.panel_scrape_raw` | Surowe obserwacje z kolejnych runów |
-| Silver | `silver.stg_panels` | Typowanie ceny i mocy, zachowanie historii runów `SUCCESS` |
-| Gold | `gold.current_panel_ranking` | Ranking ofert z najnowszego poprawnego runu |
-| Gold | `gold.product_price_history` | Obserwacje i zmiany cen produktu między runami |
-| Gold | `gold.daily_market_prices` | Zestawienie dziennych metryk oferty |
-| Orkiestracja | `airflow/dags/solar_pipeline.py` | Harmonogram, zależności zadań, uruchamianie dbt i logi |
+| Bronze runs | `scrape_runs` | One UUID per scrape |
+| Bronze observations | `panel_scrape_raw` | One `scrape_id` per saved product observation |
+| Silver | `stg_panels` | One typed observation per raw scrape row from a successful run |
+| Gold ranking | `current_panel_ranking` | Latest successful snapshot, deduplicated by `source_url` |
+| Gold history | `product_price_history` | One observation per (`scrape_run_id`, `source_url`) |
+| Gold daily | `daily_market_prices` | One summary per observed date of available products |
 
-W logu `dbt build` z 28.10.2026 wykryto **5 modeli i 15 testów danych**. Oprócz opisanych modeli analitycznych istnieje techniczny model `silver.assert_history_unique_per_run`; jego implementację i dokładną semantykę należy weryfikować w źródłowym SQL.
+Product identity in this MVP is the normalized product URL. A given URL appearing in different scrape runs is intentional; repetition within one run is an integrity violation.
 
-## Tożsamość i ziarno danych (grain)
+## Test boundaries
 
-- **Run:** jeden `scrape_run_id` na wykonanie scrapera.
-- **Obserwacja Bronze/Silver:** jeden `scrape_id` na zapisany rekord oferty.
-- **Produkt (MVP):** `source_url` po normalizacji. Jest to praktyczny identyfikator, dopóki sklep nie zmieni adresów produktów.
-- **Historia produktu:** ten sam `source_url` może legalnie występować w wielu runach; duplikat w **tym samym** runie jest błędem jakości.
-- **Historia Gold:** według kontraktu biznesowego jeden produkt na (`scrape_run_id`, `source_url`).
-- **Statystyki dzienne:** agregat po dniu; przy wielokrotnych pomiarach jednego dnia produkt powinien być uwzględniony raz w dziennym przekroju.
+- **Unit/regression:** pytest on Python parsing, dashboard transformations and offline Playwright HTML fixtures.
+- **Data:** dbt source/model tests validate latest run and relevant invariants; SQL model dependencies prevent silently publishing invalid new observations.
+- **Integration:** GitHub Actions provisions temporary PostgreSQL 17 and asserts expected model results on deterministic fixture observations.
+- **Build:** GitHub Actions validates Compose and builds Streamlit/Airflow images, without connecting to the retailer.
 
-## Incydent paginacji — 28.10.2026
+## Deliberate limitations
 
-W poprzedniej implementacji `TOTAL_PAGES=12` wymuszał odwiedzanie 12 adresów, niezależnie od rzeczywistej długości katalogu. Gdy w katalogu były już tylko **4 strony i 78 unikalnych ofert**, kolejne adresy powtarzały sześć ostatnich produktów. Powstało **126 zapisów, ale tylko 78 różnych URL (48 nadmiarowych wystąpień)**; test `assert_latest_run_integrity` zatrzymał dbt. Po przejściu na dynamiczne linki paginacji scraper pobrał **78 unikalnych ofert z 4 stron, bez duplikatów**, a pełny DAG przeszedł poprawnie.
-
-Wcześniejsze runy (27.10.2026) zawierały **288 unikalnych produktów**. Spadek do 78 jest faktem dotyczącym zaobserwowanego katalogu; **nie stanowi dowodu**, że 210 produktów zostało trwale wycofanych. Nie należy stosować stałej oczekiwanej liczby produktów.
-
-## Ograniczenia i dalszy rozwój
-
-- Źródłem mocy jest tytuł oferty, nie zweryfikowana karta techniczna; dane o sprawności i bifaciality pozostają niewypełnione lub niewiarygodne.
-- Nie ustalono niezależnie, czy `price` jest ceną brutto czy netto.
-- Obecna identyfikacja po URL jest wrażliwa na zmianę adresu produktu.
-- W starszej historii mogą występować rekordy bez poprawnego powiązania do runu; nowych danych nie należy „naprawiać” sztucznymi UUID.
-- Znaczniki czasu mają obecnie typ `TIMESTAMP` bez strefy; migracja do `TIMESTAMPTZ` wymaga decyzji o interpretacji istniejących wartości.
-- Do rozbudowy: Streamlit, alarmy anomalii wolumenu ofert, regresyjne testy paginacji, twardsze zarządzanie sekretami, monitoring i retry błędów sieci.
-
-Szczegóły operacyjne: [Development](development.md). Warunki poprawności: [Data quality](data_quality.md). Znaczenie metryk: [Business logic](business_logic.md).
+- No guarantee of 24/7 execution when the user's workstation is asleep or Docker is stopped.
+- Watchdog runs inside Airflow; loss of the scheduler/host requires an external monitor to detect.
+- Airflow metadata uses embedded SQLite in this development setup.
+- Database and other time fields are timezone-naive; UTC `TIMESTAMPTZ` migration needs an explicit plan.
+- Source prices may be net or gross; source URLs can change; product power is derived from titles.
+- A changing daily catalog means market averages are not fixed-cohort price indices.
+- A public deployment needs security hardening, backups, and a distinct environment. See [Release checklist](release_checklist.md).

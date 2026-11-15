@@ -1,128 +1,136 @@
 # E2E Solar Price Pipeline
 
-An end-to-end ELT portfolio project that collects photovoltaic panel listings from an online retailer, stores historical observations in PostgreSQL, validates and transforms them with dbt, and orchestrates the workflow with Apache Airflow.
+[![CI — E2E Solar](https://github.com/Dragozden/E2E-Solar-Scrapper/actions/workflows/ci.yml/badge.svg)](https://github.com/Dragozden/E2E-Solar-Scrapper/actions/workflows/ci.yml)
 
-## Project status (28 October 2026)
+**End-to-end Data Engineering project:** collect photovoltaic panel offers, retain price history, validate data quality, transform data with dbt, and explore the results in an interactive Streamlit dashboard.
 
-- ✅ Playwright scraper with **dynamic pagination** and product URL deduplication
-- ✅ PostgreSQL **Bronze** observations and per-run tracking (`scrape_run_id`, SUCCESS/FAILED)
-- ✅ dbt **Silver** staging and data-quality tests
-- ✅ dbt **Gold** marts for current product ranking, price history, and daily market prices
-- ✅ Apache Airflow orchestration; full pipeline completed successfully
-- ✅ Local Python test suite: **8 passed** (28 October 2026)
-- 🚧 Streamlit dashboard — next development stage
+**Stack:** Python · Playwright · PostgreSQL 17 · dbt · Apache Airflow · Streamlit · Plotly · Docker Compose · pytest · GitHub Actions
 
-## Architecture
+> **Project type:** local portfolio/demo environment, not a production SaaS. The data represent retailer listings, **not transactions** or a guaranteed real-time inventory. A public deployment is not yet provided.
+
+## Screenshots
+
+| PV panel ranking | Scrape quality monitoring |
+|:--:|:--:|
+| ![Ranking paneli](docs/images/ranking.png) | ![Monitoring jakości](docs/images/data-quality.png) |
+
+_Screenshots show historical local dashboard states. Values and offer counts change with each completed scrape._
+
+## Current capabilities
+
+- **Extraction:** synchronous Playwright scraper follows real pagination links, parses product tiles, and deduplicates product URLs within a run.
+- **Bronze:** append-only product observations plus a per-run UUID, start/end timestamps, row count, and status in PostgreSQL.
+- **Silver:** dbt cleans/normalizes prices and rated panel power and preserves observations from successful runs.
+- **Gold:** current PLN/W ranking, individual product price history, and daily market aggregates.
+- **Visualization:** Streamlit dashboards for ranking, historical prices, market trends, price-drop detection, comparison of products, and quality monitoring.
+- **Orchestration:** `solar_el_pipeline` runs daily at **00:02 Europe/Warsaw**; `solar_data_watchdog` checks freshness/quality daily at **09:00**.
+- **Monitoring:** Airflow failure alerts and optional Discord/Slack webhooks; default stale-snapshot threshold **30 hours**.
+- **Testing:** offline Playwright/HTML regression tests, Python unit tests, dbt data tests, and GitHub Actions CI on an isolated PostgreSQL service.
+
+The developer verified **49 passing local tests** after the scraper regression stage (15 November 2026). Further monitoring tests were added subsequently; run `uv run --frozen python -m pytest -q` to see the current count. GitHub Actions runs Python tests, dbt integration, and Docker image/Compose checks.
+
+## How it works
 
 ```mermaid
 flowchart LR
-  Shop[Soltech PV catalog] --> Scraper[Playwright scraper + parser]
-  Scraper --> Bronze[(PostgreSQL Bronze)]
-  Bronze --> Silver[dbt Silver]
-  Silver --> Gold[dbt Gold]
-  Gold --> Dashboard[Streamlit dashboard - planned]
-  Airflow[Apache Airflow] -. schedules and runs .-> Scraper
-  Airflow -. runs dbt build .-> Silver
+    S[Retailer catalog] --> E[Playwright extractor + parser]
+    E --> B[(PostgreSQL Bronze)]
+    B --> T[dbt Silver]
+    T --> G[dbt Gold]
+    G --> U[Streamlit / Plotly]
+    A[Airflow pipeline] -. schedules .-> E
+    A -. executes dbt .-> T
+    W[Airflow watchdog] -. checks freshness / quality .-> B
+    C[GitHub Actions CI] -. tests Python, dbt and Docker .-> T
 ```
 
-## Key capabilities
+**Main DAG:** `scrape_to_bronze` → `build_dbt_models` → `validate_pipeline`. The Streamlit service uses a separate PostgreSQL role with `SELECT` permissions on selected Gold views and Bronze monitoring tables.
 
-- Each scrape has a unique `scrape_run_id` associated with all product observations.
-- Historical snapshots are preserved rather than overwritten.
-- The scraper follows actual pagination links instead of assuming a fixed number of pages.
-- Product URLs are deduplicated within each scrape; unexpected empty pages and pagination loops cause explicit errors.
-- dbt validates latest-run integrity before building dependent models.
-- Silver cleans and types raw data; Gold provides analytical datasets for rankings, historical product prices, and daily market summaries.
+## Quick start (Windows PowerShell)
 
-## Run locally
+Requires Git, Docker Desktop with Compose, `uv`, and a compatible Python toolchain. Commands below assume the repository root.
 
-The commands below assume Windows PowerShell and the repository root unless otherwise indicated.
+### 1. Get the project and configure the local environment
 
-1. Create a local `.env` based on `.env.example` and configure the PostgreSQL connection. Do not commit `.env`.
-2. Start PostgreSQL, pgAdmin, and Airflow with Docker Compose:
+```powershell
+git clone https://github.com/Dragozden/E2E-Solar-Scrapper.git
+cd E2E-Solar-Scrapper
+uv sync --frozen
+Copy-Item .env.example .env
+```
 
-   ```powershell
-   cd docker
-   docker compose up -d --build
-   docker compose config --services
-   cd ..
-   ```
+Review the root `.env` and make sure its database credentials match your **locally configured** PostgreSQL instance. Do not commit this file. The local Compose database uses development credentials from `docker/docker-compose.yml` unless you change that configuration **and** initialize/set database credentials appropriately.
 
-   Compose automatically loads `docker/docker-compose.override.yml` alongside `docker/docker-compose.yml` when invoked from the `docker` directory.
-3. Install the local Python dependencies and Chromium, if not already installed:
+### 2. Start the database and build analytical views
 
-   ```powershell
-   uv sync
-   uv run playwright install chromium
-   ```
+```powershell
+docker compose -f docker/docker-compose.yml up -d postgres pgadmin
+uv run --frozen python -m playwright install chromium
+uv run --frozen python -m scraper.main
+uvx --env-file .env --python 3.13 --from 'dbt-postgres==1.11.0' dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
+```
 
-4. Run the test suite and optionally scrape once outside Airflow:
+The scraper contacts the retailer and stores a new snapshot. It requires the retailer to be accessible and its markup to match the parser; the catalog may change. Do **not** run this step simply to test the parser offline — use the pytest fixtures instead.
 
-   ```powershell
-   .\.venv\Scripts\python.exe -m pytest -q
-   uv run python -m scraper.main
-   ```
+### 3. Create dashboard read-only credentials and start the full stack
 
-5. Open Airflow at <http://localhost:8080> and trigger `solar_el_pipeline`, or let the configured daily schedule run it. The DAG uses `schedule="2 0 * * *"`, i.e. **00:02** in its configured `Europe/Warsaw` timezone. A manual DAG run executes the entire pipeline; do not rerun only dbt when validating newly scraped data.
+```powershell
+uv run --frozen python scripts/setup_dashboard_reader.py
+cd docker
+docker compose up -d --build
+docker compose ps
+cd ..
+uv run --frozen python -m pytest -q
+```
 
-6. To run dbt manually from the repository root:
+The reader bootstrap expects the three Gold views to exist first. It generates an untracked `dashboard/.env` and validates its permissions. **Do not run `docker compose down -v`: it removes named volumes, including the PostgreSQL history.**
 
-   ```powershell
-   uvx --env-file .env --python 3.13 --from "dbt-postgres>=1.10,<2" dbt build --project-dir dbt/solar_dbt --profiles-dir dbt/solar_dbt
-   ```
+| Service | Local address |
+|---|---|
+| Streamlit | http://localhost:8501 |
+| Airflow | http://localhost:8080 |
+| pgAdmin | http://localhost:5050 |
+| PostgreSQL | `localhost:5432` |
 
-> **Data safety:** Do not run `docker compose down -v` unless you intentionally want to remove Docker volumes, including PostgreSQL data.
+Start or enable the Airflow DAGs in the local Airflow UI. Scheduled jobs require the Docker environment and host computer to remain running; GitHub Actions CI does **not** operate your local ETL schedule.
 
-## Analytical models
+For troubleshooting, alternate setup paths, and log locations, see [Development](docs/development.md).
 
-| Layer | Model / table | Purpose |
+## Data models
+
+| Layer | Table / model | Grain and purpose |
 |---|---|---|
-| Bronze | `bronze.panel_scrape_raw` | Raw product observations from each scrape |
-| Bronze | `bronze.scrape_runs` | Run metadata, status and product count |
-| Silver | `silver.stg_panels` | Cleaned, typed observations |
-| Gold | `gold.current_panel_ranking` | Current product ranking and PLN/W comparison |
-| Gold | `gold.product_price_history` | Historical observations and price changes by product |
-| Gold | `gold.daily_market_prices` | Daily market-level price metrics |
+| Bronze | `bronze.scrape_runs` | One row per scraping execution |
+| Bronze | `bronze.panel_scrape_raw` | One row per saved offer observation |
+| Silver | `silver.stg_panels` | Typed historical observations from successful runs |
+| Gold | `gold.current_panel_ranking` | One product URL per latest successful run |
+| Gold | `gold.product_price_history` | One product URL per successful run with previous price and delta |
+| Gold | `gold.daily_market_prices` | Daily summary of observed available offers |
 
-Example PostgreSQL validation:
+`PLN/W = offer_price_pln / rated_power_w` is an offer-comparison metric, **not** a measure of generated kWh or the lowest lifetime energy cost.
 
-```sql
-SELECT
-    r.started_at,
-    r.status,
-    r.products_count,
-    COUNT(p.scrape_id) AS actual_count,
-    COUNT(DISTINCT NULLIF(TRIM(p.source_url), '')) AS unique_urls
-FROM bronze.scrape_runs r
-LEFT JOIN bronze.panel_scrape_raw p
-    ON r.scrape_run_id = p.scrape_run_id
-GROUP BY r.scrape_run_id, r.started_at, r.status, r.products_count
-ORDER BY r.started_at DESC
-LIMIT 10;
+## Engineering case study: pagination regression
 
-SELECT *
-FROM gold.daily_market_prices
-ORDER BY observation_date DESC;
-```
+On 27 October 2026, the scraper recorded **288 unique offers**. On 28 October, the observed category had **78 unique offers over four pages**, but the then-hardcoded 12-page scraper requested pages beyond the last page, repeatedly encountering six products. It saved **126 rows, 48 redundant URL occurrences**. The dbt integrity test correctly blocked downstream models.
 
-## Data quality and catalog changes
+The fix replaced the fixed page count with pagination-link traversal, URL deduplication, and explicit failure on structural anomalies. We then added offline Chromium regression tests so the same failure mode is checked without hitting the live retailer.
 
-The scraper previously observed **288 unique offers** (27 October 2026). On **28 October 2026**, the retailer's category was observed with **78 unique products across four pages**. The earlier fixed 12-page loop produced repeated offers when requesting pages beyond the end of the catalog. Dynamic pagination and URL deduplication fixed this issue, and the full Airflow/dbt pipeline subsequently completed successfully.
+Read the [portfolio case study](docs/portfolio.md) for tradeoffs and testing strategy.
 
-These values describe observed snapshots, **not an expected permanent product count**. Product counts can change as the catalog changes; a successful scrape alone does not prove that every missing historical offer is discontinued. Data-quality checks detect missing or duplicated URLs and inconsistencies between reported and stored row counts.
+## Operational notes and limitations
 
-## Documentation
+- Product identity uses retailer `source_url`; URL changes may split the history of a product.
+- Title-based regex extracts rated power; module specifications, efficiency, and bifaciality are not independently validated.
+- The source price's gross/net tax status has not been independently verified.
+- Daily average PLN/W reflects a **changing product basket**, not a fixed-cohort price index.
+- Existing timestamps are timezone-naive; migration to UTC `TIMESTAMPTZ` requires a deliberate backfill plan.
+- Airflow's embedded SQLite and the local example credentials are intended for development. Do **not** expose this stack publicly as configured.
+- The in-Airflow watchdog cannot alert if Airflow itself or its host is shut down.
 
-- [Architecture](docs/architecture.md)
-- [Data dictionary](docs/data_dictionary.md)
-- [Business logic](docs/business_logic.md)
-- [Data quality](docs/data_quality.md)
-- [Development](docs/development.md)
+## Docs
 
-## Limitations and next steps
+[Architecture](docs/architecture.md) · [Development / Runbook](docs/development.md) · [Data dictionary](docs/data_dictionary.md) · [Business logic](docs/business_logic.md) · [Data quality](docs/data_quality.md) · [Alerting](docs/alerting.md) · [CI/CD](docs/ci_cd.md) · [Release checklist](docs/release_checklist.md)
 
-- Listings are retailer offers, not completed transactions. Gross/net price interpretation has not been independently verified.
-- Power ratings are inferred from listing titles and may need additional validation.
-- Large changes in the catalog should eventually trigger explicit anomaly alerts rather than being interpreted automatically as stock removals.
-- A Streamlit dashboard, pagination regression tests and richer run-level monitoring remain planned.
-- The Docker Compose configuration currently includes local-development credentials; secure these and restrict exposed services before deploying outside a trusted development machine.
+## Next steps
+
+Use the [release checklist](docs/release_checklist.md) before sharing a hosted demo: test clean-clone setup, remove development credentials, add database backup/restore verification, and design a separate authenticated deployment environment.

@@ -17,8 +17,9 @@ concurrency:
 jobs:
   python-tests:
     name: Python · pytest and source integrity
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Explicit OS for supported, predictable Playwright Chromium dependencies.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
@@ -29,7 +30,7 @@ jobs:
         run: uv python install 3.14
       - name: Restore locked project dependencies
         run: uv sync --frozen
-      - name: Verify dashboard sources are committed
+      - name: Verify dashboard and scraper regression sources are committed
         run: |
           test -f dashboard/app.py
           test -f dashboard/db.py
@@ -39,6 +40,11 @@ jobs:
           test -f dashboard/monitoring.py
           test -f tests/test_dashboard_analytics.py
           test -f tests/test_dashboard_insights.py
+          test -f tests/test_extractor_regression.py
+          test -f tests/fixtures/catalog_page_1.html
+          test -f tests/fixtures/catalog_page_2.html
+      - name: Install Chromium for offline DOM regression tests
+        run: uv run --frozen python -m playwright install --with-deps chromium
       - name: Run Python tests
         run: uv run --frozen python -m pytest -q
       - name: Compile project source files

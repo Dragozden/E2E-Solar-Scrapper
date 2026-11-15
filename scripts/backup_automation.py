@@ -274,11 +274,14 @@ def run_automation(
     if keep_minimum < DEFAULT_MIN_KEEP:
         raise AutomationError(f"keep_minimum must be >= {DEFAULT_MIN_KEEP}")
     backup_dir = backup_dir.resolve()
-    mirror = validate_mirror_dir(mirror_dir, backup_dir) if mirror_dir else None
     report_dir = backup_dir / "status"
     report = {"started_utc": utc_now().isoformat(), "status": "RUNNING"}
     with exclusive_run(backup_dir):
         try:
+            # Record a FAIL receipt even if a removable USB mirror is missing.
+            # Previously this validation happened before the try/except, so a
+            # scheduled run could fail while status still showed an old PASS.
+            mirror = validate_mirror_dir(mirror_dir, backup_dir) if mirror_dir else None
             dump = create_backup(backup_dir)
             receipt = verify_backup(dump)
             metadata, confirmed = verified_backup(dump)

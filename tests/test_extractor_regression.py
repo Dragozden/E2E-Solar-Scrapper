@@ -211,3 +211,45 @@ def test_parser_returns_none_for_missing_href_without_network(page):
     panel = parse_product_tile(page.locator("product-tile"), uuid4())
     assert panel is not None
     assert panel.source_url is None
+
+
+def test_duplicate_next_links_to_same_destination_are_accepted(page):
+    one = html("catalog_page_1.html")
+    one = one.replace(
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a></nav>',
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a>'
+        '<a href="http://127.0.0.1:8765/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a></nav>',
+    )
+    requested = serve_offline(page, {
+        CATALOG: one,
+        f"{CATALOG}/2": html("catalog_page_2.html"),
+    })
+    panels = extractor._scrape_catalog(page, uuid4())
+    assert requested == [CATALOG, f"{CATALOG}/2"]
+    assert len(panels) == 4
+
+
+def test_duplicate_next_links_to_different_destinations_fail(page):
+    one = html("catalog_page_1.html")
+    one = one.replace(
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a></nav>',
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a>'
+        '<a href="/pl/c/Panele-fotowoltaiczne/13/3">Następne produkty</a></nav>',
+    )
+    serve_offline(page, {CATALOG: one})
+    with pytest.raises(RuntimeError, match="2 roznych adresow"):
+        extractor._scrape_catalog(page, uuid4())
+
+
+def test_duplicate_next_link_with_no_href_does_not_hide_valid_link(page):
+    one = html("catalog_page_1.html").replace(
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a></nav>',
+        '<nav><a href="/pl/c/Panele-fotowoltaiczne/13/2">Następne produkty</a>'
+        '<a>Następne produkty</a></nav>',
+    )
+    # Missing href does not enter ARIA link matches: assert the parser does not
+    # silently suppress the valid link; an explicit stricter check can follow
+    # if live markup proves this situation is common.
+    serve_offline(page, {CATALOG: one, f"{CATALOG}/2": html("catalog_page_2.html")})
+    result = extractor._scrape_catalog(page, uuid4())
+    assert len(result) == 4

@@ -1,6 +1,8 @@
 from uuid import UUID
 from urllib.parse import urljoin
 
+from scraper.pagination import next_catalog_url
+
 from playwright.sync_api import Page, sync_playwright
 
 from scraper.models import RawPanel
@@ -90,30 +92,12 @@ def _scrape_catalog(page: Page, scrape_run_id: UUID) -> list[RawPanel]:
                 "Sprawdz paginacje lub parser."
             )
 
-        next_page = page.get_by_role(
-            "link", name="Następne produkty", exact=True
-        )
-        if next_page.count() == 0:
-            # An <a> without href stops being a 'link' in the accessibility
-            # tree. Detect the visible control instead of silently treating
-            # it as the last page.
-            if page.get_by_text("Następne produkty", exact=True).count() > 0:
-                raise RuntimeError(
-                    "Wykryto 'Następne produkty', ale brak prawidlowego linku"
-                )
+        next_url = next_catalog_url(page, current_page)
+        if next_url is None:
             print("\nOsiagnieto koniec katalogu.")
             break
 
-        if next_page.count() != 1:
-            raise RuntimeError(
-                f"Niejednoznaczna paginacja na stronie {current_page}"
-            )
-
-        next_href = next_page.first.get_attribute("href")
-        if not next_href or not next_href.strip():
-            raise RuntimeError("Link do kolejnej strony nie ma href")
-
-        current_url = urljoin(page.url, next_href)
+        current_url = next_url
         current_page += 1
     else:
         raise RuntimeError(

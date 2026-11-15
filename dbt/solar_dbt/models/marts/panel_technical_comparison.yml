@@ -21,4 +21,5 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['PASS', 'REVIEW', 'INCOMPLETE', 'NOT_ENRICHED', 'POWER_MISMATCH']
+              arguments:
+                values: ['PASS', 'REVIEW', 'INCOMPLETE', 'NOT_ENRICHED', 'POWER_MISMATCH']

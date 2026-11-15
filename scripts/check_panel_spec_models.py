@@ -1,15 +1,21 @@
 """Read-only local smoke test for dbt technical models (Step 11.2).
 
-Run from repo root after dbt build:
-    uv run --frozen python scripts/check_panel_spec_models.py
-    uv run --frozen python scripts/check_panel_spec_models.py --min-complete 2
-
+Run from repository root with `uv run --frozen python scripts/check_panel_spec_models.py`.
 No writes, schema changes, or scraping. Prints aggregate coverage only.
 """
 from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+from pathlib import Path
+import sys
+
+# Direct script execution puts scripts/ (not the repo root) on sys.path.
+# Match the import strategy of scripts/panel_detail_pilot.py without relying
+# on editable package installation or PYTHONPATH set by the caller.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 
 @dataclass(frozen=True)

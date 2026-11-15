@@ -21,6 +21,7 @@ from dashboard.insights import latest_prices_for_comparison, price_drop_events
 from dashboard.monitoring import evaluate_runs
 from dashboard.db import load_run_quality
 from dashboard.db import load_gold_data
+from dashboard.technical_ui import clear_technical_cache, render_technical_tab
 
 
 st.set_page_config(
@@ -89,6 +90,7 @@ with st.sidebar:
     if st.button("↻ Odśwież dane", width="stretch"):
         get_data.clear()
         get_run_quality.clear()
+        clear_technical_cache()
         st.rerun()
     st.caption("Odczyt z PostgreSQL / dbt Gold · cache: 5 minut")
     st.divider()
@@ -133,9 +135,9 @@ latest_time = pd.to_datetime(ranking["scraped_at"], errors="coerce").max()
 latest_text = latest_time.strftime("%d.%m.%Y %H:%M") if pd.notna(latest_time) else "nieznany"
 st.caption(f"Ostatni wsad: {latest_text} · scrape_run_id: `{run_id[:8]}…` · KPI dotyczą wszystkich ofert dostępnych w tym wsadzie.")
 
-overview_tab, ranking_tab, drops_tab, compare_tab, history_tab, market_tab, quality_tab = st.tabs([
+overview_tab, ranking_tab, drops_tab, compare_tab, history_tab, market_tab, quality_tab, technical_tab = st.tabs([
     "Przegląd", "Ranking paneli", "Przeceny", "Porównanie", "Historia produktu",
-    "Trendy rynku", "Jakość danych",
+    "Trendy rynku", "Jakość danych", "Parametry techniczne",
 ])
 
 with overview_tab:
@@ -448,6 +450,11 @@ with quality_tab:
                 "Porównanie liczności używa kolejnych runów oznaczonych SUCCESS, nawet jeśli historycznie "
                 "nie przeszły kontroli integralności."
             )
+
+# STAGE11.3-TECHNICAL-TAB
+with technical_tab:
+    render_technical_tab()
+
 
 st.divider()
 st.caption(

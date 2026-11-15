@@ -1,6 +1,6 @@
 """E2E Solar: Playwright -> Bronze -> dbt Silver/Gold -> quality check.
 
-Initially triggered manually. Do not enable scheduling until idempotency is reviewed.
+Runs daily at 00:02 Europe/Warsaw. Dag-level alerts fire after task retries.
 """
 import os
 import subprocess
@@ -8,6 +8,7 @@ from datetime import timedelta
 
 import pendulum
 from airflow.sdk import dag, task
+from solar_alerting import notify_dag_failure
 
 ROOT = "/opt/airflow/solar"
 PYTHON = "/opt/airflow/solar-venv/bin/python"
@@ -27,12 +28,12 @@ def run_command(command: list[str]) -> None:
     schedule="2 0 * * *",
     catchup=False,
     max_active_runs=1,
+    on_failure_callback=notify_dag_failure,
     tags=["solar", "elt", "postgres", "dbt"],
 )
 def solar_pipeline():
     @task(retries=0)
     def scrape_to_bronze():
-        # The scraper keeps its own scrape_run_id and SUCCESS/FAILED tracking.
         run_command([PYTHON, "-m", "scraper.main"])
 
     @task(retries=1, retry_delay=timedelta(minutes=2))

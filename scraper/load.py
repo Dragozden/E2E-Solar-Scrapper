@@ -1,4 +1,11 @@
+"""PostgreSQL access for E2E Solar Bronze and enrichment routines.
+
+Keep connection settings shared by the existing services. The finite connection
+budget avoids a seemingly frozen CLI when Docker/Desktop networking is down.
+This is not query caching and does not change DB data or host selection.
+"""
 from datetime import datetime
+import os
 from uuid import UUID
 
 import psycopg
@@ -7,14 +14,26 @@ from scraper.config import config
 from scraper.models import RawPanel
 
 
+def connection_kwargs() -> dict:
+    """Connection options for both Docker and local Windows execution."""
+    try:
+        timeout = int(os.getenv("SOLAR_DB_CONNECT_TIMEOUT", "10"))
+    except ValueError as exc:
+        raise ValueError("SOLAR_DB_CONNECT_TIMEOUT must be an integer (3..60)") from exc
+    if not 3 <= timeout <= 60:
+        raise ValueError("SOLAR_DB_CONNECT_TIMEOUT must be within 3..60 seconds")
+    return {
+        "host": config.host,
+        "port": config.port,
+        "dbname": config.database,
+        "user": config.user,
+        "password": config.password,
+        "connect_timeout": timeout,
+    }
+
+
 def get_connection():
-    return psycopg.connect(
-        host=config.host,
-        port=config.port,
-        dbname=config.database,
-        user=config.user,
-        password=config.password,
-    )
+    return psycopg.connect(**connection_kwargs())
 
 
 def create_scrape_run(scrape_run_id: UUID):

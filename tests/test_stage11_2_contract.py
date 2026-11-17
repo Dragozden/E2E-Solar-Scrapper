@@ -20,9 +20,14 @@ def read(path: str) -> str:
 def test_bronze_source_declares_specs():
     config = yaml.safe_load(read("models/staging/source.yml"))
     assert config["sources"][0]["name"] == "solar_bronze"
-    assert set(t["name"] for t in config["sources"][0]["tables"]) == {
-        "panel_scrape_raw", "scrape_runs", "panel_spec_snapshots"
-    }
+    names = [t["name"] for t in config["sources"][0]["tables"]]
+    # Subsequent enrichment stages may add new Bronze sources. Keep existing
+    # contract guarantees without rejecting legitimate additive migrations.
+    assert len(names) == len(set(names)), "Bronze source names must be unique"
+    assert {
+        "panel_scrape_raw", "scrape_runs", "panel_spec_snapshots",
+        "panel_pdf_approvals",
+    }.issubset(names)
 
 
 def test_specs_staging_references_immutable_source_and_quality_fields():
@@ -48,8 +53,16 @@ def test_latest_spec_dedup_and_outer_join():
     assert "ROW_NUMBER() OVER" in sql
     assert "PARTITION BY s.source_url" in sql
     assert "ORDER BY s.fetched_at DESC, s.spec_id DESC" in sql
-    assert "WHERE latest_version_rank = 1" in sql
-    assert "LEFT JOIN latest_specs" in sql
+    # The HTML deduplication contract survives the PDF enrichment rename:
+    # latest_html uses rn=1, latest_pdf has its own independent rn=1.
+    assert "latest_html AS (" in sql
+    assert "SELECT * FROM ranked_html WHERE rn = 1" in sql
+    assert "LEFT JOIN latest_html s ON r.source_url = s.source_url" in sql
+    assert "ranked_pdf AS (" in sql
+    assert "PARTITION BY p.source_url" in sql
+    assert "ORDER BY p.approved_at DESC, p.approval_id DESC" in sql
+    assert "SELECT * FROM ranked_pdf WHERE rn = 1" in sql
+    assert "LEFT JOIN latest_pdf p ON r.source_url = p.source_url" in sql
     assert "ref('current_panel_ranking')" in sql
     assert "is_technical_comparable" in sql
 

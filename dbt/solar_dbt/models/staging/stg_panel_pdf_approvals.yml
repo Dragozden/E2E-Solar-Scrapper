@@ -1,0 +1,17 @@
+version: 2
+models:
+  - name: stg_panel_pdf_approvals
+    description: Verified source PDF and exact STC column, manually approved. Append-only evidence.
+    columns:
+      - name: approval_id
+        data_tests: [not_null, unique]
+      - name: source_url
+        data_tests: [not_null]
+      - name: pdf_sha256
+        data_tests: [not_null]
+      - name: pdf_quality
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['PASS', 'REVIEW']

@@ -11,3 +11,5 @@ sources:
         description: Scraper execution metadata
       - name: panel_spec_snapshots
         description: Immutable detail-page specifications, one row per URL and spec_hash
+      - name: panel_pdf_approvals
+        description: Immutable locally reviewed PDF/STC evidence for an exact catalog variant

@@ -51,11 +51,15 @@ class FakePage:
         if moved:
             self.url = moved
 
-    def content(self):
-        moved = self.behavior.get(self.selected, {}).get('redirect_on_content')
+    def evaluate(self, expression):
+        assert "window.location.href" in expression
+        assert "document.documentElement.outerHTML" in expression
+        behavior = self.behavior.get(self.selected, {})
+        moved = behavior.get('redirect_on_content')
         if moved:
             self.url = moved
-        return DESCRIPTION
+        html = behavior.get('html', DESCRIPTION)
+        return {'href': self.url, 'html': html}
 
 
 class FakeBrowser:
@@ -108,7 +112,7 @@ def test_redirect_to_category_skipped_without_crashing_remaining_products(monkey
     assert [s.source_url for s in samples] == [URL_1, URL_3]
     out = capsys.readouterr()
     assert 'LIVE SUMMARY: 2/3' in out.out
-    assert 'unexpected redirect' in out.err
+    assert 'left the intended HTTPS product path' in out.err
 
 
 def test_write_mode_refuses_partial_live_run(monkeypatch):

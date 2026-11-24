@@ -138,8 +138,15 @@ def test_conflicting_duplicate_label_flagged():
     assert 'conflicting_voc_v' in issues
 
 
-def test_combined_warranty_requires_review():
+def test_combined_warranty_with_explicit_subjects_is_parsed():
     result, issues = _normalize([{'label': 'Gwarancja', 'value': '12 lat produktu, 30 lat mocy'}])
+    assert result['product_warranty_years'] == 12
+    assert result['performance_warranty_years'] == 30
+    assert issues == []
+
+
+def test_ambiguous_warranty_still_requires_review():
+    result, issues = _normalize([{'label': 'Gwarancja', 'value': '12 lat i 30 lat'}])
     assert 'product_warranty_years' not in result
     assert 'combined_warranty_needs_review' in issues
 

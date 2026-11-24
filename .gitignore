@@ -32,3 +32,9 @@ airflow/state/
 backups/
 *.dump
 *.backup
+
+# Runtime scraper locks
+/runtime/locks/
+
+# Temporary credential files
+.env.pending

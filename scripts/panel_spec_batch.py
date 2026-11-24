@@ -40,7 +40,7 @@ STOPPED_OUTCOMES = frozenset({"STOPPED"})
 OUTCOMES = frozenset({
     "PASS", "INCOMPLETE", "REVIEW", "POWER_MISMATCH", "SKIPPED", "STOPPED"
 })
-LOCKFILE = ROOT / "backups" / ".panel_spec_batch.lock"
+LOCKFILE = ROOT / "runtime" / "locks" / ".panel_spec_batch.lock"
 
 
 @dataclass(frozen=True)

@@ -1,3 +1,4 @@
+
 # Docker Compose automatically merges this file with docker/docker-compose.yml.
 # Do not run 'docker compose down -v': postgres_data holds historical observations.
 services:
@@ -23,7 +24,7 @@ services:
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: "5432"
-      PYTHONPATH: /opt/airflow/solar
+      PYTHONPATH: /opt/airflow/dags:/opt/airflow/solar
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
       AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: "admin:admin"
@@ -33,8 +34,10 @@ services:
       - ../airflow/dags:/opt/airflow/dags:rw
       - ../scraper:/opt/airflow/solar/scraper:rw
       - ../dbt/solar_dbt:/opt/airflow/solar/dbt:rw
+      - ../scripts:/opt/airflow/solar/scripts:ro
       - solar_airflow_state:/opt/airflow/state
       - solar_airflow_logs:/opt/airflow/logs
+      - ../runtime/locks:/opt/airflow/solar/runtime/locks:rw
     depends_on:
       - postgres
 

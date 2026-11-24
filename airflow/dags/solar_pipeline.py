@@ -32,7 +32,7 @@ def run_command(command: list[str]) -> None:
     tags=["solar", "elt", "postgres", "dbt"],
 )
 def solar_pipeline():
-    @task(retries=0)
+    @task(retries=0, pool="solar_source_access")
     def scrape_to_bronze():
         run_command([PYTHON, "-m", "scraper.main"])
 

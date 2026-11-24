@@ -40,7 +40,17 @@ combined AS (
         s.page_title AS spec_page_title,
         s.spec_quality AS html_spec_quality,
         s.parse_issue_count AS html_parse_issue_count,
-        CASE WHEN p.approval_id IS NOT NULL THEN p.pdf_quality ELSE s.spec_quality END AS spec_quality,
+        CASE
+            WHEN p.approval_method = 'local_pdf_ocr_manual_v1' AND (
+                CASE WHEN jsonb_typeof(s.parse_issues) = 'array' THEN
+                    (s.parse_issues - ARRAY[
+                        'conflicting_rated_power_w', 'conflicting_voc_v', 'conflicting_vmp_v',
+                        'conflicting_isc_a', 'conflicting_imp_a', 'conflicting_efficiency_pct'
+                    ]::text[]) <> '[]'::jsonb
+                ELSE TRUE END
+            ) THEN 'REVIEW'
+            WHEN p.approval_id IS NOT NULL THEN p.pdf_quality
+            ELSE s.spec_quality END AS spec_quality,
         s.parse_issue_count,
         s.parse_issues,
         s.datasheet_urls,
@@ -79,7 +89,10 @@ combined AS (
         p.pdf_url AS pdf_source_url,
         p.pdf_page,
         p.variant_column AS pdf_variant_column,
-        p.approved_at AS pdf_approved_at
+        p.approved_at AS pdf_approved_at,
+        p.approval_method AS pdf_approval_method,
+        p.ocr_evidence_sha256 AS pdf_ocr_evidence_sha256,
+        p.pdf_quality AS pdf_stc_quality
     FROM {{ ref('current_panel_ranking') }} r
     LEFT JOIN latest_html s ON r.source_url = s.source_url
     LEFT JOIN latest_pdf p ON r.source_url = p.source_url
@@ -148,5 +161,8 @@ SELECT
     pdf_source_url,
     pdf_page,
     pdf_variant_column,
-    pdf_approved_at
+    pdf_approved_at,
+    pdf_approval_method,
+    pdf_ocr_evidence_sha256,
+    pdf_stc_quality
 FROM combined

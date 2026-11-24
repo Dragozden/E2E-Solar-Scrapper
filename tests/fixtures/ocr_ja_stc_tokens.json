@@ -1,0 +1,2361 @@
+{
+  "status": "OCR_EVIDENCE_ONLY",
+  "model_requested": "JAM60D40-505/LB",
+  "power_w_requested": 505,
+  "pdf_sha256": "73745e1e04918b1295265a6ffa852e36746bfd89b0f8b8888a1c2d2fb0952d55",
+  "page": 2,
+  "resolution_dpi": 250,
+  "image_width": 2067,
+  "image_height": 2806,
+  "text_layer_characters": 0,
+  "ocr_language": "eng",
+  "ocr_words": [
+    {
+      "text": "ELECTRICAL",
+      "confidence": 96.01696,
+      "left": 109,
+      "top": 1363,
+      "width": 152,
+      "height": 20
+    },
+    {
+      "text": "PARAMETERS",
+      "confidence": 96.01696,
+      "left": 270,
+      "top": 1363,
+      "width": 167,
+      "height": 20
+    },
+    {
+      "text": "AT",
+      "confidence": 96.007347,
+      "left": 444,
+      "top": 1363,
+      "width": 31,
+      "height": 19
+    },
+    {
+      "text": "STC",
+      "confidence": 96.007347,
+      "left": 483,
+      "top": 1363,
+      "width": 45,
+      "height": 20
+    },
+    {
+      "text": "CHARACTERISTICS",
+      "confidence": 96.423485,
+      "left": 1321,
+      "top": 1362,
+      "width": 233,
+      "height": 20
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 65.831978,
+      "left": 459,
+      "top": 1429,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 84.208206,
+      "left": 593,
+      "top": 1429,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 86.820137,
+      "left": 727,
+      "top": 1429,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 36.960335,
+      "left": 861,
+      "top": 1429,
+      "width": 118,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 89.155899,
+      "left": 995,
+      "top": 1429,
+      "width": 118,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 91.573921,
+      "left": 1128,
+      "top": 1429,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "Current-Voltage",
+      "confidence": 93.029518,
+      "left": 1476,
+      "top": 1429,
+      "width": 136,
+      "height": 20
+    },
+    {
+      "text": "Curve",
+      "confidence": 50.146141,
+      "left": 1619,
+      "top": 1430,
+      "width": 49,
+      "height": 14
+    },
+    {
+      "text": "JAM60D40-500/LB",
+      "confidence": 50.146141,
+      "left": 1691,
+      "top": 1428,
+      "width": 172,
+      "height": 20
+    },
+    {
+      "text": "YPE",
+      "confidence": 91.937935,
+      "left": 120,
+      "top": 1464,
+      "width": 38,
+      "height": 17
+    },
+    {
+      "text": "-485/LB",
+      "confidence": 87.563057,
+      "left": 494,
+      "top": 1459,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-490/LB",
+      "confidence": 88.189888,
+      "left": 628,
+      "top": 1459,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-495/LB",
+      "confidence": 50.489395,
+      "left": 762,
+      "top": 1459,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-500/LB",
+      "confidence": 91.97068,
+      "left": 896,
+      "top": 1459,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-505/LB",
+      "confidence": 90.766273,
+      "left": 1030,
+      "top": 1459,
+      "width": 83,
+      "height": 24
+    },
+    {
+      "text": "-510/LB",
+      "confidence": 91.531326,
+      "left": 1163,
+      "top": 1459,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "ava",
+      "confidence": 41.429588,
+      "left": 1456,
+      "top": 1496,
+      "width": 16,
+      "height": 13
+    },
+    {
+      "text": "1000W/m?",
+      "confidence": 54.585922,
+      "left": 1507,
+      "top": 1487,
+      "width": 79,
+      "height": 17
+    },
+    {
+      "text": "Rated",
+      "confidence": 96.685555,
+      "left": 109,
+      "top": 1504,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "Maximum",
+      "confidence": 93.273308,
+      "left": 174,
+      "top": 1505,
+      "width": 99,
+      "height": 17
+    },
+    {
+      "text": "Power(Pmax)",
+      "confidence": 31.62278,
+      "left": 282,
+      "top": 1504,
+      "width": 135,
+      "height": 22
+    },
+    {
+      "text": "[W",
+      "confidence": 87.938293,
+      "left": 426,
+      "top": 1504,
+      "width": 24,
+      "height": 22
+    },
+    {
+      "text": "485",
+      "confidence": 86.776672,
+      "left": 539,
+      "top": 1502,
+      "width": 39,
+      "height": 19
+    },
+    {
+      "text": "490",
+      "confidence": 96.966637,
+      "left": 673,
+      "top": 1502,
+      "width": 39,
+      "height": 19
+    },
+    {
+      "text": "495",
+      "confidence": 96.880432,
+      "left": 807,
+      "top": 1502,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "500",
+      "confidence": 96.269684,
+      "left": 941,
+      "top": 1502,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "505",
+      "confidence": 96.918083,
+      "left": 1075,
+      "top": 1502,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "510",
+      "confidence": 96.155487,
+      "left": 1209,
+      "top": 1502,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "10",
+      "confidence": 95.602646,
+      "left": 1456,
+      "top": 1520,
+      "width": 16,
+      "height": 13
+    },
+    {
+      "text": "800W/m?",
+      "confidence": 81.867142,
+      "left": 1506,
+      "top": 1520,
+      "width": 70,
+      "height": 17
+    },
+    {
+      "text": "43.25",
+      "confidence": 89.081154,
+      "left": 519,
+      "top": 1544,
+      "width": 59,
+      "height": 19
+    },
+    {
+      "text": "43.45",
+      "confidence": 96.32222,
+      "left": 653,
+      "top": 1544,
+      "width": 58,
+      "height": 19
+    },
+    {
+      "text": "43.65",
+      "confidence": 96.326027,
+      "left": 787,
+      "top": 1544,
+      "width": 58,
+      "height": 19
+    },
+    {
+      "text": "43.85",
+      "confidence": 94.348259,
+      "left": 921,
+      "top": 1544,
+      "width": 58,
+      "height": 19
+    },
+    {
+      "text": "44,05",
+      "confidence": 92.960899,
+      "left": 1055,
+      "top": 1544,
+      "width": 58,
+      "height": 19
+    },
+    {
+      "text": "44.25",
+      "confidence": 73.88707,
+      "left": 1189,
+      "top": 1544,
+      "width": 58,
+      "height": 19
+    },
+    {
+      "text": "Open",
+      "confidence": 96.929008,
+      "left": 108,
+      "top": 1547,
+      "width": 53,
+      "height": 22
+    },
+    {
+      "text": "Circuit",
+      "confidence": 96.531174,
+      "left": 169,
+      "top": 1547,
+      "width": 66,
+      "height": 17
+    },
+    {
+      "text": "Voltage",
+      "confidence": 96.400146,
+      "left": 241,
+      "top": 1546,
+      "width": 76,
+      "height": 24
+    },
+    {
+      "text": "(Voc)",
+      "confidence": 93.306107,
+      "left": 326,
+      "top": 1546,
+      "width": 48,
+      "height": 22
+    },
+    {
+      "text": "[V]",
+      "confidence": 88.239075,
+      "left": 383,
+      "top": 1546,
+      "width": 23,
+      "height": 22
+    },
+    {
+      "text": "600W/m?",
+      "confidence": 78.166161,
+      "left": 1506,
+      "top": 1554,
+      "width": 70,
+      "height": 16
+    },
+    {
+      "text": "36.28",
+      "confidence": 96.338058,
+      "left": 520,
+      "top": 1586,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "36.49",
+      "confidence": 96.798996,
+      "left": 654,
+      "top": 1586,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "36.70",
+      "confidence": 96.884239,
+      "left": 788,
+      "top": 1586,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "36.91",
+      "confidence": 94.013969,
+      "left": 922,
+      "top": 1586,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "37.11",
+      "confidence": 92.50576,
+      "left": 1056,
+      "top": 1586,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "37.31",
+      "confidence": 92.699638,
+      "left": 1189,
+      "top": 1586,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "4|",
+      "confidence": 0.0,
+      "left": 1463,
+      "top": 1591,
+      "width": 9,
+      "height": 13
+    },
+    {
+      "text": "400W/m?",
+      "confidence": 64.363297,
+      "left": 1505,
+      "top": 1587,
+      "width": 71,
+      "height": 17
+    },
+    {
+      "text": "aximum",
+      "confidence": 91.241486,
+      "left": 126,
+      "top": 1588,
+      "width": 81,
+      "height": 18
+    },
+    {
+      "text": "Power",
+      "confidence": 93.305908,
+      "left": 217,
+      "top": 1583,
+      "width": 53,
+      "height": 32
+    },
+    {
+      "text": "Voltage(Vmp)",
+      "confidence": 86.46003,
+      "left": 282,
+      "top": 1583,
+      "width": 133,
+      "height": 32
+    },
+    {
+      "text": "[V.",
+      "confidence": 38.708691,
+      "left": 432,
+      "top": 1588,
+      "width": 17,
+      "height": 21
+    },
+    {
+      "text": "Short",
+      "confidence": 95.998352,
+      "left": 108,
+      "top": 1629,
+      "width": 55,
+      "height": 19
+    },
+    {
+      "text": "Circuit",
+      "confidence": 93.040764,
+      "left": 170,
+      "top": 1630,
+      "width": 66,
+      "height": 18
+    },
+    {
+      "text": "Current(Isc)",
+      "confidence": 43.113968,
+      "left": 243,
+      "top": 1629,
+      "width": 119,
+      "height": 22
+    },
+    {
+      "text": "[A]",
+      "confidence": 95.320061,
+      "left": 371,
+      "top": 1629,
+      "width": 24,
+      "height": 22
+    },
+    {
+      "text": "14.24",
+      "confidence": 94.444283,
+      "left": 521,
+      "top": 1627,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "14.30",
+      "confidence": 90.640816,
+      "left": 655,
+      "top": 1627,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "14.36",
+      "confidence": 93.561493,
+      "left": 789,
+      "top": 1627,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "14.42",
+      "confidence": 91.680611,
+      "left": 923,
+      "top": 1627,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "14.48",
+      "confidence": 95.954079,
+      "left": 1057,
+      "top": 1628,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "14.54",
+      "confidence": 91.141487,
+      "left": 1191,
+      "top": 1628,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "2)",
+      "confidence": 44.804565,
+      "left": 1464,
+      "top": 1615,
+      "width": 8,
+      "height": 13
+    },
+    {
+      "text": "200w/m?",
+      "confidence": 44.804565,
+      "left": 1506,
+      "top": 1620,
+      "width": 70,
+      "height": 17
+    },
+    {
+      "text": "[)",
+      "confidence": 0.0,
+      "left": 1476,
+      "top": 1651,
+      "width": 8,
+      "height": 14
+    },
+    {
+      "text": "10",
+      "confidence": 96.015144,
+      "left": 1546,
+      "top": 1651,
+      "width": 16,
+      "height": 14
+    },
+    {
+      "text": "20",
+      "confidence": 96.323586,
+      "left": 1622,
+      "top": 1651,
+      "width": 16,
+      "height": 14
+    },
+    {
+      "text": "30",
+      "confidence": 95.02179,
+      "left": 1695,
+      "top": 1651,
+      "width": 17,
+      "height": 14
+    },
+    {
+      "text": "40",
+      "confidence": 96.038994,
+      "left": 1771,
+      "top": 1651,
+      "width": 17,
+      "height": 14
+    },
+    {
+      "text": "50",
+      "confidence": 93.894104,
+      "left": 1845,
+      "top": 1651,
+      "width": 17,
+      "height": 14
+    },
+    {
+      "text": "aximum",
+      "confidence": 91.790787,
+      "left": 126,
+      "top": 1672,
+      "width": 81,
+      "height": 17
+    },
+    {
+      "text": "Power",
+      "confidence": 93.261681,
+      "left": 217,
+      "top": 1672,
+      "width": 63,
+      "height": 17
+    },
+    {
+      "text": "Current(Imp)",
+      "confidence": 86.484222,
+      "left": 286,
+      "top": 1671,
+      "width": 132,
+      "height": 23
+    },
+    {
+      "text": "[A.",
+      "confidence": 55.598114,
+      "left": 427,
+      "top": 1671,
+      "width": 19,
+      "height": 22
+    },
+    {
+      "text": "13.37",
+      "confidence": 95.68293,
+      "left": 521,
+      "top": 1669,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "13.43",
+      "confidence": 96.165138,
+      "left": 655,
+      "top": 1669,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "13.49",
+      "confidence": 95.216019,
+      "left": 789,
+      "top": 1669,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "13,55",
+      "confidence": 78.911842,
+      "left": 923,
+      "top": 1669,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "13.61",
+      "confidence": 95.57608,
+      "left": 1057,
+      "top": 1669,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "13.67",
+      "confidence": 88.163292,
+      "left": 1191,
+      "top": 1669,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "Voltage(V)",
+      "confidence": 44.096661,
+      "left": 1633,
+      "top": 1675,
+      "width": 88,
+      "height": 20
+    },
+    {
+      "text": "odule",
+      "confidence": 92.870872,
+      "left": 126,
+      "top": 1713,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "Efficiency",
+      "confidence": 93.306152,
+      "left": 192,
+      "top": 1712,
+      "width": 97,
+      "height": 24
+    },
+    {
+      "text": "[%]",
+      "confidence": 87.073837,
+      "left": 297,
+      "top": 1713,
+      "width": 31,
+      "height": 21
+    },
+    {
+      "text": "21.9",
+      "confidence": 85.653046,
+      "left": 533,
+      "top": 1711,
+      "width": 45,
+      "height": 18
+    },
+    {
+      "text": "22.1",
+      "confidence": 95.130539,
+      "left": 667,
+      "top": 1711,
+      "width": 44,
+      "height": 18
+    },
+    {
+      "text": "22.4",
+      "confidence": 95.485016,
+      "left": 801,
+      "top": 1711,
+      "width": 45,
+      "height": 18
+    },
+    {
+      "text": "22.6",
+      "confidence": 93.333168,
+      "left": 935,
+      "top": 1711,
+      "width": 45,
+      "height": 18
+    },
+    {
+      "text": "22.8",
+      "confidence": 94.798019,
+      "left": 1069,
+      "top": 1711,
+      "width": 44,
+      "height": 18
+    },
+    {
+      "text": "23.0",
+      "confidence": 96.459724,
+      "left": 1203,
+      "top": 1711,
+      "width": 44,
+      "height": 18
+    },
+    {
+      "text": "Power-Voltage",
+      "confidence": 91.879692,
+      "left": 1477,
+      "top": 1719,
+      "width": 124,
+      "height": 20
+    },
+    {
+      "text": "Curve",
+      "confidence": 72.782013,
+      "left": 1607,
+      "top": 1720,
+      "width": 50,
+      "height": 15
+    },
+    {
+      "text": "JAM60D40-500/LB",
+      "confidence": 72.782013,
+      "left": 1680,
+      "top": 1718,
+      "width": 172,
+      "height": 20
+    },
+    {
+      "text": "50",
+      "confidence": 76.053207,
+      "left": 1446,
+      "top": 1751,
+      "width": 17,
+      "height": 13
+    },
+    {
+      "text": "Power",
+      "confidence": 96.069351,
+      "left": 109,
+      "top": 1756,
+      "width": 63,
+      "height": 17
+    },
+    {
+      "text": "Tolerance",
+      "confidence": 96.669266,
+      "left": 178,
+      "top": 1754,
+      "width": 100,
+      "height": 19
+    },
+    {
+      "text": "0~+3%",
+      "confidence": 43.603027,
+      "left": 849,
+      "top": 1754,
+      "width": 73,
+      "height": 19
+    },
+    {
+      "text": "\u2014",
+      "confidence": 84.615257,
+      "left": 1490,
+      "top": 1771,
+      "width": 27,
+      "height": 2
+    },
+    {
+      "text": "1000W/m?",
+      "confidence": 85.923981,
+      "left": 1524,
+      "top": 1763,
+      "width": 80,
+      "height": 17
+    },
+    {
+      "text": "a]",
+      "confidence": 6.525841,
+      "left": 1421,
+      "top": 1804,
+      "width": 14,
+      "height": 9
+    },
+    {
+      "text": "10",
+      "confidence": 77.926071,
+      "left": 1464,
+      "top": 1787,
+      "width": 8,
+      "height": 13
+    },
+    {
+      "text": "|",
+      "confidence": 90.923447,
+      "left": 1480,
+      "top": 1779,
+      "width": 8,
+      "height": 25
+    },
+    {
+      "text": "\u2014\u2014",
+      "confidence": 82.347122,
+      "left": 1490,
+      "top": 1791,
+      "width": 27,
+      "height": 1
+    },
+    {
+      "text": "800W/m?",
+      "confidence": 80.421204,
+      "left": 1524,
+      "top": 1783,
+      "width": 70,
+      "height": 17
+    },
+    {
+      "text": "emperature",
+      "confidence": 91.575294,
+      "left": 119,
+      "top": 1798,
+      "width": 120,
+      "height": 21
+    },
+    {
+      "text": "Coefficient",
+      "confidence": 94.775154,
+      "left": 247,
+      "top": 1796,
+      "width": 110,
+      "height": 18
+    },
+    {
+      "text": "of",
+      "confidence": 92.804375,
+      "left": 364,
+      "top": 1796,
+      "width": 20,
+      "height": 18
+    },
+    {
+      "text": "Isc(a_Isc)",
+      "confidence": 53.550755,
+      "left": 391,
+      "top": 1796,
+      "width": 94,
+      "height": 22
+    },
+    {
+      "text": "+0.045%/\u00b0C",
+      "confidence": 86.419273,
+      "left": 822,
+      "top": 1795,
+      "width": 127,
+      "height": 23
+    },
+    {
+      "text": "\u00b0",
+      "confidence": 10.991928,
+      "left": 1420,
+      "top": 1815,
+      "width": 11,
+      "height": 9
+    },
+    {
+      "text": "=",
+      "confidence": 83.81958,
+      "left": 1421,
+      "top": 1826,
+      "width": 10,
+      "height": 14
+    },
+    {
+      "text": "300",
+      "confidence": 94.032036,
+      "left": 1446,
+      "top": 1822,
+      "width": 26,
+      "height": 13
+    },
+    {
+      "text": "|",
+      "confidence": 92.536407,
+      "left": 1478,
+      "top": 1818,
+      "width": 10,
+      "height": 26
+    },
+    {
+      "text": "\u2014\u2014",
+      "confidence": 17.898575,
+      "left": 1490,
+      "top": 1830,
+      "width": 27,
+      "height": 2
+    },
+    {
+      "text": "400W/m?",
+      "confidence": 88.465256,
+      "left": 1523,
+      "top": 1822,
+      "width": 71,
+      "height": 17
+    },
+    {
+      "text": "600W/m?",
+      "confidence": 65.89772,
+      "left": 1524,
+      "top": 1803,
+      "width": 70,
+      "height": 16
+    },
+    {
+      "text": "emperature",
+      "confidence": 87.905457,
+      "left": 119,
+      "top": 1840,
+      "width": 120,
+      "height": 21
+    },
+    {
+      "text": "Coefficient",
+      "confidence": 96.816925,
+      "left": 247,
+      "top": 1837,
+      "width": 110,
+      "height": 19
+    },
+    {
+      "text": "of",
+      "confidence": 96.970078,
+      "left": 364,
+      "top": 1837,
+      "width": 20,
+      "height": 19
+    },
+    {
+      "text": "Voc",
+      "confidence": 93.306015,
+      "left": 389,
+      "top": 1839,
+      "width": 36,
+      "height": 17
+    },
+    {
+      "text": "(B_Voc)",
+      "confidence": 83.938683,
+      "left": 433,
+      "top": 1837,
+      "width": 75,
+      "height": 23
+    },
+    {
+      "text": "-0.250%/\u00b0C",
+      "confidence": 66.013397,
+      "left": 824,
+      "top": 1837,
+      "width": 122,
+      "height": 23
+    },
+    {
+      "text": "a",
+      "confidence": 46.249855,
+      "left": 1420,
+      "top": 1841,
+      "width": 11,
+      "height": 9
+    },
+    {
+      "text": "200W/m?",
+      "confidence": 55.936665,
+      "left": 1524,
+      "top": 1842,
+      "width": 70,
+      "height": 17
+    },
+    {
+      "text": "ex",
+      "confidence": 18.34169,
+      "left": 1417,
+      "top": 1853,
+      "width": 37,
+      "height": 28
+    },
+    {
+      "text": "Temperature",
+      "confidence": 96.228989,
+      "left": 107,
+      "top": 1881,
+      "width": 132,
+      "height": 22
+    },
+    {
+      "text": "Coefficient",
+      "confidence": 96.479752,
+      "left": 247,
+      "top": 1879,
+      "width": 110,
+      "height": 19
+    },
+    {
+      "text": "of",
+      "confidence": 93.285957,
+      "left": 364,
+      "top": 1879,
+      "width": 20,
+      "height": 19
+    },
+    {
+      "text": "Pmax(y_Pmp)",
+      "confidence": 91.499603,
+      "left": 391,
+      "top": 1879,
+      "width": 142,
+      "height": 24
+    },
+    {
+      "text": "-0,290%/\u00b0C",
+      "confidence": 68.215004,
+      "left": 824,
+      "top": 1878,
+      "width": 122,
+      "height": 24
+    },
+    {
+      "text": "~",
+      "confidence": 64.01606,
+      "left": 1417,
+      "top": 1883,
+      "width": 19,
+      "height": 3
+    },
+    {
+      "text": "100",
+      "confidence": 75.628258,
+      "left": 1447,
+      "top": 1893,
+      "width": 25,
+      "height": 13
+    },
+    {
+      "text": "STC",
+      "confidence": 96.249557,
+      "left": 108,
+      "top": 1922,
+      "width": 37,
+      "height": 17
+    },
+    {
+      "text": "Irradiance",
+      "confidence": 89.864998,
+      "left": 618,
+      "top": 1921,
+      "width": 102,
+      "height": 18
+    },
+    {
+      "text": "1000W/m?,",
+      "confidence": 29.402534,
+      "left": 728,
+      "top": 1921,
+      "width": 108,
+      "height": 22
+    },
+    {
+      "text": "cell",
+      "confidence": 96.937561,
+      "left": 843,
+      "top": 1921,
+      "width": 34,
+      "height": 18
+    },
+    {
+      "text": "temperature",
+      "confidence": 96.182991,
+      "left": 884,
+      "top": 1923,
+      "width": 128,
+      "height": 21
+    },
+    {
+      "text": "25\u00b0C,",
+      "confidence": 93.235657,
+      "left": 1019,
+      "top": 1922,
+      "width": 51,
+      "height": 21
+    },
+    {
+      "text": "AM1.5G",
+      "confidence": 89.860077,
+      "left": 1077,
+      "top": 1922,
+      "width": 76,
+      "height": 17
+    },
+    {
+      "text": "it)",
+      "confidence": 31.663986,
+      "left": 1464,
+      "top": 1929,
+      "width": 8,
+      "height": 13
+    },
+    {
+      "text": "0",
+      "confidence": 73.851318,
+      "left": 1474,
+      "top": 1941,
+      "width": 8,
+      "height": 13
+    },
+    {
+      "text": "10",
+      "confidence": 95.780441,
+      "left": 1545,
+      "top": 1941,
+      "width": 16,
+      "height": 13
+    },
+    {
+      "text": "20",
+      "confidence": 96.774643,
+      "left": 1622,
+      "top": 1941,
+      "width": 16,
+      "height": 13
+    },
+    {
+      "text": "30",
+      "confidence": 95.315056,
+      "left": 1695,
+      "top": 1941,
+      "width": 17,
+      "height": 13
+    },
+    {
+      "text": "40",
+      "confidence": 95.549393,
+      "left": 1772,
+      "top": 1941,
+      "width": 17,
+      "height": 13
+    },
+    {
+      "text": "50",
+      "confidence": 95.144028,
+      "left": 1847,
+      "top": 1941,
+      "width": 17,
+      "height": 13
+    },
+    {
+      "text": "Remark:",
+      "confidence": 96.075874,
+      "left": 108,
+      "top": 1970,
+      "width": 70,
+      "height": 14
+    },
+    {
+      "text": "Electrical",
+      "confidence": 96.210358,
+      "left": 185,
+      "top": 1970,
+      "width": 75,
+      "height": 14
+    },
+    {
+      "text": "data",
+      "confidence": 96.735634,
+      "left": 266,
+      "top": 1970,
+      "width": 35,
+      "height": 14
+    },
+    {
+      "text": "in",
+      "confidence": 94.418694,
+      "left": 308,
+      "top": 1970,
+      "width": 13,
+      "height": 14
+    },
+    {
+      "text": "this",
+      "confidence": 94.418694,
+      "left": 327,
+      "top": 1970,
+      "width": 29,
+      "height": 14
+    },
+    {
+      "text": "catalog",
+      "confidence": 96.954681,
+      "left": 362,
+      "top": 1970,
+      "width": 60,
+      "height": 19
+    },
+    {
+      "text": "do",
+      "confidence": 95.291588,
+      "left": 428,
+      "top": 1970,
+      "width": 20,
+      "height": 14
+    },
+    {
+      "text": "not",
+      "confidence": 95.291588,
+      "left": 454,
+      "top": 1972,
+      "width": 27,
+      "height": 12
+    },
+    {
+      "text": "refer",
+      "confidence": 95.585022,
+      "left": 487,
+      "top": 1969,
+      "width": 58,
+      "height": 15
+    },
+    {
+      "text": "to",
+      "confidence": 95.079292,
+      "left": 531,
+      "top": 1965,
+      "width": 14,
+      "height": 28
+    },
+    {
+      "text": "a",
+      "confidence": 95.079292,
+      "left": 551,
+      "top": 1974,
+      "width": 7,
+      "height": 10
+    },
+    {
+      "text": "single",
+      "confidence": 96.781952,
+      "left": 565,
+      "top": 1970,
+      "width": 47,
+      "height": 19
+    },
+    {
+      "text": "module",
+      "confidence": 95.928352,
+      "left": 619,
+      "top": 1970,
+      "width": 62,
+      "height": 14
+    },
+    {
+      "text": "and",
+      "confidence": 95.928352,
+      "left": 687,
+      "top": 1970,
+      "width": 30,
+      "height": 14
+    },
+    {
+      "text": "they",
+      "confidence": 96.951538,
+      "left": 723,
+      "top": 1970,
+      "width": 36,
+      "height": 18
+    },
+    {
+      "text": "are",
+      "confidence": 96.505272,
+      "left": 765,
+      "top": 1974,
+      "width": 24,
+      "height": 10
+    },
+    {
+      "text": "not",
+      "confidence": 96.725311,
+      "left": 796,
+      "top": 1972,
+      "width": 26,
+      "height": 12
+    },
+    {
+      "text": "part",
+      "confidence": 96.901596,
+      "left": 828,
+      "top": 1971,
+      "width": 33,
+      "height": 17
+    },
+    {
+      "text": "of",
+      "confidence": 96.788902,
+      "left": 866,
+      "top": 1969,
+      "width": 16,
+      "height": 15
+    },
+    {
+      "text": "the",
+      "confidence": 96.788902,
+      "left": 887,
+      "top": 1970,
+      "width": 26,
+      "height": 14
+    },
+    {
+      "text": "offer.",
+      "confidence": 94.990379,
+      "left": 919,
+      "top": 1969,
+      "width": 40,
+      "height": 15
+    },
+    {
+      "text": "Voltage(\u00a5)",
+      "confidence": 35.462799,
+      "left": 1633,
+      "top": 1966,
+      "width": 88,
+      "height": 20
+    },
+    {
+      "text": "They",
+      "confidence": 96.747704,
+      "left": 107,
+      "top": 1990,
+      "width": 30,
+      "height": 28
+    },
+    {
+      "text": "only",
+      "confidence": 96.293152,
+      "left": 152,
+      "top": 1990,
+      "width": 33,
+      "height": 28
+    },
+    {
+      "text": "serve",
+      "confidence": 96.906792,
+      "left": 193,
+      "top": 1998,
+      "width": 43,
+      "height": 11
+    },
+    {
+      "text": "for",
+      "confidence": 96.946243,
+      "left": 242,
+      "top": 1994,
+      "width": 22,
+      "height": 15
+    },
+    {
+      "text": "comparison",
+      "confidence": 96.946243,
+      "left": 269,
+      "top": 1994,
+      "width": 97,
+      "height": 19
+    },
+    {
+      "text": "among",
+      "confidence": 96.088089,
+      "left": 373,
+      "top": 1998,
+      "width": 57,
+      "height": 15
+    },
+    {
+      "text": "different",
+      "confidence": 96.142654,
+      "left": 436,
+      "top": 1994,
+      "width": 70,
+      "height": 15
+    },
+    {
+      "text": "module",
+      "confidence": 96.461922,
+      "left": 512,
+      "top": 1994,
+      "width": 62,
+      "height": 15
+    },
+    {
+      "text": "types.",
+      "confidence": 96.250328,
+      "left": 580,
+      "top": 1996,
+      "width": 48,
+      "height": 17
+    },
+    {
+      "text": "ELECTRICAL",
+      "confidence": 96.331276,
+      "left": 109,
+      "top": 2059,
+      "width": 152,
+      "height": 20
+    },
+    {
+      "text": "CHARACTERISTICS",
+      "confidence": 95.878929,
+      "left": 269,
+      "top": 2059,
+      "width": 233,
+      "height": 20
+    },
+    {
+      "text": "WITH",
+      "confidence": 96.275528,
+      "left": 510,
+      "top": 2059,
+      "width": 65,
+      "height": 20
+    },
+    {
+      "text": "10%",
+      "confidence": 96.174965,
+      "left": 586,
+      "top": 2059,
+      "width": 52,
+      "height": 20
+    },
+    {
+      "text": "SOLAR",
+      "confidence": 94.908951,
+      "left": 647,
+      "top": 2059,
+      "width": 83,
+      "height": 20
+    },
+    {
+      "text": "IRRADIATION",
+      "confidence": 94.908951,
+      "left": 739,
+      "top": 2059,
+      "width": 162,
+      "height": 20
+    },
+    {
+      "text": "RATIO",
+      "confidence": 96.800201,
+      "left": 912,
+      "top": 2059,
+      "width": 73,
+      "height": 20
+    },
+    {
+      "text": "OPERATING",
+      "confidence": 96.143356,
+      "left": 1321,
+      "top": 2059,
+      "width": 146,
+      "height": 20
+    },
+    {
+      "text": "CONDITIONS",
+      "confidence": 95.791191,
+      "left": 1476,
+      "top": 2059,
+      "width": 161,
+      "height": 20
+    },
+    {
+      "text": "1500V",
+      "confidence": 81.72934,
+      "left": 1856,
+      "top": 2120,
+      "width": 65,
+      "height": 18
+    },
+    {
+      "text": "DC",
+      "confidence": 96.212967,
+      "left": 1929,
+      "top": 2120,
+      "width": 29,
+      "height": 18
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 90.407608,
+      "left": 459,
+      "top": 2129,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 88.564575,
+      "left": 593,
+      "top": 2129,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 87.241608,
+      "left": 727,
+      "top": 2129,
+      "width": 118,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 71.092247,
+      "left": 861,
+      "top": 2129,
+      "width": 118,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 72.910995,
+      "left": 994,
+      "top": 2129,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "JAM60D40",
+      "confidence": 89.365952,
+      "left": 1128,
+      "top": 2129,
+      "width": 119,
+      "height": 19
+    },
+    {
+      "text": "Maximum",
+      "confidence": 96.692299,
+      "left": 1322,
+      "top": 2121,
+      "width": 99,
+      "height": 17
+    },
+    {
+      "text": "System",
+      "confidence": 96.623405,
+      "left": 1429,
+      "top": 2121,
+      "width": 73,
+      "height": 22
+    },
+    {
+      "text": "Voltage",
+      "confidence": 96.533676,
+      "left": 1509,
+      "top": 2120,
+      "width": 76,
+      "height": 24
+    },
+    {
+      "text": "TYPE",
+      "confidence": 95.638046,
+      "left": 107,
+      "top": 2162,
+      "width": 51,
+      "height": 17
+    },
+    {
+      "text": "-485/LB",
+      "confidence": 90.44133,
+      "left": 494,
+      "top": 2159,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-490/LB",
+      "confidence": 90.038078,
+      "left": 628,
+      "top": 2159,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-495/LB",
+      "confidence": 57.48621,
+      "left": 762,
+      "top": 2159,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-500/LB",
+      "confidence": 92.592155,
+      "left": 896,
+      "top": 2159,
+      "width": 83,
+      "height": 24
+    },
+    {
+      "text": "-505/LB",
+      "confidence": 90.054253,
+      "left": 1029,
+      "top": 2159,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "-510/LB",
+      "confidence": 91.124443,
+      "left": 1163,
+      "top": 2159,
+      "width": 84,
+      "height": 24
+    },
+    {
+      "text": "Operating",
+      "confidence": 96.219643,
+      "left": 1321,
+      "top": 2162,
+      "width": 102,
+      "height": 23
+    },
+    {
+      "text": "Temperature",
+      "confidence": 96.862946,
+      "left": 1429,
+      "top": 2163,
+      "width": 132,
+      "height": 22
+    },
+    {
+      "text": "-40\u00b0C~+85\u00b0C",
+      "confidence": 54.351696,
+      "left": 1822,
+      "top": 2161,
+      "width": 135,
+      "height": 19
+    },
+    {
+      "text": "Rated",
+      "confidence": 96.585358,
+      "left": 109,
+      "top": 2202,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "Max",
+      "confidence": 93.297661,
+      "left": 175,
+      "top": 2204,
+      "width": 39,
+      "height": 17
+    },
+    {
+      "text": "Power(Pmax)",
+      "confidence": 92.128922,
+      "left": 222,
+      "top": 2202,
+      "width": 137,
+      "height": 23
+    },
+    {
+      "text": "[W]",
+      "confidence": 92.510376,
+      "left": 368,
+      "top": 2203,
+      "width": 31,
+      "height": 21
+    },
+    {
+      "text": "524",
+      "confidence": 96.090927,
+      "left": 540,
+      "top": 2202,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "529",
+      "confidence": 96.269951,
+      "left": 674,
+      "top": 2202,
+      "width": 37,
+      "height": 19
+    },
+    {
+      "text": "535",
+      "confidence": 95.608406,
+      "left": 808,
+      "top": 2202,
+      "width": 37,
+      "height": 19
+    },
+    {
+      "text": "540",
+      "confidence": 96.79245,
+      "left": 941,
+      "top": 2202,
+      "width": 38,
+      "height": 19
+    },
+    {
+      "text": "345",
+      "confidence": 81.186935,
+      "left": 1075,
+      "top": 2203,
+      "width": 38,
+      "height": 18
+    },
+    {
+      "text": "551",
+      "confidence": 75.080414,
+      "left": 1209,
+      "top": 2203,
+      "width": 38,
+      "height": 18
+    },
+    {
+      "text": "Maximum",
+      "confidence": 95.91275,
+      "left": 1322,
+      "top": 2204,
+      "width": 99,
+      "height": 18
+    },
+    {
+      "text": "Series",
+      "confidence": 96.183182,
+      "left": 1429,
+      "top": 2204,
+      "width": 61,
+      "height": 18
+    },
+    {
+      "text": "Fuse",
+      "confidence": 96.681137,
+      "left": 1498,
+      "top": 2205,
+      "width": 45,
+      "height": 17
+    },
+    {
+      "text": "Rating",
+      "confidence": 96.598892,
+      "left": 1551,
+      "top": 2204,
+      "width": 65,
+      "height": 23
+    },
+    {
+      "text": "30A",
+      "confidence": 92.830902,
+      "left": 1919,
+      "top": 2203,
+      "width": 39,
+      "height": 19
+    },
+    {
+      "text": "Open",
+      "confidence": 96.789711,
+      "left": 108,
+      "top": 2245,
+      "width": 53,
+      "height": 22
+    },
+    {
+      "text": "Circuit",
+      "confidence": 93.258957,
+      "left": 170,
+      "top": 2245,
+      "width": 67,
+      "height": 17
+    },
+    {
+      "text": "Voltage(Voc)",
+      "confidence": 71.442299,
+      "left": 243,
+      "top": 2244,
+      "width": 129,
+      "height": 24
+    },
+    {
+      "text": "[V]",
+      "confidence": 84.510254,
+      "left": 381,
+      "top": 2244,
+      "width": 24,
+      "height": 22
+    },
+    {
+      "text": "43.25",
+      "confidence": 95.14344,
+      "left": 519,
+      "top": 2244,
+      "width": 59,
+      "height": 18
+    },
+    {
+      "text": "43.45",
+      "confidence": 95.97438,
+      "left": 653,
+      "top": 2244,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "43.65",
+      "confidence": 96.180672,
+      "left": 787,
+      "top": 2244,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "43.85",
+      "confidence": 95.477585,
+      "left": 921,
+      "top": 2244,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "44.05",
+      "confidence": 95.324196,
+      "left": 1055,
+      "top": 2244,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "44.25",
+      "confidence": 94.822929,
+      "left": 1189,
+      "top": 2244,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "Maximum",
+      "confidence": 96.269753,
+      "left": 1322,
+      "top": 2246,
+      "width": 99,
+      "height": 17
+    },
+    {
+      "text": "Static",
+      "confidence": 96.287857,
+      "left": 1429,
+      "top": 2246,
+      "width": 56,
+      "height": 17
+    },
+    {
+      "text": "Load,",
+      "confidence": 96.860977,
+      "left": 1493,
+      "top": 2245,
+      "width": 54,
+      "height": 22
+    },
+    {
+      "text": "Front",
+      "confidence": 96.486191,
+      "left": 1556,
+      "top": 2246,
+      "width": 53,
+      "height": 17
+    },
+    {
+      "text": "5400Pa(112",
+      "confidence": 92.196075,
+      "left": 1759,
+      "top": 2243,
+      "width": 127,
+      "height": 25
+    },
+    {
+      "text": "lb/ft?)",
+      "confidence": 73.05629,
+      "left": 1895,
+      "top": 2241,
+      "width": 61,
+      "height": 26
+    },
+    {
+      "text": "Max",
+      "confidence": 96.446548,
+      "left": 109,
+      "top": 2287,
+      "width": 39,
+      "height": 17
+    },
+    {
+      "text": "Power",
+      "confidence": 93.158394,
+      "left": 156,
+      "top": 2281,
+      "width": 54,
+      "height": 32
+    },
+    {
+      "text": "Voltage(Vmp)",
+      "confidence": 89.713928,
+      "left": 225,
+      "top": 2281,
+      "width": 132,
+      "height": 32
+    },
+    {
+      "text": "[V]",
+      "confidence": 91.147995,
+      "left": 374,
+      "top": 2286,
+      "width": 23,
+      "height": 22
+    },
+    {
+      "text": "36.28",
+      "confidence": 95.483139,
+      "left": 520,
+      "top": 2286,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "36.49",
+      "confidence": 96.555222,
+      "left": 654,
+      "top": 2286,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "36.70",
+      "confidence": 96.716843,
+      "left": 788,
+      "top": 2286,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "36.91",
+      "confidence": 96.006638,
+      "left": 921,
+      "top": 2286,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "37.11",
+      "confidence": 94.03054,
+      "left": 1055,
+      "top": 2286,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "37.31",
+      "confidence": 94.096176,
+      "left": 1189,
+      "top": 2286,
+      "width": 58,
+      "height": 18
+    },
+    {
+      "text": "Maximum",
+      "confidence": 94.325012,
+      "left": 1322,
+      "top": 2287,
+      "width": 99,
+      "height": 18
+    },
+    {
+      "text": "Static",
+      "confidence": 96.220306,
+      "left": 1429,
+      "top": 2287,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "Load,",
+      "confidence": 96.49173,
+      "left": 1493,
+      "top": 2287,
+      "width": 54,
+      "height": 22
+    },
+    {
+      "text": "Back",
+      "confidence": 96.967216,
+      "left": 1556,
+      "top": 2287,
+      "width": 48,
+      "height": 18
+    },
+    {
+      "text": "2400Pa(50",
+      "confidence": 88.186241,
+      "left": 1773,
+      "top": 2285,
+      "width": 113,
+      "height": 24
+    },
+    {
+      "text": "Ib/ft?)",
+      "confidence": 19.437103,
+      "left": 1895,
+      "top": 2283,
+      "width": 61,
+      "height": 26
+    },
+    {
+      "text": "15.38",
+      "confidence": 93.587982,
+      "left": 521,
+      "top": 2327,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "15.44",
+      "confidence": 94.71653,
+      "left": 655,
+      "top": 2328,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "15.51",
+      "confidence": 93.758392,
+      "left": 789,
+      "top": 2328,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "15.57",
+      "confidence": 89.191154,
+      "left": 923,
+      "top": 2328,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "15.64",
+      "confidence": 95.931717,
+      "left": 1057,
+      "top": 2327,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "15.70",
+      "confidence": 96.753349,
+      "left": 1190,
+      "top": 2327,
+      "width": 57,
+      "height": 19
+    },
+    {
+      "text": "Short",
+      "confidence": 96.887268,
+      "left": 108,
+      "top": 2327,
+      "width": 56,
+      "height": 19
+    },
+    {
+      "text": "Circuit",
+      "confidence": 92.662231,
+      "left": 171,
+      "top": 2328,
+      "width": 67,
+      "height": 18
+    },
+    {
+      "text": "Current(Isc}",
+      "confidence": 70.772797,
+      "left": 245,
+      "top": 2327,
+      "width": 120,
+      "height": 23
+    },
+    {
+      "text": "[A]",
+      "confidence": 95.854958,
+      "left": 375,
+      "top": 2328,
+      "width": 24,
+      "height": 21
+    },
+    {
+      "text": "NOCT",
+      "confidence": 92.693474,
+      "left": 1322,
+      "top": 2329,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "4542\u00b0C",
+      "confidence": 46.259018,
+      "left": 1871,
+      "top": 2327,
+      "width": 86,
+      "height": 20
+    },
+    {
+      "text": "Max",
+      "confidence": 96.826805,
+      "left": 109,
+      "top": 2371,
+      "width": 39,
+      "height": 16
+    },
+    {
+      "text": "Power",
+      "confidence": 93.273552,
+      "left": 156,
+      "top": 2371,
+      "width": 64,
+      "height": 16
+    },
+    {
+      "text": "Current(Imp)",
+      "confidence": 88.267876,
+      "left": 227,
+      "top": 2369,
+      "width": 133,
+      "height": 23
+    },
+    {
+      "text": "[A]",
+      "confidence": 96.009583,
+      "left": 369,
+      "top": 2369,
+      "width": 25,
+      "height": 22
+    },
+    {
+      "text": "14.44",
+      "confidence": 94.500641,
+      "left": 521,
+      "top": 2369,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "14.50",
+      "confidence": 96.437958,
+      "left": 655,
+      "top": 2369,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "14.57",
+      "confidence": 95.050125,
+      "left": 789,
+      "top": 2369,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "14.63",
+      "confidence": 96.479118,
+      "left": 923,
+      "top": 2369,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "14.70",
+      "confidence": 94.934387,
+      "left": 1057,
+      "top": 2369,
+      "width": 56,
+      "height": 18
+    },
+    {
+      "text": "14.76",
+      "confidence": 94.465652,
+      "left": 1190,
+      "top": 2369,
+      "width": 57,
+      "height": 18
+    },
+    {
+      "text": "80%+5%",
+      "confidence": 91.297981,
+      "left": 1851,
+      "top": 2369,
+      "width": 107,
+      "height": 19
+    },
+    {
+      "text": "Bifaciality",
+      "confidence": 92.912193,
+      "left": 1322,
+      "top": 2370,
+      "width": 99,
+      "height": 23
+    },
+    {
+      "text": "Irradiation",
+      "confidence": 96.517761,
+      "left": 108,
+      "top": 2411,
+      "width": 107,
+      "height": 18
+    },
+    {
+      "text": "Ratio",
+      "confidence": 93.19725,
+      "left": 225,
+      "top": 2411,
+      "width": 51,
+      "height": 18
+    },
+    {
+      "text": "(rear/front)",
+      "confidence": 88.393311,
+      "left": 285,
+      "top": 2411,
+      "width": 113,
+      "height": 22
+    },
+    {
+      "text": "10%",
+      "confidence": 95.640358,
+      "left": 797,
+      "top": 2411,
+      "width": 46,
+      "height": 18
+    },
+    {
+      "text": "Safety",
+      "confidence": 96.261398,
+      "left": 1321,
+      "top": 2411,
+      "width": 63,
+      "height": 24
+    },
+    {
+      "text": "Class",
+      "confidence": 96.808205,
+      "left": 1391,
+      "top": 2412,
+      "width": 52,
+      "height": 18
+    },
+    {
+      "text": "Class",
+      "confidence": 96.252777,
+      "left": 1872,
+      "top": 2410,
+      "width": 56,
+      "height": 20
+    },
+    {
+      "text": "Il",
+      "confidence": 91.818604,
+      "left": 1942,
+      "top": 2412,
+      "width": 9,
+      "height": 18
+    }
+  ],
+  "candidates": [],
+  "database_write": false,
+  "warning": "Unverified OCR tokens. Never import or infer STC values from this report."
+}

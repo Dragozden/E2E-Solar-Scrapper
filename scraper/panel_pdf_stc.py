@@ -229,8 +229,15 @@ def spatial_stc_anchors(words: Sequence[Mapping], *, page_width: float) -> list[
         if not tokens:
             continue
         word = tokens[-1]
+        # Use the electrical heading origin, not the STC token position:
+        # the title can share a visual line with an unrelated drawing label.
+        heading_words = [w for w in row["words"]
+                         if float(w["x0"]) <= float(word["x0"])
+                         and _ELECTRICAL_HEADING.search(normalize(str(w["text"])))]
+        start = min((float(w["x0"]) for w in heading_words), default=None)
         anchors.append({"top": row["top"], "bottom": row["bottom"],
-                        "x0": float(word["x0"]), "text": row["text"]})
+                        "x0": float(word["x0"]), "heading_start": start,
+                        "text": row["text"]})
     return anchors
 
 
@@ -251,8 +258,14 @@ def spatial_stc_candidate(words: Sequence[Mapping], target_power: int, *, page: 
         # The STC heading is normally in a half-width product-spec column.
         # Restrict all values to that column so a right-side warranty graph
         # cannot contribute a similarly positioned number.
-        left = 0.0 if head["x0"] < page_width * 0.58 else page_width * 0.49
-        right = min(page_width, left + page_width * 0.53)
+        start = head.get("heading_start")
+        if start is not None and start >= page_width * 0.28:
+            # Some datasheets give the drawing ~38% and the STC table the
+            # remaining ~62%. Anchor the left edge to the electrical label.
+            left, right = max(0.0, start - 8.0), page_width
+        else:
+            left = 0.0 if head["x0"] < page_width * 0.58 else page_width * 0.49
+            right = min(page_width, left + page_width * 0.53)
         column = [w for w in words if left <= float(w["x0"]) < right]
         # Scan VISUAL LINES for the next section rather than individual words:
         # 'N MOT' is often split into two PDF text objects, so word-level
@@ -262,7 +275,8 @@ def spatial_stc_candidate(words: Sequence[Mapping], target_power: int, *, page: 
         all_column_rows = _word_rows(column)
         following_headers = [r for r in all_column_rows
                              if r["top"] > head["bottom"] + 12
-                             and _is_following_section_heading(r["text"])]
+                             and (_is_following_section_heading(r["text"])
+                                  or re.match(r"^[* ]*stc\s*:", normalize(r["text"])))]
         # A section heading may be split across nearby rows; check a short
         # window while anchoring the boundary to the earliest involved row.
         for before, after in zip(all_column_rows, all_column_rows[1:]):

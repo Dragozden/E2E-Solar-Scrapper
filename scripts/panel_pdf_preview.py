@@ -29,6 +29,7 @@ def extract_stc_lines(pdf_path: Path, *, model: str, power: int) -> tuple[list, 
     """
     import pdfplumber  # optional dependency; excluded from default scraper env
 
+    from scraper.panel_pdf_layouts import paired_conditions, jinko_range, jinko_specs
     found = []
     diagnostic = []
     family = family_token(model)
@@ -39,10 +40,22 @@ def extract_stc_lines(pdf_path: Path, *, model: str, power: int) -> tuple[list, 
             raise ValueError("PDF has more than 20 pages; manual inspection required")
         full_text = " ".join((pg.extract_text() or "") for pg in pdf.pages)
         clean = lambda value: re.sub(r"[^A-Z0-9]", "", value.upper())
-        if clean(family) not in clean(full_text):
+        range_bounds = jinko_range(full_text, model, power)
+        if re.search(r"installation manual", full_text[:500], re.I):
+            return [], [{"warning": "INSTALLATION_MANUAL_NOT_DATASHEET"}]
+        if clean(family) not in clean(full_text) and range_bounds is None:
             return [], [{"warning": "EXPECTED_MODEL_FAMILY_NOT_PRESENT_IN_PDF",
-                         "family": family, "extracted_characters": len(full_text)}]
+                         "family": family, "extracted_characters": len(full_text),
+                         "text_layer_hint": ("LIMITED_TEXT_LAYER_MANUAL_REVIEW"
+                                             if len(full_text.strip()) < 250 else "CHECK_MODEL_FAMILY")}]
+        range_only = clean(family) not in clean(full_text) and range_bounds is not None
         for page_number, page in enumerate(pdf.pages, start=1):
+            if range_only:
+                page_candidates = jinko_specs(page, power, page_number, family, range_bounds)
+                found.extend(page_candidates)
+                diagnostic.append({"page": page_number, "candidates_on_page": len(page_candidates),
+                                   "inspections": [{"method": "range_model_stc", "range_w": list(range_bounds)}]})
+                continue
             lines = page.extract_text_lines(layout=False) or []
             heads = [line for line in lines if HEADING_STC.search(normalize(line.get("text", "")))]
             page_candidates = []
@@ -79,6 +92,17 @@ def extract_stc_lines(pdf_path: Path, *, model: str, power: int) -> tuple[list, 
                 page_candidates.extend(spatial_found)
                 page_notes.append({"method": "spatial", "word_count": len(words),
                                    "reasons": reasons})
+            if not page_candidates:
+                paired = paired_conditions(page.extract_words(x_tolerance=2,y_tolerance=3) or [],
+                                           model, power, page_number, family)
+                page_candidates.extend(paired)
+                if paired:
+                    page_notes.append({"method": "paired_conditions", "reason": "EXPLICIT_STC_NOCT_COLUMNS_VALIDATED"})
+                elif range_bounds is not None:
+                    ranged = jinko_specs(page, power, page_number, family, range_bounds)
+                    page_candidates.extend(ranged)
+                    if ranged:
+                        page_notes.append({"method": "range_model_stc", "range_w": list(range_bounds)})
             if not page_candidates:
                 sample = [str(line.get("text", ""))[:160] for line in lines
                           if re.search(r"stc|elektryczn|charakterystyk", normalize(line.get("text", "")))]

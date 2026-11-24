@@ -1,47 +1,40 @@
 # Security and local hardening — E2E Solar
 
-_This repository is a local development/demo stack, not a production deployment. Stage 9.2 adds a non-invasive audit and recovery groundwork without rotating live credentials._
+_Stage 9.3: local development credentials stored outside Git and rotated only after a verified PostgreSQL backup._
 
-## Read-only preflight
+## Read-only security preflight
 
 ```powershell
 uv run --frozen python scripts/security_audit.py
+uv run --frozen python scripts/security_audit.py --strict
 ```
 
-The command checks:
+The audit checks localhost-only published ports, plaintext example passwords in the Compose source, whether local PostgreSQL credentials agree between root `.env` and `docker/.env`, missing/default/short local secrets, accidentally tracked secret or dump files, and ignore rules. It never prints password values, connects to the DB, or changes services.
 
-- Whether published Docker Compose ports bind only to loopback;
-- Whether development-default PostgreSQL or pgAdmin passwords remain in the Compose file;
-- Whether `.env`, database dumps or `backups/` files are accidentally tracked in Git;
-- Whether Git and Docker ignore rules exclude `backups/`.
+## Local credential management
 
-It **does not print password values**, execute SQL, restart services, or change Docker files. To turn every warning into a nonzero exit status, run `uv run --frozen python scripts/security_audit.py --strict` (not appropriate for the current default-password development stack).
+- Compose now references `${POSTGRES_PASSWORD:?…}` and `${PGADMIN_DEFAULT_PASSWORD:?…}` instead of putting example passwords in a public YAML file.
+- The **root `.env`** provides PostgreSQL access to the Windows scraper, dbt, and the Airflow container.
+- The **`docker/.env`** file supplies only secret substitutions for Docker Compose when invoked in `docker/`.
+- The **`dashboard/.env`** remains a separate SELECT-only database identity; rotation of PostgreSQL admin credentials does not change its password.
+- All three files are ignored by Git and Docker build contexts. Shell environment variables take precedence over Compose `.env`; unset conflicting `POSTGRES_PASSWORD` / `PGADMIN_DEFAULT_PASSWORD` shell overrides before running Compose.
 
-## Known limitations to resolve before hosting publicly
+Existing populated installations **must not** use `init`. Follow [Credential rotation](credential_rotation.md), including verifying a fresh backup and checking restored data first. The `rotate` command performs `ALTER ROLE`, validates a new PostgreSQL login and synchronizes the two local files with best-effort rollback on error. It does **not** restart services automatically, and a power failure between SQL and filesystem updates may require manual reconciliation.
 
-1. `docker/docker-compose.yml` currently defines example values for `POSTGRES_PASSWORD` and `PGADMIN_DEFAULT_PASSWORD`. Loopback port binding helps protect the local setup but does not make such passwords suitable for any public service.
-2. `dashboard/.env` contains the randomly generated read-only PostgreSQL password. Keep this file local and never copy it into Git, CI artifacts, Docker build contexts, or screenshots.
-3. `docker-compose.override.yml` mounts secrets from the root `.env` into Airflow; webhook URLs are secrets too. Docker inspect and host accounts with Docker privileges can see runtime environment variables. Restrict host access accordingly.
-4. The local Airflow uses SQLite and the simple auth manager. Streamlit is not designed here as an authenticated, publicly accessible service. Avoid routing those ports to the internet.
-5. Current `pg_dump` archives are **not encrypted**. Keep backup directories on encrypted media or move them into protected backup storage.
-6. Internal Airflow watchdog alerts cannot detect a complete host or Airflow shutdown. Use independent uptime monitoring if availability matters.
+The official PostgreSQL image does **not** rotate existing role passwords if `POSTGRES_PASSWORD` alone changes. The script issues the actual authenticated SQL update.
 
-## Password rotation — do this as a separate change
+## Additional limitations before public deployment
 
-**First complete `create` + `verify` in [backups.md](backups.md).** Do not merely change the `POSTGRES_PASSWORD` environment variable and recreate the existing database container: the official PostgreSQL image uses it to initialize a new cluster, not to rotate the password in an existing data volume.
+1. **Airflow** currently runs with SQLite and its simple authentication manager; this is appropriate for a controlled local environment, not public access.
+2. **Streamlit** remains an unauthenticated local service. Its read-only role reduces database permissions, but does not provide application-level access control.
+3. Docker host/daemon administrators can view container environment variables. Running multiple services as Docker containers is not a secret isolation boundary.
+4. pgAdmin has its **own application account database**. The `PGADMIN_DEFAULT_PASSWORD` variable configures the initial admin account, and changing it does not necessarily rotate an existing login if pgAdmin state is reused. Verify the new login manually; preserve/export server registrations before intentionally resetting pgAdmin state.
+5. Backups are not encrypted by the backup script. Protect off-machine copies using encrypted storage, and treat manifest hashes as integrity checks, **not** encryption or a secure signature.
+6. The Airflow watchdog does not detect that the entire host is offline; independent uptime monitoring remains a later improvement.
+7. This package does not rotate webhook secrets or the `solar_dashboard` role password. Handle either of those in a distinct controlled change.
 
-A safe rotation plan includes:
+## Further reading
 
-1. Record which roles connect (scraper/Airflow admin connection and the dedicated `solar_dashboard` reader).
-2. Choose strong unique credentials, store them in untracked files or a secret manager, and avoid pasting them into PowerShell history or Git.
-3. Change the actual database role password using an authenticated PostgreSQL administration session (e.g. `psql`'s `\password` interactive command), then update the matching local application and Compose configuration **in a coordinated maintenance window**.
-4. Recreate only affected containers without deleting any named volumes, then verify scraper, dbt, Streamlit and watchdog connections.
-5. Rotate pgAdmin and webhook credentials separately. Use an authenticated reverse proxy or a separately hosted environment for any demo that must be reached publicly.
-
-The current package deliberately does **not** change or rotate any passwords, for safety. Do not expose development services with their present example passwords.
-
-## Operational references
-
-- [Database backup and isolated restore](backups.md)
+- [Credential rotation](credential_rotation.md)
+- [Verified PostgreSQL backup and restore](backups.md)
 - [Release checklist](release_checklist.md)
-- [Development runbook](development.md)

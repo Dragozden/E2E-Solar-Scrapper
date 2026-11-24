@@ -1,19 +1,16 @@
-# Local development only. Postgres and pgAdmin listen on localhost, not LAN/WAN.
+# Local-only stack; secret values are loaded by Compose from docker/.env.
+# Never run 'docker compose down -v': postgres_data contains historical observations.
 services:
   postgres:
     image: postgres:17
     container_name: solar-postgres
-
     restart: unless-stopped
-
     environment:
       POSTGRES_DB: solar_prices
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/local_credentials.py init or rotate to create docker/.env}
     ports:
       - "127.0.0.1:5432:5432"
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
@@ -21,16 +18,12 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: solar-pgadmin
-
     restart: unless-stopped
-
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@local.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Run scripts/local_credentials.py init or rotate to create docker/.env}
     ports:
       - "127.0.0.1:5050:80"
-
     depends_on:
       - postgres
 

@@ -1,9 +1,4 @@
-"""Read-only local security preflight for the E2E Solar development stack.
-
-Run from repo root: uv run python scripts/security_audit.py
-Optional: --strict treats all detected warnings as a failing preflight.
-Never prints secret values, opens a database connection, or changes services.
-"""
+"""Read-only local security preflight. Never prints secrets or modifies services."""
 from __future__ import annotations
 
 import argparse
@@ -11,6 +6,7 @@ import subprocess
 from pathlib import Path
 
 import yaml
+from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "docker" / "docker-compose.yml"
@@ -18,7 +14,6 @@ OVERLAY = ROOT / "docker" / "docker-compose.override.yml"
 
 
 def listen_address(port_spec: object) -> str:
-    """Return the host portion of Compose's short port syntax."""
     if isinstance(port_spec, str) and port_spec.count(":") >= 2:
         return port_spec.rsplit(":", 2)[0].strip("[]")
     if isinstance(port_spec, dict):
@@ -49,6 +44,27 @@ def credential_warnings(config: dict) -> list[str]:
     return warnings
 
 
+def local_secret_warnings(repo: Path) -> list[str]:
+    root_env, compose_env = repo / ".env", repo / "docker" / ".env"
+    warnings = []
+    if not root_env.is_file() or not compose_env.is_file():
+        warnings.append("Missing root .env or docker/.env; run local_credentials init/rotate")
+        return warnings
+    root = dotenv_values(root_env)
+    compose = dotenv_values(compose_env)
+    pg_root, pg_compose, pgadmin = root.get("POSTGRES_PASSWORD"), compose.get("POSTGRES_PASSWORD"), compose.get("PGADMIN_DEFAULT_PASSWORD")
+    if not pg_root or not pg_compose or pg_root != pg_compose:
+        warnings.append("Root and Compose PostgreSQL credentials missing or inconsistent")
+    if pg_root == "postgres" or pg_compose == "postgres":
+        warnings.append("PostgreSQL uses example development password")
+    if pgadmin == "admin" or not pgadmin:
+        warnings.append("pgAdmin uses example development password or missing secret")
+    for key, value in (("PostgreSQL", pg_compose), ("pgAdmin", pgadmin)):
+        if value and len(value) < 24 and value not in ("postgres", "admin"):
+            warnings.append(f"{key} local password is shorter than 24 characters")
+    return warnings
+
+
 def tracked_sensitive_files(repo: Path) -> list[str]:
     proc = subprocess.run(["git", "ls-files", "-z"], cwd=repo, stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE, check=False)
@@ -71,9 +87,9 @@ def audit(repo: Path = ROOT) -> list[str]:
     base = yaml.safe_load((repo / "docker" / "docker-compose.yml").read_text(encoding="utf-8"))
     overlay = yaml.safe_load((repo / "docker" / "docker-compose.override.yml").read_text(encoding="utf-8"))
     warnings = local_bind_warnings(base, overlay) + credential_warnings(base)
+    warnings += local_secret_warnings(repo)
     tracked = tracked_sensitive_files(repo)
     if tracked:
-        # File paths, never file contents.
         warnings.append("Sensitive files tracked by Git: " + ", ".join(tracked))
     ignore = (repo / ".gitignore").read_text(encoding="utf-8-sig")
     dockerignore = (repo / ".dockerignore").read_text(encoding="utf-8-sig")

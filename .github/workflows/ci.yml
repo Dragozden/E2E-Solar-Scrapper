@@ -19,6 +19,12 @@ jobs:
     name: Python · pytest and source integrity
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: solar_prices
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dummy_ci_only
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
@@ -110,6 +116,7 @@ jobs:
       - name: Validate Compose with disposable CI credentials
         run: |
           printf 'POSTGRES_HOST=localhost\nPOSTGRES_PORT=5432\nPOSTGRES_DB=solar_prices\nPOSTGRES_USER=postgres\nPOSTGRES_PASSWORD=dummy_ci_only\n' > .env
+          printf 'POSTGRES_PASSWORD=dummy_ci_only\nPGADMIN_DEFAULT_PASSWORD=dummy_ci_admin_only\n' > docker/.env
           printf 'POSTGRES_HOST=postgres\nPOSTGRES_PORT=5432\nPOSTGRES_DB=solar_prices\nPOSTGRES_USER=solar_dashboard\nPOSTGRES_PASSWORD=dummy_ci_only\n' > dashboard/.env
           (cd docker && docker compose config --quiet)
       - name: Build dashboard image

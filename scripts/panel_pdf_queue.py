@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scraper.panel_detail_specs import is_allowed_detail_url
 from scraper.panel_pdf_approval import approved_document_url, validate_stc, ApprovalError
-from scraper.panel_pdf_stc import family_token
+from scraper.panel_pdf_model import resolve_model
 from scripts.panel_pdf_preview import extract_stc_lines
 
 HOST = 'sklepsoltech.pl'
@@ -76,12 +76,12 @@ def make_plan(rows, root, overrides=None):
             item['state'] = 'INVALID_POWER'; continue
         power = int(watts)
         item['power_w'] = power
-        m = item['model']
-        normal = lambda s: re.sub(r'[^a-z0-9]', '', s.casefold())
-        if (not isinstance(m, str) or not m.strip() or len(m) > 100 or
-            not re.search(rf'(?<!\d){power}(?!\d)', m) or not family_token(m) or
-            normal(m) not in normal(title)):
+        item['model_input'] = model
+        m, reason = resolve_model(item['model'], title, power, explicit=url in overrides)
+        item['model_resolution'] = reason
+        if m is None:
             item['state'] = 'MODEL_CONFIRMATION_NEEDED'; continue
+        item['model'] = m
         key = hashlib.sha256(json.dumps([url, item['pdf_url'], m, power], ensure_ascii=False).encode()).hexdigest()[:24]
         item['folder'] = str(root / key)
         if (root / key).exists():

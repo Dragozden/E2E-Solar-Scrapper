@@ -109,3 +109,47 @@ def jinko_specs(page_obj, power, page, family, bounds):
             continue
         found.extend(_result(fields,power,page,family))
     return found if len(found)==1 else []
+
+
+def item_unit_stc(words, model, power, page, family, full_text):
+    """Full-width Hyundai Item/Unit table with explicit model series and STC header.
+
+    A complete cover variant and the exact FB series on the table are required.
+    Values must align with the independently printed wattage header.
+    """
+    m = re.fullmatch(r'HIT-H(\d{3})LE(?:-FB)?', model.upper())
+    if not m or int(m[1]) != power:
+        return []
+    if not re.search(r'(?<![A-Z0-9-])HIT-H'+str(power)+r'LE-FB(?![A-Z0-9-])', full_text.upper()):
+        return []
+    rows = _word_rows(words, tolerance=3.2)
+    found = []
+    units = dict(rated_power_w='W',voc_v='V',isc_a='A',vmp_v='V',imp_a='A',efficiency_pct='%')
+    for i, head in enumerate(rows[:-8]):
+        if not re.fullmatch(r'electrical characteristics\s*\(stc\*?\)', normalize(head['text']).strip()):
+            continue
+        if normalize(rows[i+1]['text']).strip() != 'hit-hxxxle-fb':
+            continue
+        header = rows[i+2]
+        if not re.match(r'^item\s+unit\s+', normalize(header['text'])):
+            continue
+        cols = _nums(header)
+        powers = [v for _,v in cols]
+        if not 2 <= len(cols) <= 12 or powers != sorted(set(powers)) or power not in powers or any(v != int(v) or not 100<=v<=900 for v in powers):
+            continue
+        if any(b-a<10 for (a,_),(b,_) in zip(cols,cols[1:])):
+            continue
+        fields = {}
+        for row in rows[i+3:i+9]:
+            k = row_type(row['text']); vals = _nums(row)
+            if k not in units or k in fields or len(vals)!=len(cols):
+                break
+            if not any(w['text']==units[k] and _center(w)<cols[0][0]-10 for w in row['words']):
+                break
+            if any(abs(x-y)>5 for (x,_),(y,_) in zip(vals,cols)):
+                break
+            fields[k] = [v for _,v in vals]
+        if fields.get('rated_power_w') != powers:
+            continue
+        found.extend(_result(fields,power,page,family))
+    return found if len(found)==1 else []

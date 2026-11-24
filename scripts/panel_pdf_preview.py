@@ -29,7 +29,7 @@ def extract_stc_lines(pdf_path: Path, *, model: str, power: int) -> tuple[list, 
     """
     import pdfplumber  # optional dependency; excluded from default scraper env
 
-    from scraper.panel_pdf_layouts import paired_conditions, jinko_range, jinko_specs
+    from scraper.panel_pdf_layouts import paired_conditions, jinko_range, jinko_specs, item_unit_stc
     found = []
     diagnostic = []
     family = family_token(model)
@@ -103,6 +103,12 @@ def extract_stc_lines(pdf_path: Path, *, model: str, power: int) -> tuple[list, 
                     page_candidates.extend(ranged)
                     if ranged:
                         page_notes.append({"method": "range_model_stc", "range_w": list(range_bounds)})
+            if not page_candidates:
+                wide = item_unit_stc(page.extract_words(x_tolerance=2,y_tolerance=3) or [],
+                                     model, power, page_number, family, full_text)
+                page_candidates.extend(wide)
+                if wide:
+                    page_notes.append({"method": "item_unit_stc", "reason": "FULL_WIDTH_STC_HEADER_ALIGNED"})
             if not page_candidates:
                 sample = [str(line.get("text", ""))[:160] for line in lines
                           if re.search(r"stc|elektryczn|charakterystyk", normalize(line.get("text", "")))]
